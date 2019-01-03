@@ -1,0 +1,11 @@
+inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
+outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
+
+in0::QueueInc(port=inport, qid=0)
+out0::QueueOut(port=outport, qid=0)
+
+in1::QueueInc(port=outport, qid=0)
+out1::QueueOut(port=inport, qid=0)
+
+in0 -> out0
+in1 -> out1
