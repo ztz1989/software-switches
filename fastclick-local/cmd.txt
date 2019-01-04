@@ -2,3 +2,7 @@
    --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/tmp/fastclick/vhost-user-0' \
    --vdev 'net_virtio_user3,mac=00:00:00:00:00:03,path=/tmp/fastclick/vhost-user-1' \
    -- -p 0x3 -T 1
+
+./build/FlowMon-DPDK -c 0xf0 -n 1 --socket-mem=4096,0 --file-prefix flowmon --no-pci  \
+   --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/tmp/fastclick/vhost-user-0'
+

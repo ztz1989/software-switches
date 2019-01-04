@@ -1,1 +1,1 @@
-FromDPDKDevice(0, NDESC 2048) -> ToDPDKDevice(1, NDESC 2048)
+FromDPDKDevice(0, NDESC 4096) -> ToDPDKDevice(1, NDESC 4096)
