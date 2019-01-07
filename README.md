@@ -1,2 +1,2 @@
 # software-switches
-To reproduce all the experiments on TPT server. 
+This repository contains scripts to reproduce all the experiments on TPT server. 
