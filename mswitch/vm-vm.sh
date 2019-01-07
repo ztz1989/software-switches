@@ -12,10 +12,8 @@ sudo vale-ctl -a vale0:v3
 
 echo 'Start Centos VM..'
 
-sudo ./qemu/x86_64-softmmu/qemu-system-x86_64 CentOS-7-x86_64-Azure.qcow2 \
+sudo taskset -c 8-9 ./qemu/x86_64-softmmu/qemu-system-x86_64 CentOS-7-x86_64-Azure.qcow2 \
      --enable-kvm -smp 2 -m 2G -nographic -cpu host \
-     -device ptnet-pci,netdev=data1,mac=00:AA:BB:CC:01:01 \
-     -netdev netmap,ifname=vale0:v2,id=data1,passthrough=on -vnc :4 \
-	 -device ptnet-pci,netdev=data2,mac=00:AA:BB:CC:01:02 \
-     -netdev netmap,ifname=vale0:v3,id=data2,passthrough=on -vnc :5 \
+     -device ptnet-pci,netdev=data,mac=00:AA:BB:CC:01:11 \
+     -netdev netmap,ifname=vale0:v2,id=data,passthrough=on -vnc :4 \
 	 -net nic -net user,hostfwd=tcp::10020-:22
