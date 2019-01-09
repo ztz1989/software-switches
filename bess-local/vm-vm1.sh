@@ -6,7 +6,7 @@ export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm2.qcow2
 export VHOST_SOCK_DIR=/tmp/bess
 
 cd /home/tianzhu/qemu/bin/x86_64-softmmu/
-sudo numactl --membind=0 --physcpubind=5-8 ./qemu-system-x86_64 -name $VM_NAME1 -cpu host -enable-kvm \
+sudo numactl --membind=0 --physcpubind=5-8 /usr/bin/qemu-system-x86_64 -name $VM_NAME1 -cpu host -enable-kvm \
   -m $GUEST_MEM -drive file=$CDROM --nographic \
   -numa node,memdev=mem1 -mem-prealloc -smp sockets=1,cores=4 \
   -object memory-backend-file,id=mem1,size=$GUEST_MEM,mem-path=/dev/hugepages,share=on \

@@ -2,10 +2,10 @@ inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
 outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
 
 in0::QueueInc(port=inport, qid=0)
-out0::QueueInc(port=outport, qid=0)
+out0::QueueOut(port=outport, qid=0)
 
 v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1')
 v2::PMDPort(vdev='eth_vhost1,iface=/tmp/bess/vhost-user-1,queues=1')
 
 in0 -> PortOut(port=v1.name)
-out0 -> PortOut(port=v2.name)
+PortInc(port=v2.name) -> out0
