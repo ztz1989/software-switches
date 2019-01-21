@@ -19,8 +19,8 @@ This project considers both virtual machines and containers, both of which are e
 We use QEMU/KVM as hypervisor. In specific, three versions of QEMU software are used in our experiments:
 
 #### QEMU 3.0.95: Used for experiments with OVS-DPDK, Snabb, FastClick and ClickNF
-#### QEMU 2.5.0: Used for experiments with BESS due to an issue reported by https://github.com/NetSys/bess/issues/874
+#### QEMU 2.5.0: Used for experiments with BESS due to a compatibility issue reported by https://github.com/NetSys/bess/issues/874
 #### QEMU 3.0.95: A modified version for experiments with netmap, since it supports netmap passthrough. More details can be found in https://github.com/vmaffione/qemu
 
 ### Containers
-We use Docker to create and manage containers. 
+We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. 
