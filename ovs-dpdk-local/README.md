@@ -15,7 +15,8 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
 
 ### Virtual machines
 * Physical <-> Virtual test:
-  1. Start OVS and configure forwarding rules: ./ovs-nic1-vm1.sh 
+  1. Start OVS and configure forwarding rules
+      * ./ovs-nic1-vm1.sh 
   2. Start virtual machine using QEMU/KVM and attach one virtual interface: ./nic1-vm1.sh
   3. Login to the VM
       * username: root
@@ -30,7 +31,8 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
       * sudo ./throughput-test.sh
 
 * Virtual <-> Virtual test:
-  1. Start OVS and configure the forwarding rules between two VMs: ./ovs-vm-vm.sh
+  1. Start OVS and configure the forwarding rules between two VMs
+      * ./ovs-vm-vm.sh
   2. Start two VMs using QEMU/KVM:
       * ./vm-vm1.sh    # start VM1 which transmits packets to VM2
       * ./vm-vm.sh     # start VM2 which receives packet from VM1 and measures the throughput
@@ -44,8 +46,19 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
       * ./build/FlowMown -c 3
   
 * Physical <-> Virtual <-> Physical test:
-  
-  
+  1. start OVS and configure the PVP forwarding rules
+      * ./ovs-nic2-vm1.sh
+  2. start an instance of VM and attach it with two virtual interfaces
+      * ./nic2-vm1.sh
+  3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
+      * ./setup.sh
+      * cd /root/dpdk-stable-17.11.4/examples/l2fwd/build
+      * ./l2fwd -l 0-3 -- -p 3 -T 1 -q 1
+      * run MoonGen scripts on the host machine from NUMA node 1
+           * cd ../moongen-local
+           * unidirectional test: sudo ./throughput-test.sh 
+           * bidirectional test: sudo ./bidirectional-test.sh
+      
 ### Containers
 
 ### Clear the flow table and terminate all OVS threads
