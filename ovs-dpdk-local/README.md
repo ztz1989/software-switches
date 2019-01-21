@@ -61,6 +61,11 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
            * bidirectional test: sudo ./bidirectional-test.sh
       
 ### Containers
+* Physical <-> Virtual test
+   * start OVS and configure forwarding rules
+      * ./ovs-nic1-vm1.sh
+   * start an instance of FlowMown-DPDK container
+      * ./flowmon-docker.sh   
 
 ### Clear the flow table and terminate all OVS threads
   * ./terminate_ovs-dpdk.sh
