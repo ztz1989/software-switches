@@ -26,7 +26,11 @@ In specific, three versions of QEMU software are used in our experiments:
 * QEMU 3.0.95: A modified version for experiments with netmap, since it supports netmap passthrough. More details can be found in https://github.com/vmaffione/qemu
 
 #### Image
-We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). We expect similar performance using other Linux distributions. In our experiments, we have downloaded CentOS-7-x86_64-Azure-vm2.qcow2 image and edit it to allow password access. The username and password to login to its VMs are both "root". 
+We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). We expect similar performance using other Linux distributions. In our experiments, we have downloaded CentOS-7-x86_64-Azure-vm2.qcow2 image and edit it to allow password access. The username and password to login to its VMs are both "root".
+
+#### Examples of configuring VMs
+QEMU provides a variety of options to configure virtual machines. 
+
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. 
