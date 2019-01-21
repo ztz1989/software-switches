@@ -54,4 +54,8 @@ In the last line, we configure a host forwarding rule as a shortcut to access th
 ssh root@localhost -p 10020, and login with the same password.
 
 ### Containers
-We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. 
+We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
+* DPDK container
+* FlowMown-DPDK container
+* pktgen-dpdk container
+
