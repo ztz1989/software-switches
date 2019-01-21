@@ -3,7 +3,7 @@
 ## Experiments in physical environment (nic-nic communication)
 The script "ovs-nic-nic.sh" initiates the DPDK, reserves memory on NUMA node 0, pins OVS-DPDK threads to specific cores and configures the rules to setup the direct communication between two physical NICs.
 
-### Steps to reproduce:
+### Steps:
 * Start OVS and configure rules: ./ovs-nic-nic.sh
 * Inspect the throughput using MoonGen to TX and RX on NUMA node 1, instructions are detailed in [moongen-local section](https://github.com/ztz1989/software-switches/tree/master/moongen-local)
     * cd ../moongen-local
@@ -23,8 +23,8 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
   4. Configure virtual machines: ./setup.sh (under /root directory).
   5. Login to the VM by opening new terminals and type: ssh root@localhost -p 10020. This can avoid the noisy logs of Centos.
   6. Start FlowMown-DPDK to monitor inside the VM:
-      * cd monitor/
-      * ./build/FlowMon-DPDK -c 3
+      * cd /root/monitor/
+      * ./build/FlowMown-DPDK -c 3
   7. Open a new terminal on the host machine and start MoonGen to TX packets from NIC 1:
       * cd ../moongen-local
       * sudo ./throughput-test.sh
@@ -32,10 +32,17 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
 * Virtual <-> Virtual test:
   1. Start OVS and configure the forwarding rules between two VMs: ./ovs-vm-vm.sh
   2. Start two VMs using QEMU/KVM:
-      * ./vm-vm.sh
-      * ./vm-vm1.sh
-  3. 
-
+      * ./vm-vm1.sh    # start VM1 which transmits packets to VM2
+      * ./vm-vm.sh     # start VM2 which receives packet from VM1 and measures the throughput
+  3. On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
+      * ./setup.sh
+      * cd /root/MoonGen
+      * ./build/MoonGen example/l2-load-latency.lua 0 0
+  4. On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FlowMown-DPDK to measure the inter-VM throughput:
+      * ./setup.sh
+      * cd /root/monitor
+      * ./build/FlowMown -c 3
+  
 * Physical <-> Virtual <-> Physical test:
   
   
