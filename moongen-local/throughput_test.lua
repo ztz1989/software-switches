@@ -110,7 +110,7 @@ function loadSlave(queue, rxDev, size)
 	numxstats = tonumber(result)
 
 
-	doArp()
+	--doArp()
 	local mempool = memory.createMemPool(function(buf)
 		fillUdpPacket(buf, size)
 	end)
