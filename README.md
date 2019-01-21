@@ -51,7 +51,7 @@ To isolate multiple instances of VMs and virtual switches on the same host, we u
 
 In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: 
 
-ssh root@localhost -p 10020. 
+ssh root@localhost -p 10020, and login with the same password.
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. 
