@@ -59,4 +59,4 @@ We use Docker to create and manage containers. The version is 17.03.2-ce, build 
 * FlowMown-DPDK container
 * pktgen-dpdk container
 
-These images are available and can be found using: sudo docker images
+These images are available on our server and can be found using: sudo docker images
