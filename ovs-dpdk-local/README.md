@@ -9,6 +9,7 @@ The script "ovs-nic-nic.sh" initiates the DPDK, reserves memory on NUMA node 0, 
     * cd ../moongen-local
     * For unidirectional test: sudo ./throughput-test.sh
     * For bidirectional test: sudo ./bidirectional-test.sh
+    * For latency test: sudo ./latency-test.sh
     
 ## Experiments in Virtual environment
 This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Physical-Virtual-Physical scenarios.  
