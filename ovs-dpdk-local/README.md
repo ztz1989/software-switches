@@ -5,7 +5,7 @@ The script "ovs-nic-nic.sh" initiates the DPDK, reserves memory on NUMA node 0, 
 
 ### Steps to reproduce:
 * Start OVS and configure rules: ./ovs-nic-nic.sh
-* Inspect the throughput using MoonGen to TX and RX on NUMA node 1, instructions are detailed in ()
+* Inspect the throughput using MoonGen to TX and RX on NUMA node 1, instructions are detailed in [moongen-local section](https://github.com/ztz1989/software-switches/tree/master/moongen-local)
     * cd ../moongen-local
     * For unidirectional test: sudo ./throughput-test.sh
     * For bidirectional test: sudo ./bidirectional-test.sh
