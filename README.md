@@ -31,6 +31,21 @@ We choose Centos 7 image. They are available [here](https://cloud.centos.org/cen
 #### Examples of configuring VMs
 QEMU provides a variety of options to configure virtual machines. 
 
+A sample usage is as follows:
+
+sudo taskset -c 4-7 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
+  -m $GUEST_MEM -drive file=$CDROM --nographic \
+  -numa node,memdev=mem -mem-prealloc -smp sockets=1,cores=4 \
+  -object memory-backend-file,id=mem,size=$GUEST_MEM,mem-path=/dev/hugepages,share=on \
+  -chardev socket,id=char0,path=$VHOST_SOCK_DIR/vhost-user-1 \
+  -netdev type=vhost-user,id=mynet1,chardev=char0,vhostforce \
+  -device virtio-net-pci,mac=00:00:00:00:00:01,netdev=mynet1,mrg_rxbuf=off \
+  -chardev socket,id=char1,path=$VHOST_SOCK_DIR/vhost-user-2 \
+  -netdev type=vhost-user,id=mynet2,chardev=char1,vhostforce \
+  -device virtio-net-pci,mac=00:00:00:00:00:02,netdev=mynet2,mrg_rxbuf=off \
+  -net user,hostfwd=tcp::10020-:22 -net nic
+
+In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in server mode) to exchange packetsw with host machine. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. 
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. 
