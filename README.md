@@ -62,6 +62,6 @@ We use Docker to create and manage containers. The version is 17.03.2-ce, build 
 These images are available on our server and can be found using: sudo docker images
 
 Instructions for starting Docker instances for different test scenarios are available in each sub-directiory. Actually, we dont't need to start a new container everytime since all the containers instances are still reserved in the container pool. We can just restart and jump into their terminals using
-  * sudo Docker container start -i [container name]
+  * sudo docker container start -i [container name]
 
 
