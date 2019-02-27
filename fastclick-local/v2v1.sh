@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export VM_NAME1=vhost-vm1
-export GUEST_MEM=4096M
+export GUEST_MEM=2048M
 export QCOW2_IMAGE=/home/tianzhu/centos7.qcow2
 export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm2.qcow2
 export VHOST_SOCK_DIR=/tmp/fastclick

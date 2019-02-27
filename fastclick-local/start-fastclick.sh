@@ -11,4 +11,4 @@ else
 	config="${1}"
 fi
 
-sudo ${FASTCLICK_DIR}/bin/click --dpdk -c 0x400 -w "0000:0b:00.0" -w "0000:0b:00.1" --socket-mem=2048,0 -- "${config}"
+sudo ${FASTCLICK_DIR}/bin/click --dpdk -c 0x600 -w "0000:0b:00.0" -w "0000:0b:00.1" --socket-mem=2048,0 -- "${config}"
