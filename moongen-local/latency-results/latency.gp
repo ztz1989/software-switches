@@ -14,7 +14,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.005:1]
+set yrange [0.0005:1]
 #set ytics 
 
 ## Group arrows
@@ -45,19 +45,10 @@ plot 'snabb-10.DATA_parsed' u 1:($2/180336) w boxes lc rgb "#cc000000"  t "0.10R
 'snabb-50.DATA_parsed' u 1:($2/275620) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'snabb-99.DATA_parsed' u 1:($2/119704)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
-
-# For the old data...
-#plot 'mix_10-final_NEW.DATA_parsed' u 1:($2/18950) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-#'mix_50-final_NEW.DATA_parsed' u 1:($2/18950) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-#'mix_99-final_NEW.DATA_parsed' u 1:($2/18950)  w boxes lc rgb "#21000000" t "0.99R^{+}"
-
-
-# Arrows
-
-
-
-
-# Legacy
+set xlabel "Bess"
+plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'bess-50.DATA_parsed' u 1:($2/276861) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'bess-99.DATA_parsed' u 1:($2/113379)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
 #plot 'xc_10_NEW.DATA_parsed' w boxes lc rgb "#cc88CAF0" t "XC - 0.10R^{+}" , 'xc_50_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0" t "XC - 0.50R^{+}", 'xc_99_NEW.DATA_parsed' w boxes lc rgb "#88CAF0" t "XC - 0.99R^{+}"
