@@ -7,12 +7,12 @@ size=${2}
 
 if [[ "${#}" -lt 2 ]]
 then
-	echo 'Usage: ${0} TX_RATE PKT_SIZE'
+	echo "Usage: ${0} TX_RATE PKT_SIZE"
 	exit 1
 fi
 
 echo "Packet rate: ${1}, Packet size: ${2}"
 
-cd $MOONGEN_DIR
+MOONGEN_DIR="/usr/local/src/MoonGen/"
 
-sudo ./build/MoonGen examples/l3-load-latency.lua 0 1 -r "${rate}" -s "${size}"
+sudo $MOONGEN_DIR/build/MoonGen ./latency-test.lua 0 1 -r "${rate}" -s "${size}"
