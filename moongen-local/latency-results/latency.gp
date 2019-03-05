@@ -50,6 +50,7 @@ plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^
 'bess-50.DATA_parsed' u 1:($2/276861) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'bess-99.DATA_parsed' u 1:($2/113379)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
+set xlabel "Latency"
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
 #plot 'xc_10_NEW.DATA_parsed' w boxes lc rgb "#cc88CAF0" t "XC - 0.10R^{+}" , 'xc_50_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0" t "XC - 0.50R^{+}", 'xc_99_NEW.DATA_parsed' w boxes lc rgb "#88CAF0" t "XC - 0.99R^{+}"
 #plot 'ip_10_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#ee009E73" t "IP - 0.10R^{+}", 'ip_50_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#bb009E73" t "IP - 0.50R^{+}", 'ip_99_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#009E73" t "IP - 0.99R^{+}"
