@@ -41,9 +41,9 @@ plot 'ovs-10.DATA_parsed' u 1:($2/281623) w boxes lc rgb "#cc000000" t "0.10R^{+
 'ovs-99.DATA_parsed' u 1:($2/124712) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "Snabb"
-plot 'snabb-10.DATA_parsed' u 1:($2/8934) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-'snabb-50.DATA_parsed' u 1:($2/15316) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'snabb-99.DATA_parsed' u 1:($2/5045)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+plot 'snabb-10.DATA_parsed' u 1:($2/180336) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'snabb-50.DATA_parsed' u 1:($2/275620) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'snabb-99.DATA_parsed' u 1:($2/119704)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 
 # For the old data...
