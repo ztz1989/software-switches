@@ -30,7 +30,7 @@ set yrange [0.005:1]
 unset title
 set mxtics
 set xlabel "Fastclick"
-set xtics format " " 
+#set xtics format " " 
 plot 'fastclick-10.DATA_parsed' u 1:($2/277112) w boxes lc rgb "#cc000000" t "0.10R^{+}" ,\
 'fastclick-50.DATA_parsed' u 1:($2/277057)  w boxes lc rgb "#66000000" t "0.50R^{+}" ,\
 'fastclick-99.DATA_parsed' u 1:($2/117709) w boxes lc rgb "#21000000" t "0.99R^{+}"
