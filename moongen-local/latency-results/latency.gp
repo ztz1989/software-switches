@@ -3,9 +3,9 @@ set output "latency_binned.pdf"
 	
 set style fill solid 1.0 noborder
 
-set xrange [0:200]
+set xrange [0:20]
 
-set multiplot layout 3,1  title "Latency ({/Symbol m}s)"
+set multiplot layout 4,1  title "Latency ({/Symbol m}s)"
 
 #set size 0.1,0.2
 
