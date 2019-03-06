@@ -10,7 +10,7 @@ local arp    = require "proto.arp"
 local log    = require "log"
 
 -- set addresses here
-local DST_MAC		= nil -- resolved via ARP on GW_IP or DST_IP, can be overriden with a string here
+local DST_MAC		= "90:e2:ba:cb:f5:39" -- resolved via ARP on GW_IP or DST_IP, can be overriden with a string here
 local SRC_IP_BASE	= "10.0.0.10" -- actual address will be SRC_IP_BASE + random(0, flows)
 local DST_IP		= "10.1.0.10"
 local SRC_PORT		= 1234
