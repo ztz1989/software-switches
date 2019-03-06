@@ -5,9 +5,9 @@ set style fill solid 1.0 noborder
 
 set xrange [0:50]
 
-set multiplot layout 5,1  title "Latency ({/Symbol m}s)"
+set multiplot layout 3,2  title "Latency ({/Symbol m}s)"
 
-#set size 0.1,0.2
+#set size 2,1.5
 
 
 set datafile separator ","
