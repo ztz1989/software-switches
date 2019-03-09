@@ -55,6 +55,12 @@ plot 'netmap-10.DATA_parsed' u 1:($2/281798) w boxes lc rgb "#cc000000"  t "0.10
 'netmap-50.DATA_parsed' u 1:($2/281861) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'netmap-99.DATA_parsed' u 1:($2/281001)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
+#set xrange [:100]
+set xlabel "vpp"
+plot 'vpp-10.DATA_parsed' u 1:($2/29281) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'vpp-50.DATA_parsed' u 1:($2/30706) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'vpp-99.DATA_parsed' u 1:($2/16288)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
 #plot 'xc_10_NEW.DATA_parsed' w boxes lc rgb "#cc88CAF0" t "XC - 0.10R^{+}" , 'xc_50_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0" t "XC - 0.50R^{+}", 'xc_99_NEW.DATA_parsed' w boxes lc rgb "#88CAF0" t "XC - 0.99R^{+}"
 #plot 'ip_10_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#ee009E73" t "IP - 0.10R^{+}", 'ip_50_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#bb009E73" t "IP - 0.50R^{+}", 'ip_99_NEW.DATA_parsed' u 1:2 w boxes lc rgb "#009E73" t "IP - 0.99R^{+}"
