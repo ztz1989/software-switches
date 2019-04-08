@@ -18,6 +18,6 @@ sudo ovs-vsctl del-br br-acl
 sudo ovs-vsctl add-br br-acl -- set bridge br-acl datapath_type=netdev
 sudo ovs-vsctl add-port br-acl dpdk-lc0p0 -- set interface dpdk-lc0p0 type=dpdk options:dpdk-devargs=0000:0b:00.0 ofport_request=1
 
-sudo ovs-vsctl add-port br-acl vhost-user-0 -- set Interface vhost-user-0 type=dpdkvhostuser ofport_request=3
-  
+sudo ovs-vsctl add-port br-acl vhost-user-0 -- set Interface vhost-user-0 type=dpdkvhostuser options:n_rxq=2 ofport_request=3
+
 sudo ovs-ofctl add-flow br-acl "in_port=1 actions=3"
