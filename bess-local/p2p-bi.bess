@@ -1,3 +1,6 @@
+bess.add_worker(wid=0, core=9)
+#bess.add_worker(wid=1, core=10)
+
 inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
 outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
 
@@ -9,3 +12,6 @@ out1::QueueOut(port=inport, qid=0)
 
 in0 -> out0
 in1 -> out1
+
+#in0.attach_task(wid=0)
+#in1.attach_task(wid=1)
