@@ -2,6 +2,8 @@
 
 sudo vale-ctl -d vale0:v2 2> /dev/null
 sudo vale-ctl -r v2 2> /dev/null
+sudo vale-ctl -d vale0:enp11s0f1 2> /dev/null
+sudo vale-ctl -d vale0:v1 2> /dev/null
 
 sudo vale-ctl -n v2
 sudo vale-ctl -a vale0:v2
