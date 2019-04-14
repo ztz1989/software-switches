@@ -10,9 +10,9 @@ sudo env "PATH=${PATH}" ovs-ctl --no-ovs-vswitchd start
 
 export DB_SOCK=/usr/local/var/run/openvswitch/db.sock
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
-sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=600
+sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=400
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048,0"
-sudo taskset -c 9 env "PATH=${PATH}" ovs-ctl --no-ovsdb-server --db-sock="$DB_SOCK" start
+sudo env "PATH=${PATH}" ovs-ctl --no-ovsdb-server --db-sock="$DB_SOCK" start
 
 sudo ovs-vsctl del-br br-acl
 sudo ovs-vsctl add-br br-acl -- set bridge br-acl datapath_type=netdev
