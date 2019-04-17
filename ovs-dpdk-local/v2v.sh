@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export VM_NAME2=vhost-vm2
-export GUEST_MEM=2048M
+export GUEST_MEM=4096M
 export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm2.qcow2
 export VHOST_SOCK_DIR=/usr/local/var/run/openvswitch
 
