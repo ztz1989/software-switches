@@ -3,7 +3,7 @@ set output "latency_binned.pdf"
 	
 set style fill solid 1.0 noborder
 
-set xrange [0:50]
+set xrange [0:120]
 
 set multiplot layout 3,2  title "Latency ({/Symbol m}s)"
 
@@ -14,7 +14,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.005:1]
+set yrange [0.0005:1]
 #set ytics 
 
 ## Group arrows

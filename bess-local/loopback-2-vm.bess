@@ -1,0 +1,21 @@
+bess.add_worker(wid=0, core=9)
+#bess.add_worker(wid=1, core=10)
+
+inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
+outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
+
+in0::QueueInc(port=inport, qid=0)
+out0::QueueOut(port=outport, qid=0)
+
+v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1', num_inc_q=1, num_out_q=1)
+v2::PMDPort(vdev='eth_vhost1,iface=/tmp/bess/vhost-user-1,queues=1', num_inc_q=1, num_out_q=1)
+v3::PMDPort(vdev='eth_vhost2,iface=/tmp/bess/vhost-user-2,queues=1', num_inc_q=1, num_out_q=1)
+v4::PMDPort(vdev='eth_vhost3,iface=/tmp/bess/vhost-user-3,queues=1', num_inc_q=1, num_out_q=1)
+
+in0 -> PortOut(port=v1.name)
+PortInc(port=v2.name) -> PortOut(port=v3.name)
+PortInc(port=v4.name) -> out0
+
+# attach different tasks to different cores
+# in0.attach_task(wid=1)
+# v2.attach_task(wid=1)

@@ -30,13 +30,14 @@ for file in onlyfiles:
 		values = l.strip().split(",")
 
 		curr_bin = str(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
-#		if(curr_bin - prev_bin) < 0.1:
-#			curr_val += int(values[1])
-#		else:
-#			print (prev_bin, prev_val)
-#			output.write(str(prev_bin) + ", " + str(prev_val) + "\n" )
-#			curr_val = int(values[1])
-
+		'''
+		if(curr_bin - prev_bin) < 0.1:
+			curr_val += int(values[1])
+		else:
+			print (prev_bin, prev_val)
+			output.write(str(prev_bin) + ", " + str(prev_val) + "\n" )
+			curr_val = int(values[1])
+		'''
 		if (curr_bin not in hashtab.keys()):
 			hashtab[curr_bin] = int(values[1])
 		else:
