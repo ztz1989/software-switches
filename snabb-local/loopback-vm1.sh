@@ -6,7 +6,7 @@ export QCOW2_IMAGE=/home/tianzhu/centos7.qcow2
 export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure.qcow2
 export VHOST_SOCK_DIR=/tmp/snabb
 
-sudo rm "${VHOST_SOCK_DIR}"/*
+#sudo rm "${VHOST_SOCK_DIR}"/*
 
 cd /home/tianzhu/qemu/bin/x86_64-softmmu/
 
