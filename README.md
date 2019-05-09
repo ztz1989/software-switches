@@ -49,7 +49,7 @@ In this example, we configure a VM instance with 2 virtual network interfaces, e
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
 * DPDK container
-* FlowMown-DPDK container
+* FloWatcher-DPDK container
 * pktgen-dpdk container
 
 These images are locally generated on our server. The corresponding Docketfiles can be found in Docker/ directory. 
