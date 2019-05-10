@@ -9,7 +9,7 @@ We consider six state-of-the-art software switches in our project, including:
 * netmap (including VALE switch, mSwitch and ptnet)
 * Vector Packet Processing (VPP)
 
-The detailed instructions for each considered software switch can be found in the corresponding sub-directories.
+The detailed instructions for each considered software switch can be found in the corresponding directories.
 
 ## Virtualization environment
 This project considers both virtual machines and containers, both of which are essential building blocks in Network Function Virtualization (NFV).
