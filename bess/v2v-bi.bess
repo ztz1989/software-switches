@@ -1,5 +1,5 @@
 bess.add_worker(wid=0, core=10)
-bess.add_worker(wid=1, core=11)
+#bess.add_worker(wid=1, core=11)
 
 v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1')
 v2::PMDPort(vdev='eth_vhost1,iface=/tmp/bess/vhost-user-1,queues=1')

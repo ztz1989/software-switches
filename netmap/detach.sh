@@ -12,6 +12,7 @@ sudo vale-ctl -d vale0:v3 2> /dev/null
 sudo vale-ctl -d vale1:v3 2> /dev/null
 sudo vale-ctl -d vale1:v4 2> /dev/null
 
+sudo vale-ctl -d vale0:v5 2> /dev/null
 sudo vale-ctl -d vale2:v5 2> /dev/null
 sudo vale-ctl -d vale2:v6 2> /dev/null
 sudo vale-ctl -d vale3:v7 2> /dev/null
