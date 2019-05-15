@@ -24,5 +24,5 @@ sudo ovs-vsctl add-port br-acl vhost-user-2 -- set Interface vhost-user-2 type=d
 
 sudo ovs-ofctl add-flow br-acl "in_port=1 actions=3"
 sudo ovs-ofctl add-flow br-acl "in_port=4 actions=2"
-#sudo ovs-ofctl add-flow br-acl "in_port=2 actions=4"
-#sudo ovs-ofctl add-flow br-acl "in_port=3 actions=1"
+sudo ovs-ofctl add-flow br-acl "in_port=2 actions=4"
+sudo ovs-ofctl add-flow br-acl "in_port=3 actions=1"

@@ -21,3 +21,4 @@ sudo ovs-vsctl add-port br-acl dpdk-lc0p0 -- set interface dpdk-lc0p0 type=dpdk 
 sudo ovs-vsctl add-port br-acl vhost-user-0 -- set Interface vhost-user-0 type=dpdkvhostuser options:n_rxq=2 ofport_request=3
 
 sudo ovs-ofctl add-flow br-acl "in_port=1 actions=3"
+sudo ovs-ofctl add-flow br-acl "in_port=3 actions=1"

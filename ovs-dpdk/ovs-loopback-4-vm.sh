@@ -30,7 +30,16 @@ sudo ovs-vsctl add-port br-acl vhost-user-7 -- set Interface vhost-user-7 type=d
 sudo ovs-vsctl add-port br-acl vhost-user-8 -- set Interface vhost-user-8 type=dpdkvhostuser ofport_request=10
 
 sudo ovs-ofctl add-flow br-acl "in_port=1 actions=3"
+sudo ovs-ofctl add-flow br-acl "in_port=3 actions=1"
+
 sudo ovs-ofctl add-flow br-acl "in_port=4 actions=5"
+sudo ovs-ofctl add-flow br-acl "in_port=5 actions=4"
+
 sudo ovs-ofctl add-flow br-acl "in_port=6 actions=7"
+sudo ovs-ofctl add-flow br-acl "in_port=7 actions=6"
+
 sudo ovs-ofctl add-flow br-acl "in_port=8 actions=9"
+sudo ovs-ofctl add-flow br-acl "in_port=9 actions=8"
+
 sudo ovs-ofctl add-flow br-acl "in_port=10 actions=2"
+sudo ovs-ofctl add-flow br-acl "in_port=2 actions=10"

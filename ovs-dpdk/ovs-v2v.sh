@@ -22,3 +22,4 @@ sudo ovs-vsctl add-port br-acl vhost-user-1 -- set Interface vhost-user-1 type=d
 sudo ovs-vsctl add-port br-acl vhost-user-2 -- set Interface vhost-user-2 type=dpdkvhostuser ofport_request=4
 
 sudo ovs-ofctl add-flow br-acl "in_port=3 actions=4"
+sudo ovs-ofctl add-flow br-acl "in_port=4 actions=3"
