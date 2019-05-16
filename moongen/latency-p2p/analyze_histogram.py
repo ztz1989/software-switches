@@ -20,24 +20,24 @@ for file in onlyfiles:
 
 	hashtab =		{}
 
-
 	# Check values
 	data = open(file)
 	print ("Opening: ", file)
+	output = open(file+"_parsed", "w")
 
 	lines = data.readlines()[1:]
 	for l in lines:
 		values = l.strip().split(",")
 
-		curr_bin = str(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
-		'''
+		curr_bin = int(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
+
 		if(curr_bin - prev_bin) < 0.1:
 			curr_val += int(values[1])
 		else:
 			print (prev_bin, prev_val)
-			output.write(str(prev_bin) + ", " + str(prev_val) + "\n" )
+			#output.write(str(prev_bin) + ", " + str(prev_val) + "\n" )
 			curr_val = int(values[1])
-		'''
+
 		if (curr_bin not in hashtab.keys()):
 			hashtab[curr_bin] = int(values[1])
 		else:
@@ -48,14 +48,18 @@ for file in onlyfiles:
 		prev_val = curr_val
 
 	data.close()
-	k = [float(x) for x in hashtab.keys()]
+	k = [int(x) for x in hashtab.keys()]
 	k.sort()
 
 	print sum( hashtab.values() )
 
+	#output = open(file+"_parsed", "w")
 
-	output = open(file+"_parsed", "w")
+	print hashtab,k
 	for i in k:
-		output.write( str(i) + ", " + str(hashtab[str(i)]) + "\n")
+		if i in hashtab.keys():
+			output.write( str(i) + ", " + str(hashtab[i]) + "\n")
+
 	output.close()
+
 sys.exit()
