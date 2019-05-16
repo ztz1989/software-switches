@@ -14,7 +14,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.00005:1]
+set yrange [0.005:1]
 #set ytics 
 
 ## Group arrows
