@@ -23,15 +23,17 @@ for file in onlyfiles:
 	# Check values
 	data = open(file)
 	print ("Opening: ", file)
+
 	output = open(file+"_parsed", "w")
 
 	lines = data.readlines()[1:]
+
 	for l in lines:
 		values = l.strip().split(",")
 
-		curr_bin = float(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
+		curr_bin = round(float(values[0])/1000, 1)		# Putting string here for hashtabl
 
-		if(curr_bin - prev_bin) < 0.1:
+		if(curr_bin - prev_bin) < 0.3:
 			curr_val += int(values[1])
 		else:
 			print (prev_bin, prev_val)
@@ -43,23 +45,31 @@ for file in onlyfiles:
 		else:
 			hashtab[curr_bin] += int(values[1])
 
-
 		prev_bin = curr_bin
 		prev_val = curr_val
 
 	data.close()
+
 	k = [float(x) for x in hashtab.keys()]
 	k.sort()
 
+	print k
 	print sum( hashtab.values() )
 
-	#output = open(file+"_parsed", "w")
+	start = k[0]
+	step = 0.3
+	val = 0
 
-	print hashtab,k
+	print start
 	for i in k:
-		if i in hashtab.keys():
-			output.write( str(i) + ", " + str(hashtab[i]) + "\n")
+		if i >= start and i < start+step:
+			val += hashtab[i]
+		else:
+			output.write( str(start) + ", " + str(val) + "\n")
+			start = i
+			val = hashtab[i]
 
+	output.write( str(start) + ", " + str(val) + "\n")
 	output.close()
 
 sys.exit()

@@ -33,19 +33,19 @@ set xlabel "Fastclick"
 #set xtics format " " 
 plot 'fastclick-10.DATA_parsed' u 1:($2/277112) w boxes lc rgb "#cc000000" t "0.10R^{+}" ,\
 'fastclick-50.DATA_parsed' u 1:($2/277057)  w boxes lc rgb "#66000000" t "0.50R^{+}" ,\
-'fastclick-99.DATA_parsed' u 1:($2/117709) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'fastclick-99.DATA_parsed' u 1:($2/41825) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "OvS-DPDK"
 plot 'ovs-10.DATA_parsed' u 1:($2/281623) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
 'ovs-50.DATA_parsed' u 1:($2/281872) w boxes lc rgb "#66000000" t "0.50R^{+}", \
-'ovs-99.DATA_parsed' u 1:($2/124712) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'ovs-99.DATA_parsed' u 1:($2/57347) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "Snabb"
 plot 'snabb-10.DATA_parsed' u 1:($2/180336) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'snabb-50.DATA_parsed' u 1:($2/275620) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'snabb-99.DATA_parsed' u 1:($2/119704)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
-set xlabel "Bess"
+set xlabel "BESS"
 plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'bess-50.DATA_parsed' u 1:($2/276861) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'bess-99.DATA_parsed' u 1:($2/113379)  w boxes lc rgb "#21000000" t "0.99R^{+}"
