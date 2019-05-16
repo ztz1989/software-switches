@@ -29,7 +29,7 @@ for file in onlyfiles:
 	for l in lines:
 		values = l.strip().split(",")
 
-		curr_bin = int(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
+		curr_bin = float(round(float(values[0])/1000, 1))		# Putting string here for hashtabl
 
 		if(curr_bin - prev_bin) < 0.1:
 			curr_val += int(values[1])
