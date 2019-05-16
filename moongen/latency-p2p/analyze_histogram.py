@@ -48,7 +48,7 @@ for file in onlyfiles:
 		prev_val = curr_val
 
 	data.close()
-	k = [int(x) for x in hashtab.keys()]
+	k = [float(x) for x in hashtab.keys()]
 	k.sort()
 
 	print sum( hashtab.values() )
