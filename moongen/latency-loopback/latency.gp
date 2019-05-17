@@ -1,9 +1,9 @@
 set terminal pdf enhanced color font "Times,11"
-set output "latency_binned.pdf"
+set output "latency-loopback.pdf"
 	
 set style fill solid 1.0 noborder
 
-set xrange [0:120]
+set xrange [0:500]
 
 set multiplot layout 3,2  title "Latency ({/Symbol m}s)"
 

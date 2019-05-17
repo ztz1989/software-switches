@@ -5,7 +5,7 @@ set style fill solid 1.0 noborder
 
 set xrange [0:50]
 
-set multiplot layout 3,2  title "Latency ({/Symbol m}s)"
+set multiplot layout 3,2  #title "Latency ({/Symbol m}s)"
 
 #set size 2,1.5
 
@@ -14,7 +14,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.005:1]
+set yrange [0.01:1]
 #set ytics 
 
 ## Group arrows
@@ -29,21 +29,21 @@ set yrange [0.005:1]
 
 unset title
 set mxtics
-set xlabel "Fastclick"
+set xlabel "FastClick"
 #set xtics format " " 
-plot 'fastclick-10.DATA_parsed' u 1:($2/277112) w boxes lc rgb "#cc000000" t "0.10R^{+}" ,\
-'fastclick-50.DATA_parsed' u 1:($2/277057)  w boxes lc rgb "#66000000" t "0.50R^{+}" ,\
+plot 'fastclick-10.DATA_parsed' u 1:($2/98728) w boxes lc rgb "#cc000000" t "0.10R^{+}" ,\
+'fastclick-50.DATA_parsed' u 1:($2/98253)  w boxes lc rgb "#66000000" t "0.50R^{+}" ,\
 'fastclick-99.DATA_parsed' u 1:($2/41825) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "OvS-DPDK"
 plot 'ovs-10.DATA_parsed' u 1:($2/281623) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
-'ovs-50.DATA_parsed' u 1:($2/281872) w boxes lc rgb "#66000000" t "0.50R^{+}", \
-'ovs-99.DATA_parsed' u 1:($2/57347) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'ovs-50.DATA_parsed' u 1:($2/99012) w boxes lc rgb "#66000000" t "0.50R^{+}", \
+'ovs-99.DATA_parsed' u 1:($2/54036) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "Snabb"
-plot 'snabb-10.DATA_parsed' u 1:($2/180336) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-'snabb-50.DATA_parsed' u 1:($2/275620) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'snabb-99.DATA_parsed' u 1:($2/119704)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+plot 'snabb-10.DATA_parsed' u 1:($2/98385) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'snabb-50.DATA_parsed' u 1:($2/98597) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'snabb-99.DATA_parsed' u 1:($2/52756)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "BESS"
 plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
@@ -56,7 +56,7 @@ plot 'netmap-10.DATA_parsed' u 1:($2/281798) w boxes lc rgb "#cc000000"  t "0.10
 'netmap-99.DATA_parsed' u 1:($2/281001)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 #set xrange [:100]
-set xlabel "vpp"
+set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/29281) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/30706) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'vpp-99.DATA_parsed' u 1:($2/16288)  w boxes lc rgb "#21000000" t "0.99R^{+}"
