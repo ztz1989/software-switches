@@ -36,7 +36,7 @@ for file in onlyfiles:
 		if(curr_bin - prev_bin) < 0.3:
 			curr_val += int(values[1])
 		else:
-			print (prev_bin, prev_val)
+			#print (prev_bin, prev_val)
 			#output.write(str(prev_bin) + ", " + str(prev_val) + "\n" )
 			curr_val = int(values[1])
 
@@ -53,14 +53,14 @@ for file in onlyfiles:
 	k = [float(x) for x in hashtab.keys()]
 	k.sort()
 
-	print k
-	print sum( hashtab.values() )
+	#print k
+	#print sum( hashtab.values() )
 
 	start = k[0]
 	step = 0.3
 	val = 0
 
-	print start
+	#print start
 	for i in k:
 		if i >= start and i < start+step:
 			val += hashtab[i]

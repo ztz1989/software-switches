@@ -4,7 +4,7 @@ SNABB_DIR="/home/tianzhu/snabb"
 
 if [[ -z "${1}" ]]
 then
-	config="l2fwd"
+	config="p2p"
 else
 	config="${1}"
 fi
