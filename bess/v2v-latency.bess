@@ -1,0 +1,15 @@
+bess.add_worker(wid=0, core=10)
+
+v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1')
+v2::PMDPort(vdev='eth_vhost1,iface=/tmp/bess/vhost-user-1,queues=1')
+v3::PMDPort(vdev='eth_vhost2,iface=/tmp/bess/vhost-user-2,queues=1')
+v4::PMDPort(vdev='eth_vhost3,iface=/tmp/bess/vhost-user-3,queues=1')
+
+input0::QueueInc(port=v1,qid=0)
+input1::QueueInc(port=v3,qid=0)
+
+output0::QueueOut(port=v2,qid=0)
+output1::QueueOut(port=v4,qid=0)
+
+input0 -> output1
+input1 -> output0
