@@ -6,7 +6,8 @@ local stats  = require "stats"
 local hist   = require "histogram"
 
 local PKT_SIZE	= 60
-local ETH_DST	= "11:12:13:14:15:16"
+local ETH_DST	= "aa:cc:dd:cc:00:01"
+local ETH_DST1   = "aa:bb:bb:aa:00:01"
 
 local function getRstFile(...)
 	local args = { ... }
@@ -34,20 +35,20 @@ function master(args)
 	device.waitForLinks()
 	dev1:getTxQueue(0):setRate(args.rate)
 	dev2:getTxQueue(0):setRate(args.rate)
-	mg.startTask("loadSlave", dev1:getTxQueue(0), args.size)
+	mg.startTask("loadSlave", dev1:getTxQueue(0), args.size, ETH_DST)
 	if dev1 ~= dev2 then
-		mg.startTask("loadSlave", dev2:getTxQueue(0), args.size)
+		mg.startTask("loadSlave", dev2:getTxQueue(0), args.size, ETH_DST1)
 	end
 	stats.startStatsTask{dev1, dev2}
 	mg.startSharedTask("timerSlave", dev1:getTxQueue(1), dev2:getRxQueue(1), args.file)
 	mg.waitForTasks()
 end
 
-function loadSlave(queue, size)
+function loadSlave(queue, size, ethdst)
 	local mem = memory.createMemPool(function(buf)
 		buf:getEthernetPacket():fill{
 			ethSrc = txDev,
-			ethDst = ETH_DST,
+			ethDst = ethdst,
 			ethType = 0x1234
 		}
 	end)
