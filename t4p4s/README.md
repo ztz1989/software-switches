@@ -1,7 +1,7 @@
 # Performance test for the t4p4s switch
 
 This directory contains scripts to perform p2p, p2v and v2v tests. More details about t4p4s can be found in its 
-[repository](https://github.com/P4ELTE/t4p4s)
+[repository](https://github.com/P4ELTE/t4p4s). A more comprehensive test description will be added soon.
 
 ## p2p test:
 - in the start_t4p4s.sh script, modify the $T4P4s_DIR to the corresponding path on your server
