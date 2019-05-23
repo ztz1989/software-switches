@@ -1,7 +1,14 @@
 # Performance test for the t4p4s switch
 
 This directory contains scripts to perform p2p, p2v and v2v tests. More details about t4p4s can be found in its 
-[repository](https://github.com/P4ELTE/t4p4s). A more comprehensive test description will be added soon.
+[repository](https://github.com/P4ELTE/t4p4s). Our work aims at providing a preliminary performance analysis of t4p4s as dataplane of NFV platform. 
+
+Note that due to some unknown issues in t4p4s's boostrap-t4p4s.sh script during installation, we cannot specify the version of DPDK for t4p4s, and it just uses the newest version of DPDK, which is now 19.05. A dirty way to specify a DPDK version is assigning the intended version specifically to $DPDK_VSN and $DPDK_FILEVSN variables in the scripts, for example, if we want to use DPDK 18.11, then edit the variables as follows:
+
+DPDK_VSN="18.11"
+DPDK_FILEVSN="18.11.1"
+
+A more comprehensive test description will be added soon. Stay tuned!!!
 
 ## p2p test:
 - in the start_t4p4s.sh script, modify the $T4P4s_DIR to the corresponding path on your server
@@ -22,6 +29,9 @@ This directory contains scripts to perform p2p, p2v and v2v tests. More details 
   the matched out_port cannot be the same as in_port, or t4p4s will simply crash.**
   
 ## p2v test:
+Before starting p2v test, one thing to emphasize about t4p4s is the fact that it is mainly designed to work with physical NICs. By default, it cannot work with virtual interfaces, since a lot of hardware features (offloading, RSS, etc.) utilized by t4p4s switch are not natively supported by virtual interfaces such as virtio-net, etc. We comment out these unsupported features in the dpdk_lib_init_hw.c file under src/hardware_dep/dpdk/data_plane directory of the t4p4s repo, and recompile the source code so as to make t4p4s compatible with virtual interfaces. 
+
+Steps to reproduce p2v test for t4p4s is as follows:
 - in the p2v.cfg configuration file, line 8: specify your intended virtual device with the Unix socket path through the DPDK --vdev option. Also whitelist the PCI address of the physical interface using -w option.
 - start t4p4s switch: **./start_t4p4s.sh p2v**
 - launch a VM instance with a virtio interface connected through the specified socket path, using the p2v.sh script.
