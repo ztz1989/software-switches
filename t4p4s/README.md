@@ -8,6 +8,15 @@ Note that due to some unknown issues in t4p4s's boostrap-t4p4s.sh script during 
 DPDK_VSN="18.11"
 DPDK_FILEVSN="18.11.1"
 
+
+
+Furthermore, there seems to be a bug in the llvm libraries. we needed to remove existing libraries and install the 3.9
+
+```
+ sudo apt-get remove llvm-3.8-runtime llvm-runtime 
+ sudo apt-get install llvm-3.9*
+```
+
 A more comprehensive test description will be added soon. Stay tuned!!!
 
 ## p2p test:
