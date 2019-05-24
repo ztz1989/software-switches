@@ -51,8 +51,8 @@ Steps to reproduce p2v test for t4p4s is as follows:
 - in the v2v.cfg configuration file, specify two virtual devices
 - start t4p4s switch: **./start_t4p4s.sh v2v**
 - launch two VMs using
-  - *./v2v.sh
-  - *./v2v1.sh
+  - *./v2v.sh*
+  - *./v2v1.sh*
 - on the first VM, start MoonGen to transmit packets to its virtual interface from inside.
 - on the second VM, start FloWatcher-DPDK to measure forwarding throughput of t4p4s switch.
 
