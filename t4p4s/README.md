@@ -8,6 +8,15 @@ Note that due to some unknown issues in t4p4s's boostrap-t4p4s.sh script during 
 DPDK_VSN="18.11"
 DPDK_FILEVSN="18.11.1"
 
+
+
+Furthermore, there seems to be a bug in the llvm libraries. we needed to remove existing libraries and install the 3.9
+
+```
+ sudo apt-get remove llvm-3.8-runtime llvm-runtime 
+ sudo apt-get install llvm-3.9*
+```
+
 A more comprehensive test description will be added soon. Stay tuned!!!
 
 ## p2p test:
@@ -42,8 +51,8 @@ Steps to reproduce p2v test for t4p4s is as follows:
 - in the v2v.cfg configuration file, specify two virtual devices
 - start t4p4s switch: **./start_t4p4s.sh v2v**
 - launch two VMs using
-  - *./v2v.sh
-  - *./v2v1.sh
+  - *./v2v.sh*
+  - *./v2v1.sh*
 - on the first VM, start MoonGen to transmit packets to its virtual interface from inside.
 - on the second VM, start FloWatcher-DPDK to measure forwarding throughput of t4p4s switch.
 
