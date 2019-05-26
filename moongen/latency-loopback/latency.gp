@@ -14,7 +14,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.0001:1]
+set yrange [0.001:1]
 #set ytics 
 
 ## Group arrows
@@ -53,9 +53,9 @@ plot 'bess-10.DATA_parsed' u 1:($2/17115) w boxes lc rgb "#cc000000"  t "0.10R^{
 'bess-99.DATA_parsed' u 1:($2/18909)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "netmap"
-plot 'netmap-10.DATA_parsed' u 1:($2/19631) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-'netmap-50.DATA_parsed' u 1:($2/123409) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'netmap-99.DATA_parsed' u 1:($2/28594)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+plot 'netmap-10.DATA_parsed' u 1:($2/39130) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'netmap-50.DATA_parsed' u 1:($2/33608) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'netmap-99.DATA_parsed' u 1:($2/68755)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/107895) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
