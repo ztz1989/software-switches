@@ -1,5 +1,5 @@
 # Performance comparison of state-of-the-art software switches
-This repository contains scripts to reproduce all the experiments on TPT server. All the results and numbers shown in the slides and papers are reproducible on the our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended. 
+This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
 
 We consider six state-of-the-art software switches in our project, including:
 * OVS-DPDK
@@ -8,6 +8,7 @@ We consider six state-of-the-art software switches in our project, including:
 * BESS (previously named SoftNIC)
 * netmap (including VALE switch, mSwitch and ptnet)
 * Vector Packet Processing (VPP)
+* t4p4s: a P4 switch based on Intel DPDK
 
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
