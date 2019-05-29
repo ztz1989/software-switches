@@ -15,7 +15,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.001:1]
+set yrange [0.0001:1]
 #set ytics 
 
 ## Group arrows
@@ -41,9 +41,9 @@ plot 'fastclick-10.DATA_parsed' u 1:($2/98728) w boxes lc rgb "#cc000000" t "0.1
 unset ylabel
 
 set xlabel "OvS-DPDK"
-plot 'ovs-10.DATA_parsed' u 1:($2/281623) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
+plot 'ovs-10.DATA_parsed' u 1:($2/54483) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
 'ovs-50.DATA_parsed' u 1:($2/99012) w boxes lc rgb "#66000000" t "0.50R^{+}", \
-'ovs-99.DATA_parsed' u 1:($2/35395) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'ovs-99.DATA_parsed' u 1:($2/21296) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset ylabel
 set xlabel "Snabb"
@@ -58,14 +58,14 @@ plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^
 
 set xlabel "netmap"
 plot 'netmap-10.DATA_parsed' u 1:($2/101592) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-'netmap-50.DATA_parsed' u 1:($2/33608) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'netmap-50.DATA_parsed' u 1:($2/44470) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 'netmap-99.DATA_parsed' u 1:($2/88510)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 #set xrange [:100]
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/29281) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/30706) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'vpp-99.DATA_parsed' u 1:($2/8728)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'vpp-99.DATA_parsed' u 1:($2/76943)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset multiplot
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
