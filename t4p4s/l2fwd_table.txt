@@ -1,2 +1,0 @@
-aa:cc:dd:cc:00:01 1
-aa:bb:bb:aa:00:01 0
