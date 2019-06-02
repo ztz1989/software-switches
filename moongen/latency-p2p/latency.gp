@@ -65,7 +65,7 @@ plot 'netmap-10.DATA_parsed' u 1:($2/101592) w boxes lc rgb "#cc000000"  t "0.10
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/29281) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/30706) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'vpp-99.DATA_parsed' u 1:($2/76943)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'vpp-99.DATA_parsed' u 1:($2/18738)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset multiplot
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
