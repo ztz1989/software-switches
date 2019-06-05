@@ -7,7 +7,7 @@ set xrange [0:100]
 #set ylabel "Normalized Frequency"
 set label 2 'Normalized Frequency' at screen 0.01,0.4 rotate by 90
 
-set multiplot layout 3,2  #title "Latency ({/Symbol m}s)"
+set multiplot layout 3,3  #title "Latency ({/Symbol m}s)"
 
 #set size 2,1.5
 
@@ -65,7 +65,12 @@ plot 'netmap-10.DATA_parsed' u 1:($2/101592) w boxes lc rgb "#cc000000"  t "0.10
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/150707) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/113915) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'vpp-99.DATA_parsed' u 1:($2/96203)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'vpp-99.DATA_parsed' u 1:($2/92690)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+
+set xlabel "t4p4s"
+plot 't4p4s-10.DATA_parsed' u 1:($2/34345) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'t4p4s-50.DATA_parsed' u 1:($2/52981) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'t4p4s-99.DATA_parsed' u 1:($2/111474)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset multiplot
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
