@@ -3,7 +3,7 @@ set output "latency_binned.pdf"
 	
 set style fill solid 1.0 noborder
 
-set xrange [0:100]
+set xrange [0:50]
 #set ylabel "Normalized Frequency"
 set label 2 'Normalized Frequency' at screen 0.01,0.4 rotate by 90
 
@@ -15,7 +15,7 @@ set datafile separator ","
 
 set logscale y
 
-set yrange [0.0001:1]
+set yrange [0.001:1]
 #set ytics 
 
 ## Group arrows
