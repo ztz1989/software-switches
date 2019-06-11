@@ -43,7 +43,7 @@ unset ylabel
 set xlabel "OvS-DPDK"
 plot 'ovs-10.DATA_parsed' u 1:($2/54483) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
 'ovs-50.DATA_parsed' u 1:($2/99012) w boxes lc rgb "#66000000" t "0.50R^{+}", \
-'ovs-99.DATA_parsed' u 1:($2/21296) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'ovs-99.DATA_parsed' u 1:($2/82066) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset ylabel
 set xlabel "Snabb"
@@ -65,7 +65,7 @@ plot 'netmap-10.DATA_parsed' u 1:($2/101592) w boxes lc rgb "#cc000000"  t "0.10
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/150707) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/113915) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'vpp-99.DATA_parsed' u 1:($2/92690)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'vpp-99.DATA_parsed' u 1:($2/28996)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 set xlabel "t4p4s"
 plot 't4p4s-10.DATA_parsed' u 1:($2/34345) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
