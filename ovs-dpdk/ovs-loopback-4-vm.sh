@@ -12,7 +12,7 @@ sudo env "PATH=${PATH}" ovs-ctl --no-ovs-vswitchd start
 export DB_SOCK=/usr/local/var/run/openvswitch/db.sock
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=400
-sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048,0"
+sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="1024,0"
 sudo env "PATH=${PATH}" ovs-ctl --no-ovsdb-server --db-sock="$DB_SOCK" start
 
 sudo ovs-vsctl del-br br-acl

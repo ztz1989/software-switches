@@ -9,8 +9,6 @@ set label 2 'Normalized Frequency' at screen 0.01,0.4 rotate by 90
 
 set multiplot layout 3,3  #title "Latency ({/Symbol m}s)"
 
-#set size 2,1.5
-
 set datafile separator ","
 
 set logscale y
@@ -36,14 +34,14 @@ set xlabel "FastClick"
 #set xtics format " " 
 plot 'fastclick-10.DATA_parsed' u 1:($2/98728) w boxes lc rgb "#cc000000" t "0.10R^{+}" ,\
 'fastclick-50.DATA_parsed' u 1:($2/98253)  w boxes lc rgb "#66000000" t "0.50R^{+}" ,\
-'fastclick-99.DATA_parsed' u 1:($2/41825) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'fastclick-99.DATA_parsed' u 1:($2/18673) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset ylabel
 
 set xlabel "OvS-DPDK"
 plot 'ovs-10.DATA_parsed' u 1:($2/54483) w boxes lc rgb "#cc000000" t "0.10R^{+}",\
 'ovs-50.DATA_parsed' u 1:($2/99012) w boxes lc rgb "#66000000" t "0.50R^{+}", \
-'ovs-99.DATA_parsed' u 1:($2/82066) w boxes lc rgb "#21000000" t "0.99R^{+}"
+'ovs-99.DATA_parsed' u 1:($2/50760) w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset ylabel
 set xlabel "Snabb"
@@ -59,18 +57,19 @@ plot 'bess-10.DATA_parsed' u 1:($2/277377) w boxes lc rgb "#cc000000"  t "0.10R^
 set xlabel "netmap"
 plot 'netmap-10.DATA_parsed' u 1:($2/101592) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'netmap-50.DATA_parsed' u 1:($2/44470) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'netmap-99.DATA_parsed' u 1:($2/88510)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'netmap-99.DATA_parsed' u 1:($2/70034)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
-#set xrange [:100]
 set xlabel "VPP"
 plot 'vpp-10.DATA_parsed' u 1:($2/150707) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 'vpp-50.DATA_parsed' u 1:($2/113915) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'vpp-99.DATA_parsed' u 1:($2/28996)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+'vpp-99.DATA_parsed' u 1:($2/28758)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
+set size 1,1.0/3
 set xlabel "t4p4s"
-plot 't4p4s-10.DATA_parsed' u 1:($2/34345) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
-'t4p4s-50.DATA_parsed' u 1:($2/52981) w boxes lc rgb "#66000000" t "0.50R^{+}",\
-'t4p4s-99.DATA_parsed' u 1:($2/111474)  w boxes lc rgb "#21000000" t "0.99R^{+}"
+set xrange [:150]
+plot 't4p4s-10.DATA_parsed' u 1:($2/133790) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
+'t4p4s-50.DATA_parsed' u 1:($2/24667) w boxes lc rgb "#66000000" t "0.50R^{+}",\
+'t4p4s-99.DATA_parsed' u 1:($2/107223)  w boxes lc rgb "#21000000" t "0.99R^{+}"
 
 unset multiplot
 #plot 'mix_10-final_NEW.DATA_parsed' w boxes lc rgb "#999999", 'mix_50-final_NEW.DATA_parsed' w boxes lc rgb "#6688CAF0", 'mix_99-final_NEW.DATA_parsed' w boxes lc rgb "#88CAF0"
