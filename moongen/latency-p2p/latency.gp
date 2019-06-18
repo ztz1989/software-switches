@@ -66,7 +66,7 @@ plot 'vpp-10.DATA_parsed' u 1:($2/150707) w boxes lc rgb "#cc000000"  t "0.10R^{
 
 set size 1,1.0/3
 set xlabel "t4p4s"
-set xrange [:150]
+set xrange [:190]
 plot 't4p4s-10.DATA_parsed' u 1:($2/133790) w boxes lc rgb "#cc000000"  t "0.10R^{+}",\
 't4p4s-50.DATA_parsed' u 1:($2/24667) w boxes lc rgb "#66000000" t "0.50R^{+}",\
 't4p4s-99.DATA_parsed' u 1:($2/107223)  w boxes lc rgb "#21000000" t "0.99R^{+}"
