@@ -73,4 +73,4 @@
 ### Clear the flow table and terminate all OVS threads
   * ./terminate_ovs-dpdk.sh
  
- This step is necessary before running experiments for other software switches, just in case of race conditions on physical NICS.
+ This step is necessary before running experiments for other software switches, just in case of race conditions on physical/virtual interfaces.
