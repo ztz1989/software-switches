@@ -1,4 +1,4 @@
-# Instructions to reproduce the OVS-DPDK experiments
+# OVS-DPDK experiments
 
 ## p2p test
 ### Steps:
