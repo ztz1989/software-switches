@@ -1,42 +1,42 @@
 # Instructions to reproduce the OVS-DPDK experiments
 
-## Experiments in physical environment (nic-nic communication)
-The script "ovs-nic-nic.sh" initiates the DPDK, reserves memory on NUMA node 0, pins OVS-DPDK threads to specific cores and configures the rules to setup the direct communication between two physical NICs.
-
+## p2p test
 ### Steps:
-* Start OVS and configure rules: ./ovs-nic-nic.sh
-* Inspect the throughput using MoonGen to TX and RX on NUMA node 1, instructions are detailed in [moongen-local section](https://github.com/ztz1989/software-switches/tree/master/moongen-local)
-    * cd ../moongen-local
-    * For unidirectional test: sudo ./throughput-test.sh
-    * For bidirectional test: sudo ./bidirectional-test.sh
-    * For latency test: sudo ./latency-test.sh
+* Start OVS and configure rules cross-connect rules between two physical ports: ./ovs-p2p.sh
+   * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
+* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
+    * Go to MoonGen directory: cd ../moongen
+    * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * For bidirectional test: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
     
-## Experiments in Virtual environment
-This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Physical-Virtual-Physical scenarios.  
-
-### Virtual machines
-* Physical <-> Virtual test:
-  1. Start OVS and configure forwarding rules
-      * ./ovs-nic1-vm1.sh 
-  2. Start virtual machine using QEMU/KVM and attach one virtual interface: ./nic1-vm1.sh
-  3. Login to the VM
+## p2v test
+### Steps:
+* Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
+      * ./ovs-p2v.sh
+* Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
+* Setup DPDK: /root/setup.sh
+* Login to the VM
       * username: root
       * password: root
-  4. Configure virtual machines: ./setup.sh (under /root directory).
-  5. Login to the VM by opening new terminals and type: ssh root@localhost -p 10020. This can avoid the noisy logs of Centos.
-  6. Start FlowMown-DPDK to monitor inside the VM:
-      * cd /root/monitor/
-      * ./build/FlowMown-DPDK -c 3
-  7. Open a new terminal on the host machine and start MoonGen to TX packets from NIC 1:
-      * cd ../moongen-local
-      * sudo ./throughput-test.sh
+* Configure virtual machines: ./setup.sh (under /root directory).
+* Login to the VM by opening new terminals and type: ssh root@localhost -p 10020. The username and password are the same. This can avoid the noise of system logs.
+* For unidirectional test:
+      * Inside the VM, to to FloWatcher-DPDK directory: cd /root/monitor/
+      * Instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
+      * On the host side, go to MoonGen directory and start its unidirectional test script on NUMA node 1: cd ../moongen & sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+* For bidirectional test:
+      * Inside the VM, go to MoonGen directory: cd /root/MoonGen
+      * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
+      * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
-* Virtual <-> Virtual test:
-  1. Start OVS and configure the forwarding rules between two VMs
+## v2v test
+### Steps:
+* Start OVS and configure the forwarding rules between two VMs
       * ./ovs-vm-vm.sh
-  2. Start two VMs using QEMU/KVM:
-      * ./vm-vm1.sh    # start VM1 which transmits packets to VM2
-      * ./vm-vm.sh     # start VM2 which receives packet from VM1 and measures the throughput
+* Start two QEMU/KVM virtual machines:
+      * ./v2v1.sh    # start VM1 which transmits packets to VM2
+      * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
   3. On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
       * ./setup.sh
       * cd /root/MoonGen
@@ -46,8 +46,9 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
       * cd /root/monitor
       * ./build/FlowMown -c 3
   
-* Physical <-> Virtual <-> Physical test:
-  1. start OVS and configure the PVP forwarding rules
+## Loopback
+### Steps:
+1. start OVS and configure the PVP forwarding rules
       * ./ovs-nic2-vm1.sh
   2. start an instance of VM and attach it with two virtual interfaces
       * ./nic2-vm1.sh
@@ -60,7 +61,7 @@ This set of experiments include Physical <-> Virtual, Virtual <-> Virtual and Ph
            * unidirectional test: sudo ./throughput-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
       
-### Containers
+### Containers (To be completed)
 * Physical <-> Virtual test
    * start OVS and configure forwarding rules
       * ./ovs-nic1-vm1.sh
