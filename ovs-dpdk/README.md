@@ -48,7 +48,7 @@
   
 ## Loopback
 ### Steps:
-1. start OVS and configure the PVP forwarding rules
+1. start OVS and configure the loopback forwarding rules
       * ./ovs-loopback.sh
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
