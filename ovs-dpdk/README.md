@@ -33,32 +33,32 @@
 ## v2v test
 ### Steps:
 * Start OVS and configure the forwarding rules between two VMs
-    * ./ovs-vm-vm.sh
+    * ./ovs-v2v.sh
 * Start two QEMU/KVM virtual machines:
     * ./v2v1.sh    # start VM1 which transmits packets to VM2
     * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
-  3. On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
+* On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
     * ./setup.sh
     * cd /root/MoonGen
     * ./build/MoonGen example/l2-load-latency.lua 0 0
-  4. On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FlowMown-DPDK to measure the inter-VM throughput:
+* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
     * ./setup.sh
     * cd /root/monitor
-    * ./build/FlowMown -c 3
+    * ./build/FloWatcher-DPDK -c 3
   
 ## Loopback
 ### Steps:
 1. start OVS and configure the PVP forwarding rules
-      * ./ovs-nic2-vm1.sh
+      * ./ovs-loopback.sh
   2. start an instance of VM and attach it with two virtual interfaces
-      * ./nic2-vm1.sh
+      * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
       * ./setup.sh
-      * cd /root/dpdk-stable-17.11.4/examples/l2fwd/build
+      * cd /root/dpdk-stable-18.11/examples/l2fwd/build
       * ./l2fwd -l 0-3 -- -p 3 -T 1 -q 1
-      * run MoonGen scripts on the host machine from NUMA node 1
-           * cd ../moongen-local
-           * unidirectional test: sudo ./throughput-test.sh 
+      * run MoonGen scripts on the host machine from NUMA node 1:
+           * cd /root/MoonGen
+           * unidirectional test: sudo ./unidirectional-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
       
 ### Containers (To be completed)
