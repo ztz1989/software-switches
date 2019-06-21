@@ -3,7 +3,7 @@
 ## p2p test
 ### Steps:
 * Start OVS and configure rules cross-connect rules between two physical ports: ./ovs-p2p.sh
-   * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
+    * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
 * Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
     * Go to MoonGen directory: cd ../moongen
     * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
@@ -13,22 +13,22 @@
 ## p2v test
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
-      * ./ovs-p2v.sh
+    * ./ovs-p2v.sh
 * Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
 * Setup DPDK: /root/setup.sh
 * Login to the VM
-      * username: root
-      * password: root
+    * username: root
+    * password: root
 * Configure virtual machines: ./setup.sh (under /root directory).
 * Login to the VM by opening new terminals and type: ssh root@localhost -p 10020. The username and password are the same. This can avoid the noise of system logs.
 * For unidirectional test:
-      * Inside the VM, to to FloWatcher-DPDK directory: cd /root/monitor/
-      * Instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
-      * On the host side, go to MoonGen directory and start its unidirectional test script on NUMA node 1: cd ../moongen & sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * Inside the VM, to to FloWatcher-DPDK directory: cd /root/monitor/
+    * Instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
+    * On the host side, go to MoonGen directory and start its unidirectional test script on NUMA node 1: cd ../moongen & sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 * For bidirectional test:
-      * Inside the VM, go to MoonGen directory: cd /root/MoonGen
-      * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
-      * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * Inside the VM, go to MoonGen directory: cd /root/MoonGen
+    * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
 ## v2v test
 ### Steps:
