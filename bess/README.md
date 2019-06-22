@@ -61,13 +61,3 @@
            * cd /root/MoonGen
            * unidirectional test: sudo ./unidirectional-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
-      
-### Containers (To be completed)
-* Physical <-> Virtual test
-   * start OVS and configure forwarding rules
-      * ./ovs-nic1-vm1.sh
-   * start an instance of FlowMown-DPDK container and login
-      * ./flowmown-docker.sh
-   * start FlowMown-DPDK inside the container
-      * ./build/FlowMown-DPDK -c 0xe0 -n 1 --socket-mem=1024,0 --file-prefix flowmown --no-pci --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-2'
-      
