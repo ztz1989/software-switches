@@ -59,7 +59,7 @@ Steps to reproduce p2v test for t4p4s is as follows:
 ## Loopback
 ### 1-VNF experiment:
 1. start VPP and configure the loopback forwarding rules
-      * ./startup_vpp.sh loopback
+      * ./start_t4p4s.sh loopback
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
@@ -72,7 +72,7 @@ Steps to reproduce p2v test for t4p4s is as follows:
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-1, start t4p4s 2-VNF configuration script: **./start_t4p4s.sh v2v**
+1, start t4p4s 2-VNF configuration script: ./start_t4p4s.sh loopback-2-vm
 2, open a new terminal and launch the first VM: ./loopback-vm1.sh
 3, open another terminal and launch the second VM: ./loopback-vm2.sh
 4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
