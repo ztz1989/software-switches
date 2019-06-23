@@ -15,7 +15,7 @@
 * Start VPP, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
     * ./startup_vpp.sh p2v
 * Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
-* Login to the VM and setup the virtual machines according to https://github.com/ztz1989/software-switches#virtualization-environment.
+* Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
 * For unidirectional test:
     * Inside the VM, go to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput as follows: ./build/FloWatcher-DPDK -c 3
     * On the host side, go to MoonGen directory of our repo and start its unidirectional test script on NUMA node 1: cd ../moongen & sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
@@ -32,7 +32,7 @@
     * ./v2v1.sh    # start VM1 which transmits packets to VM2
     * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
 * On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
-    * Setup the virtual machine according to https://github.com/ztz1989/software-switches#virtualization-environment.
+    * Setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
     * Go to the MoonGen installation directory inside the virtual machine
     * ./build/MoonGen example/l2-load-latency.lua 0 0
 * On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
@@ -46,7 +46,7 @@
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Setup the virtual machine according to https://github.com/ztz1989/software-switches#virtualization-environment.
+      * Setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
       * Go to dpdk l2fwd directory, usually it is under: ${DPDK_HOME}/examples/l2fwd.
       * ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1
       * run MoonGen scripts on the host machine from NUMA node 1:
