@@ -39,7 +39,7 @@
     * Go to FloWatcher-DPDK installation directory and launch it using: ./build/FloWatcher-DPDK -c 3
   
 ## Loopback
-### Steps:
+### 1-VNF experiment:
 1. start OVS and configure the loopback forwarding rules
       * ./ovs-loopback.sh
   2. start an instance of VM and attach it with two virtual interfaces
@@ -51,7 +51,10 @@
            * Go to MoonGen directory of our repo.
            * unidirectional test: sudo ./unidirectional-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
-      
+     
+### Multi-VNF experiments:
+
+
 ## Containers (To be completed)
 * Physical <-> Virtual test
    * start OVS and configure forwarding rules
