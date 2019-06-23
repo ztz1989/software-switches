@@ -1,13 +1,13 @@
 # Performance comparison of state-of-the-art software switches
 This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
 
-We consider seven state-of-the-art software switches in our project, including:
-* OVS-DPDK (http://docs.openvswitch.org/en/latest/intro/install/dpdk/): an accelerated version of Open vSwitch based on Intel DPDK.
-* SnabbSwitch (https://github.com/snabbco/snabb): a modular software switch based on LuaJIT.
-* FastClick (https://github.com/tbarbette/fastclick): a Click modular router based on Intel DPDK.
-* BESS (previously named SoftNIC) (https://github.com/NetSys/bess): a software switch aiming at augmenting physical NICs
-* netmap (including VALE switch, mSwitch and ptnet) (https://github.com/luigirizzo/netmap): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality.
-* Vector Packet Processing (VPP) (https://wiki.fd.io/view/VPP): an open-source full-fledged software router implemented by Cisco.
+We consider six state-of-the-art software switches in our project, including:
+* OVS-DPDK: an accelerated version of Open vSwitch based on Intel DPDK.
+* SnabbSwitch: a modular software switch based on LuaJIT.
+* FastClick: a Click modular router based on Intel DPDK.
+* BESS (previously named SoftNIC): a software switch aiming at augmenting physical NICs
+* netmap (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality.
+* Vector Packet Processing (VPP): an open-source full-fledged software router implemented by Cisco.
 * t4p4s: a P4 switch based on Intel DPDK.
 
 The detailed instructions for each considered software switch can be found in the corresponding directories.
@@ -45,7 +45,8 @@ sudo taskset -c 4-7 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
   -device virtio-net-pci,mac=00:00:00:00:00:02,netdev=mynet2,mrg_rxbuf=off \
   -net user,hostfwd=tcp::10020-:22 -net nic
 
-In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in server mode) to exchange packetsw with host machine. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: ssh root@localhost -p 10020, and login with the same password.
+In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in server mode) to exchange packetsw with host machine. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
+In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: ssh root@localhost -p 10020, and login with the same password.
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
