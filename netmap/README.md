@@ -48,7 +48,7 @@ virtual machines:
     * Then instantiate a pair of pkt-gen TX/RX thread: 
       * pkt-gen -i vale1:v0 -f tx
       * pkt-gen -i vale1:v0 -f rx
-* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
+* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030):
     * For unidirectional test, start a pkt-gen RX thread to monitor traffic from the first VM: pkt-gen -i vif0 -f rx
     * For bidirectional test, follow exactly the same configuration steps as the first VM.
   
