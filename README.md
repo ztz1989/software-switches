@@ -50,7 +50,7 @@ In the last line, we configure a host forwarding rule as a shortcut to access th
 
 #### Install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html).
 
-#### Configure DPDK inside the VM
+#### Configure DPDK inside the VM, an example is given as follows:
 ```
 #!/bin/bash
 
@@ -65,6 +65,7 @@ $DPDK_DIR/usertools/dpdk-devbind.py --status
 $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:04.0 
 $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
 ```
+In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two physical ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
@@ -76,5 +77,3 @@ These images are locally generated on our server. The corresponding Docketfiles 
 
 Instructions for starting Docker instances for different test scenarios are available in each sub-directiory. Actually, we dont't need to start a new container everytime since all the containers instances are still reserved in the container pool. We can just restart and jump into their terminals using
   * sudo docker container start -i [container name]
-
-
