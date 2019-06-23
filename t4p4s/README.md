@@ -60,9 +60,9 @@ Steps to reproduce p2v test for t4p4s is as follows:
 ### 1-VNF experiment:
 1. start VPP and configure the loopback forwarding rules
       * ./start_t4p4s.sh loopback
-  2. start an instance of VM and attach it with two virtual interfaces
+2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
-  3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
+3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
       * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
       * Go to DPDK l2fwd sample application directory and launch it: ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1
       * run MoonGen scripts on the host machine from NUMA node 1:
@@ -72,11 +72,11 @@ Steps to reproduce p2v test for t4p4s is as follows:
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-1, start t4p4s 2-VNF configuration script: ./start_t4p4s.sh loopback-2-vm
-2, open a new terminal and launch the first VM: ./loopback-vm1.sh
-3, open another terminal and launch the second VM: ./loopback-vm2.sh
-4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
-5, Launch MoonGen for different measurement:
+1. start t4p4s 2-VNF configuration script: ./start_t4p4s.sh loopback-2-vm
+2. open a new terminal and launch the first VM: ./loopback-vm1.sh
+3. open another terminal and launch the second VM: ./loopback-vm2.sh
+4. inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+5. Launch MoonGen for different measurement:
    * Go to MoonGen directory of our repo.
    * unidirectional test: sudo ./unidirectional-test.sh 
    * bidirectional test: sudo ./bidirectional-test.sh
