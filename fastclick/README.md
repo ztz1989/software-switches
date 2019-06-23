@@ -28,7 +28,7 @@
 
 ## v2v test
 ### Steps:
-* Start VPP and configure the forwarding rules between two VMs
+* Start FastClick and configure the forwarding rules between two VMs
     * For unidirectional test, use: ./fastclick-v2v.sh
     * For bidirectional test, use: ./fastclick-v2v.sh bidirectional-x.click
 * Start two QEMU/KVM virtual machines:
