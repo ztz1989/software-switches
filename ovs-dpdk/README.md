@@ -73,4 +73,4 @@
 # Clear the flow table and terminate all OVS threads
   * ./terminate_ovs-dpdk.sh
  
- This step is necessary before running experiments for other software switches, just in case of race conditions on physical/virtual interfaces.
+ This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on physical/virtual interfaces.
