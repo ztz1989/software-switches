@@ -59,9 +59,9 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 3, open another terminal and launch the second VM: ./loopback-vm2.sh
 4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
 5, Launch MoonGen for different measurement:
-      * Go to MoonGen directory of our repo.
-      * unidirectional test: sudo ./unidirectional-test.sh 
-      * bidirectional test: sudo ./bidirectional-test.sh
+   * Go to MoonGen directory of our repo.
+   * unidirectional test: sudo ./unidirectional-test.sh 
+   * bidirectional test: sudo ./bidirectional-test.sh
 
 ## Containers (To be completed)
 * Physical <-> Virtual test
