@@ -22,8 +22,7 @@
     * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 * For bidirectional test:
-    * Inside the VM, go to MoonGen directory: cd /root/MoonGen
-    * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * Inside the VM, go to MoonGen directory and execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
 ## v2v test
@@ -55,7 +54,7 @@
            * Go to MoonGen directory of our repo.
            * unidirectional test: sudo ./unidirectional-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
-     
+
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
 1, start FastClick 2-VNF configuration script: 
@@ -69,4 +68,4 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    * unidirectional test: sudo ./unidirectional-test.sh 
    * bidirectional test: sudo ./bidirectional-test.sh
    * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
-
+   
