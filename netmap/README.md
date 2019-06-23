@@ -40,11 +40,17 @@ virtual machines:
     * ./v2v1.sh    # start VM1 which transmits packets to VM2
     * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput under unidirectional test
 * On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
-    * Login to the VM, bind the two virtual interfaces to a VALE switch
-      * sudo vale-ctl -b vif0
+    * For unidirectional test, start a pkt-gen TX thread to inject packets towards the other VM: pkt-gen -i vif0 -f tx
+    * For bidirectional test, create a VALE interface: vale-ctl -n v0
+    * attach both vif0 and v0:
+      * vale-ctl -a vale1:vif0 # vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+      * vale-ctl -a vale1:v0
+    * Then instantiate a pair of pkt-gen TX/RX thread: 
+      * pkt-gen -i vale1:v0 -f tx
+      * pkt-gen -i vale1:v0 -f rx
 * On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-    * Go to FloWatcher-DPDK installation directory and launch it using: ./build/FloWatcher-DPDK -c 3
+    * For unidirectional test, start a pkt-gen RX thread to monitor traffic from the first VM: pkt-gen -i vif0 -f rx
+    * For bidirectional test, follow exactly the same configuration steps as the first VM.
   
 ## Loopback
 ### 1-VNF experiment:
