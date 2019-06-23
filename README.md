@@ -2,13 +2,13 @@
 This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
 
 We consider six state-of-the-art software switches in our project, including:
-* OVS-DPDK
-* SnabbSwitch
-* FastClick
-* BESS (previously named SoftNIC)
-* netmap (including VALE switch, mSwitch and ptnet)
-* Vector Packet Processing (VPP)
-* t4p4s: a P4 switch based on Intel DPDK
+* OVS-DPDK: an accelerated version of Open vSwitch based on Intel DPDK.
+* SnabbSwitch: a modular software switch based on LuaJIT.
+* FastClick: a Click modular router based on Intel DPDK.
+* BESS (previously named SoftNIC): a software switch aiming at augmenting physical NICs
+* netmap (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality.
+* Vector Packet Processing (VPP): an open-source full-fledged software router implemented by Cisco.
+* t4p4s: a P4 switch based on Intel DPDK.
 
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
