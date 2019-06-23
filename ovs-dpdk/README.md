@@ -62,6 +62,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    * Go to MoonGen directory of our repo.
    * unidirectional test: sudo ./unidirectional-test.sh 
    * bidirectional test: sudo ./bidirectional-test.sh
+   * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
 ## Containers (To be completed)
 * Physical <-> Virtual test
