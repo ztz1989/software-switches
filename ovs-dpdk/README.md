@@ -61,7 +61,7 @@
            * unidirectional test: sudo ./unidirectional-test.sh 
            * bidirectional test: sudo ./bidirectional-test.sh
       
-### Containers (To be completed)
+## Containers (To be completed)
 * Physical <-> Virtual test
    * start OVS and configure forwarding rules
       * ./ovs-nic1-vm1.sh
@@ -70,7 +70,7 @@
    * start FlowMown-DPDK inside the container
       * ./build/FlowMown-DPDK -c 0xe0 -n 1 --socket-mem=1024,0 --file-prefix flowmown --no-pci --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-2'
 
-### Clear the flow table and terminate all OVS threads
+# Clear the flow table and terminate all OVS threads
   * ./terminate_ovs-dpdk.sh
  
  This step is necessary before running experiments for other software switches, just in case of race conditions on physical/virtual interfaces.
