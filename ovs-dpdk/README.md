@@ -53,7 +53,15 @@
            * bidirectional test: sudo ./bidirectional-test.sh
      
 ### Multi-VNF experiments:
-
+Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
+1, start OVS 2-VNF configuration script: ./ovs-loopback-2-vm.sh
+2, open a new terminal and launch the first VM: ./loopback-vm1.sh
+3, open another terminal and launch the second VM: ./loopback-vm2.sh
+4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+5, Launch MoonGen for throughput measurement:
+       * Go to MoonGen directory of our repo.
+       * unidirectional test: sudo ./unidirectional-test.sh 
+       * bidirectional test: sudo ./bidirectional-test.sh
 
 ## Containers (To be completed)
 * Physical <-> Virtual test
