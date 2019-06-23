@@ -74,3 +74,6 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
       * unidirectional test: sudo ./unidirectional-test.sh 
       * bidirectional test: sudo ./bidirectional-test.sh
       * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
+
+## Detach all the physical/virtual ports from any VALE instance upon finishing, so as to avoid potential race conditions:
+* ./detach.sh
