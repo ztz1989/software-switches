@@ -67,6 +67,10 @@ $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
 ```
 In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two physical ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
 
+#### Run VNFs inside the VMs
+1. For p2v and v2v tests, install and run FloWatcher-DPDK inside VM to measure throughput. Details can be found in (https://github.com/ztz1989/FloWatcher-DPDK)
+2. For loopback test, deploy DPDK l2fwd application to forward packets between two virtual interfaces. For more details, refer to (https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html).
+
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
 * DPDK container
