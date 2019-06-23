@@ -71,16 +71,16 @@
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-1, Start BESS and configure rules cross-connect rules between two physical ports:
+1. Start BESS and configure rules cross-connect rules between two physical ports:
     * Go to BESS installation directory and launch BESS CLI: sudo ${BESS_DIR}/bessctl/bessctl
     * On the CLI, start BESS daemon process: daemon start
     * Run Configure p2p forwarding for BESS on the CLI:
       * For unidirectional test: run file loopback-2-vm.bess
       * For bidirectioanl test: run file loopback-2-vm-bi.bess
-2, Open a new terminal and launch the first VM: ./loopback-vm1.sh
-3, Open another terminal and launch the second VM: ./loopback-vm2.sh
-4, Inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
-5, Launch MoonGen for different measurement:
+2. Open a new terminal and launch the first VM: ./loopback-vm1.sh
+3. Open another terminal and launch the second VM: ./loopback-vm2.sh
+4. Inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+5. Launch MoonGen for different measurement:
    * Go to MoonGen directory of our repo.
    * unidirectional test: sudo ./unidirectional-test.sh 
    * bidirectional test: sudo ./bidirectional-test.sh
