@@ -1,37 +1,66 @@
-# SnabbSwitch Experiments
-Here we describe instructions to reporduce our experiments with SnabbSwitch. The source code as well as other details of Snabb can be found [here](https://github.com/snabbco/snabb).
+# Snabb experiments
 
-## Experiments in physical environment (nic-nic communication)
-We have already composed some modules into snabb, including **l2fwd** and **cross**. The **l2fwd** is used for unidirectional communication while **cross** is dedicated to bidirectional communication.
-
-### unidirectional test and latency test
-  * sudo ./start-snabb.sh 
-### bidirectional test
-  * sudo ./start-snabb.sh cross
-
-## Experiments in physical environment
-We composed four snabb modules for experiments with virtual environments.
-
-### Virtual machines
-  * Physical <-> Virtual
-    * start VM using QEMU. It creates a virtual interface and make it operate in vhost-user *server* mode.
-      * ./nic1-vm1.sh
-    * start snabb. vm-single module creates a virtual interface in /tmp/snabb/ directory, binds another physical NIC and interconnects the two interfaces
-      * ./start-snabb.sh vm-single
-    * Inside the VM, we firstly setup DPDK and bind virtual interface. 
-      * ./setup.sh
-    * Start FlowMown-DPDK as traffic monitor
-      * cd /root/monitor
-      * ./build/FlowMown-DPDK -c 3
+## p2p test
+### Steps:
+* Start Snabb and configure rules cross-connect rules between two physical ports: ./startup_vpp.sh p2p
+    * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
+* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
+    * Go to the MoonGen repo directory
+    * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * For bidirectional test: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
     
-  * Virtual <-> Virtual
-  
-  * Physical <-> Virtual <-> Physical
+## p2v test
+### Steps:
+* Start Snabb, bind a physical port and a vhost-user port to Snabb, then configure forwarding rules between them:
+    * ./startup_vpp.sh p2v
+* Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
+* Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+* For unidirectional test:
+    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
+    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+* For bidirectional test:
+    * Inside the VM, go to MoonGen directory: cd /root/MoonGen
+    * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
+## v2v test
+### Steps:
+* Start Snabb and configure the forwarding rules between two VMs
+    * ./startup_vpp.sh v2v
+* Start two QEMU/KVM virtual machines:
+    * ./v2v1.sh    # start VM1 which transmits packets to VM2
+    * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
+* On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
+    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+    * Go to MoonGen directory and run its l2-load-latency sample application: /build/MoonGen example/l2-load-latency.lua 0 0
+* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
+    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+    * Go to FloWatcher-DPDK installation directory and launch it using: ./build/FloWatcher-DPDK -c 3
+  
+## Loopback
+### 1-VNF experiment:
+1. start Snabb and configure the loopback forwarding rules
+      * ./startup_vpp.sh loopback
+  2. start an instance of VM and attach it with two virtual interfaces
+      * ./loopback.sh
+  3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
+      * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+      * Go to DPDK l2fwd sample application directory and launch it: ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1
+      * run MoonGen scripts on the host machine from NUMA node 1:
+           * Go to MoonGen directory of our repo.
+           * unidirectional test: sudo ./unidirectional-test.sh 
+           * bidirectional test: sudo ./bidirectional-test.sh
+     
+### Multi-VNF experiments:
+Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
+1, start Snabb 2-VNF configuration script: ./startup_vpp loopback2
+2, open a new terminal and launch the first VM: ./loopback-vm1.sh
+3, open another terminal and launch the second VM: ./loopback-vm2.sh
+4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+5, Launch MoonGen for different measurement:
+   * Go to MoonGen directory of our repo.
+   * unidirectional test: sudo ./unidirectional-test.sh 
+   * bidirectional test: sudo ./bidirectional-test.sh
+   * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
 
-### Containers
-  * Physical <-> Virtual
-  
-  * Virtual <-> Virtual
-  
-  * Physical <-> Virtual <-> Physical
