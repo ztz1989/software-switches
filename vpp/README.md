@@ -4,6 +4,7 @@
 ### Steps:
 * Start VPP and configure rules cross-connect rules between two physical ports: ./startup_vpp.sh p2p
     * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
+    * Open another terminal and configure VPP l2patch rules: ./vppctl_p2p.sh l2patch
 * Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
     * Go to the MoonGen repo directory
     * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
@@ -14,6 +15,7 @@
 ### Steps:
 * Start VPP, bind a physical port and a vhost-user port to VPP, then configure forwarding rules between them:
     * ./startup_vpp.sh p2v
+    * Open another terminal and configure VPP l2patch rules: ./vppctl_p2v.sh l2patch
 * Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
 * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
 * For unidirectional test:
@@ -28,6 +30,7 @@
 ### Steps:
 * Start VPP and configure the forwarding rules between two VMs
     * ./startup_vpp.sh v2v
+    * Open another terminal and configure VPP l2patch rules: ./vppctl_v2v.sh l2patch
 * Start two QEMU/KVM virtual machines:
     * ./v2v1.sh    # start VM1 which transmits packets to VM2
     * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
@@ -42,6 +45,7 @@
 ### 1-VNF experiment:
   1. start VPP and configure the loopback forwarding rules
       * ./startup_vpp.sh loopback
+      * Open another terminal and configure VPP l2patch rules: ./vppctl_loopback.sh l2patch
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
@@ -54,7 +58,9 @@
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-1. start VPP 2-VNF configuration script: ./startup_vpp loopback2
+1. start VPP 2-VNF configuration script
+   * ./startup_vpp loopback2
+   * Open another terminal and configure VPP l2patch rules: ./vppctl_loopback2.sh l2patch
 2. open a new terminal and launch the first VM: ./loopback-vm1.sh
 3. open another terminal and launch the second VM: ./loopback-vm2.sh
 4. inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
