@@ -45,7 +45,7 @@
 ### 1-VNF experiment:
   1. start VPP and configure the loopback forwarding rules
       * ./startup_vpp.sh loopback
-      * Open another terminal and configure VPP l2patch rules: ./vppctl_loopback.sh l2patch
+      * Open another terminal and configure VPP l2patch rules: ./vppctl_loopback-2-vm.sh l2patch
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
