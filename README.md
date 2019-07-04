@@ -73,9 +73,10 @@ In this script, we firstly mount and reserve hugepages for DPDK. Then we load DP
 
 ### Containers
 We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
-* DPDK container
-* FloWatcher-DPDK container
-* pktgen-dpdk container
+
+* FloWatcher-DPDK image: wraps the FloWatcher-DPDK 
+* pktgen-dpdk image: wraps pktgen-dpdk application
+* DPDK l2fwd image: wraps the dpdk l2fwd sample application
 
 These images are locally generated on our server. The corresponding Docketfiles can be found in Docker/ directory. 
 
