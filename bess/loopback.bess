@@ -1,4 +1,4 @@
-bess.add_worker(wid=0, core=9)
+bess.add_worker(wid=0, core=10)
 #bess.add_worker(wid=1, core=10)
 
 inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
