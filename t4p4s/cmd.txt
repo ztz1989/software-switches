@@ -1,0 +1,2 @@
+Pktgen-DPDK:
+pktgen -l 1-3 -n 1 --socket-mem=2048,0  --vdev='net_virtio_user0,path=/tmp/t4p4s/vhost-user-0' --no-pci --file-prefix pktgen -- -P -m "[2:3].0" -T 1 --crc-strip

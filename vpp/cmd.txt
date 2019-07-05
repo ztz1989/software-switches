@@ -1,0 +1,5 @@
+FloWatcher-DPDK:
+./build/FlowMon-DPDK -c 0x30 -n 1 --socket-mem=32,0 --file-prefix flowmown --no-pci --vdev 'net_virtio_user1,mac=00:00:00:00:00:02,path=/tmp/vpp/vhost-user-1'
+
+pktgen-DPDK:
+pktgen -l 1-3 -n 1 --socket-mem=2048,0  --vdev='net_virtio_user0,path=/tmp/vpp/vhost-user-0' --no-pci --file-prefix pktgen -- -P -m "[2:3].0" -T 1 --crc-strip

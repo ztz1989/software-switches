@@ -3,7 +3,7 @@
 SNABB_DIR="/home/tianzhu/snabb"
 
 sudo mkdir -p "/tmp/snabb"
-sudo rm "/tmp/snabb/*"
+sudo rm "/tmp/snabb/*" 2> /dev/null
 
 if [[ -z "${1}" ]]
 then
