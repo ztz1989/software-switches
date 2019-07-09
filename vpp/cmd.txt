@@ -1,3 +1,6 @@
+testpmd:
+./x86_64-native-linuxapp-gcc/app/testpmd -l 1-4 -n 1 --socket-mem 64,0 --no-pci --vdev="virtio_user0,mac=00:00:00:00:00:00,path=/tmp/vpp/vhost-user-0" --vdev="virtio_user1,mac=00:00:00:00:00:01,path=/tmp/vpp/vhost-user-1"  --file-prefix=testpmd -- -i --auto-start
+
 FloWatcher-DPDK:
 ./build/FlowMon-DPDK -c 0x30 -n 1 --socket-mem=32,0 --file-prefix flowmown --no-pci --vdev 'net_virtio_user1,mac=00:00:00:00:00:02,path=/tmp/vpp/vhost-user-1'
 

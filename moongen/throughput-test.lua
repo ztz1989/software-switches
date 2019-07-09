@@ -67,7 +67,7 @@ function master(args)
 end
 
 local function fillUdpPacket(buf, len)
-	buf:getUdpPacket():fill{
+--[[	buf:getUdpPacket():fill{
 		ethSrc = queue,
 		ethDst = DST_MAC,
 		ip4Src = SRC_IP,
@@ -76,6 +76,12 @@ local function fillUdpPacket(buf, len)
 		udpDst = DST_PORT,
 		pktLength = len
 	}
+--]]
+buf:getEthernetPacket():fill{
+            ethSrc = queue,
+            ethDst = DST_MAC,
+            ethType = 0x1234
+        }
 end
 
 local function doArp()
