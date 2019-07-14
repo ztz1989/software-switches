@@ -1,0 +1,36 @@
+bess.add_worker(wid=0, core=9)
+bess.add_worker(wid=1, core=10)
+
+p1::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
+p2::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
+
+in0::QueueInc(port=p1, qid=0)
+out0::QueueOut(port=p1, qid=0)
+
+in1::QueueInc(port=p2, qid=0)
+out1::QueueOut(port=p2, qid=0)
+
+v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1', num_inc_q=1, num_out_q=1)
+v2::PMDPort(vdev='eth_vhost1,iface=/tmp/bess/vhost-user-1,queues=1', num_inc_q=1, num_out_q=1)
+v3::PMDPort(vdev='eth_vhost2,iface=/tmp/bess/vhost-user-2,queues=1', num_inc_q=1, num_out_q=1)
+v4::PMDPort(vdev='eth_vhost3,iface=/tmp/bess/vhost-user-3,queues=1', num_inc_q=1, num_out_q=1)
+v5::PMDPort(vdev='eth_vhost4,iface=/tmp/bess/vhost-user-4,queues=1', num_inc_q=1, num_out_q=1)
+v6::PMDPort(vdev='eth_vhost5,iface=/tmp/bess/vhost-user-5,queues=1', num_inc_q=1, num_out_q=1)
+v7::PMDPort(vdev='eth_vhost6,iface=/tmp/bess/vhost-user-6,queues=1', num_inc_q=1, num_out_q=1)
+v8::PMDPort(vdev='eth_vhost7,iface=/tmp/bess/vhost-user-7,queues=1', num_inc_q=1, num_out_q=1)
+v9::PMDPort(vdev='eth_vhost8,iface=/tmp/bess/vhost-user-8,queues=1', num_inc_q=1, num_out_q=1)
+v10::PMDPort(vdev='eth_vhost9,iface=/tmp/bess/vhost-user-9,queues=1', num_inc_q=1, num_out_q=1)
+
+in0 -> PortOut(port=v1.name)
+PortInc(port=v2.name) -> PortOut(port=v3.name)
+PortInc(port=v4.name) -> PortOut(port=v5.name)
+PortInc(port=v6.name) -> PortOut(port=v7.name)
+PortInc(port=v8.name) -> PortOut(port=v9.name)
+PortInc(port=v10.name) -> out1
+
+in1 -> PortOut(port=v10.name)
+PortInc(port=v9.name) -> PortOut(port=v8.name)
+PortInc(port=v7.name) -> PortOut(port=v6.name)
+PortInc(port=v5.name) -> PortOut(port=v4.name)
+PortInc(port=v3.name) -> PortOut(port=v2.name)
+PortInc(port=v1.name) -> out0

@@ -1,0 +1,9 @@
+ 2002  pid="$(sudo docker inspect -f '{{.State.Pid}}' "netmap-docker")"
+ 2003  echo $pid
+ 2004  sudo ln -s /proc/$pid/ns/net /var/run/netns/netmap-docker
+ 2005  sudo rm /var/run/netns/netmap-docker 
+ 2006  sudo ln -s /proc/$pid/ns/net /var/run/netns/netmap-docker
+ 2007  ip netns 
+ 2008  ifconfig 
+ 2009  sudo pkt-gen -i veth1 -f tx
+sudo ip link set veth2 netns netmap-docker
