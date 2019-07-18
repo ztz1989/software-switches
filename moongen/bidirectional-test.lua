@@ -70,4 +70,3 @@ function timerSlave(txQueue, rxQueue, histfile)
 	hist:print()
 	hist:save(histfile)
 end
-
