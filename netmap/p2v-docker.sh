@@ -9,13 +9,13 @@ else
 	DOCKER_NAME="${1}"
 fi
 
-pid=sudo docker inspect -f '{{.State.Pid}}' ${DOCKER_NAME}
+pid=$sudo docker inspect -f '{{.State.Pid}}' ${DOCKER_NAME}
 echo "Curent process ID: " ${pid}
 
 sudo mkdir -p /var/run/netns/
 sudo rm /var/run/netns/* 2> /dev/null
 sudo ip link delete veth1 2> /dev/null
-sudo ip link delete veth2 2> /dev/null
+sudo ip link delete veth3 2> /dev/null
 
 sudo ln -s /proc/$pid/ns/net /var/run/netns/${DOCKER_NAME}
 

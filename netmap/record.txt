@@ -7,3 +7,4 @@
  2008  ifconfig 
  2009  sudo pkt-gen -i veth1 -f tx
 sudo ip link set veth2 netns netmap-docker
+sudo ip netns exec netmap-docker ip link set veth4 netns 1

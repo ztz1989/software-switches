@@ -13,11 +13,11 @@ done
 
 echo "bess daemon started!"
 
-if [[ "${1}" -ne 0 ]]
+if [[ -z "${1}" ]]
 then
-	config="${1}"
-else
 	config="p2p"
+else
+	config="#{1}"
 fi
 
 echo "configuration: ${config}"
