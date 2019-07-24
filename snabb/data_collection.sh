@@ -10,12 +10,28 @@ echo "starting snabb"
 echo "Sleep for 5s"
 sleep 5
 
+pid=''
+j='0'
+
+for i in $(pidof snabb)
+do
+	if [[ "$j" == '0' ]]
+	then
+		pid="$i"
+		j='1'
+	else
+		pid="$i,${pid}"
+	fi
+done
+
+echo "The snabb pids are ${pid}"
+
 for i in 0 1 2
 do
 
 	echo "starting perf and sleep 5 secs"
 	echo "Perf printing to ${file_array[$i]}.csv"
-	sudo perf stat -e instructions,branches,branch-misses,branch-load-misses,cache-misses,cache-references,cycles,context-switches,cpu-clock,minor-faults,page-faults,task-clock,bus-cycles,ref-cycles,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-stores,L1-icache-load-misses,LLC-load-misses,LLC-store-misses,LLC-stores,LLC-loads,dTLB-stores,dTLB-load-misses,dTLB-store-misses,iTLB-loads,iTLB-load-misses,node-load-misses,node-loads,node-store-misses,node-stores -x, -o "${file_array[$i]}.csv" -r 1 -p `pidof snabb` -I 100 &
+	sudo perf stat -e instructions,branches,branch-misses,branch-load-misses,cache-misses,cache-references,cycles,context-switches,cpu-clock,minor-faults,page-faults,task-clock,bus-cycles,ref-cycles,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-stores,L1-icache-load-misses,LLC-load-misses,LLC-store-misses,LLC-stores,LLC-loads,dTLB-stores,dTLB-load-misses,dTLB-store-misses,iTLB-loads,iTLB-load-misses,node-load-misses,node-loads,node-store-misses,node-stores -x, -o "${file_array[$i]}.csv" -r 1 -p "${pid}" -I 100 &
 	sleep 5
 
 	echo "starting MoonGen with rate: ${rates_array[$i]} mpbs"
@@ -23,7 +39,7 @@ do
 	sudo ./latency-test.sh ${rates_array[i]} 60 &
 
 	echo "sleep 1000 secs"
-	sleep 1000
+	sleep 60
 
 	sudo kill -9 $(pidof perf)
 	sleep 5
