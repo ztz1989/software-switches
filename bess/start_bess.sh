@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo mkdir -p /tmp/bess
-sudo rm /tmp/bess/*
+sudo rm /tmp/bess/* 2> /dev/null
 
 sudo /home/tianzhu/bess/bessctl/bessctl daemon start
 
