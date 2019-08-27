@@ -77,7 +77,7 @@ local function fillUdpPacket(buf, len)
 		pktLength = len
 	}
 --]]
-buf:getEthernetPacket():fill{
+	buf:getEthernetPacket():fill{
             ethSrc = queue,
             ethDst = DST_MAC,
             ethType = 0x1234

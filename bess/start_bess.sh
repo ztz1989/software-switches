@@ -17,7 +17,7 @@ if [[ -z "${1}" ]]
 then
 	config="p2p"
 else
-	config="#{1}"
+	config="${1}"
 fi
 
 echo "configuration: ${config}"

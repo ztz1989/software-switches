@@ -1,22 +1,22 @@
 testpmd:
- ./testpmd -l 1-4 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user0,mac=00:00:00:00:00:01,path=/tmp/t4p4s/vhost-user-0" \
-		--vdev="virtio_user1,mac=00:00:00:00:00:02,path=/tmp/t4p4s/vhost-user-1"  \
+ ./testpmd -l 1-4 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user0,mac=00:00:00:00:00:01,path=/tmp/vpp/vhost-user-0" \
+		--vdev="virtio_user1,mac=00:00:00:00:00:02,path=/tmp/vpp/vhost-user-1"  \
 		--file-prefix=testpmd -- -i --auto-start --eth-peer=0,02:00:00:00:00:00 --eth-peer=1,02:00:00:00:00:01 --forward-mode=mac
 
- ./testpmd -l 5-8 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user2,mac=00:00:00:00:00:03,path=/tmp/t4p4s/vhost-user-2" \
-        --vdev="virtio_user3,mac=00:00:00:00:00:04,path=/tmp/t4p4s/vhost-user-3"  \
+ ./testpmd -l 5-8 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user2,mac=00:00:00:00:00:03,path=/tmp/vpp/vhost-user-2" \
+        --vdev="virtio_user3,mac=00:00:00:00:00:04,path=/tmp/vpp/vhost-user-3"  \
         --file-prefix=testpmd1 -- -i --auto-start --eth-peer=0,03:00:00:00:00:00 --eth-peer=1,03:00:00:00:00:01 --forward-mode=mac
 
- ./testpmd -l 24-27 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user4,mac=00:00:00:00:00:05,path=/tmp/t4p4s/vhost-user-4" \
-        --vdev="virtio_user5,mac=00:00:00:00:00:06,path=/tmp/t4p4s/vhost-user-5"  \
+ ./testpmd -l 24-27 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user4,mac=00:00:00:00:00:05,path=/tmp/vpp/vhost-user-4" \
+        --vdev="virtio_user5,mac=00:00:00:00:00:06,path=/tmp/vpp/vhost-user-5"  \
         --file-prefix=testpmd2 -- -i --auto-start --eth-peer=0,04:00:00:00:00:00 --eth-peer=1,04:00:00:00:00:01 --forward-mode=mac
 
- ./testpmd -l 28-31 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user6,mac=00:00:00:00:00:07,path=/tmp/t4p4s/vhost-user-6" \
-        --vdev="virtio_user7,mac=00:00:00:00:00:08,path=/tmp/t4p4s/vhost-user-7"  \
+ ./testpmd -l 28-31 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user6,mac=00:00:00:00:00:07,path=/tmp/vpp/vhost-user-6" \
+        --vdev="virtio_user7,mac=00:00:00:00:00:08,path=/tmp/vpp/vhost-user-7"  \
         --file-prefix=testpmd3 -- -i --auto-start --eth-peer=0,05:00:00:00:00:00 --eth-peer=1,05:00:00:00:00:01 --forward-mode=mac
 
- ./testpmd -l 32-35 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user8,mac=00:00:00:00:00:09,path=/tmp/t4p4s/vhost-user-8" \
-        --vdev="virtio_user9,mac=00:00:00:00:00:10,path=/tmp/t4p4s/vhost-user-9"  \
+ ./testpmd -l 32-35 -n 1 --socket-mem=1024,0 --no-pci --vdev="virtio_user8,mac=00:00:00:00:00:09,path=/tmp/vpp/vhost-user-8" \
+        --vdev="virtio_user9,mac=00:00:00:00:00:10,path=/tmp/vpp/vhost-user-9"  \
         --file-prefix=testpmd4 -- -i --auto-start --eth-peer=0,06:00:00:00:00:00 --eth-peer=1,06:00:00:00:00:01 --forward-mode=mac
 
 ./testpmd -l 0-3 -n 1 -m 1024 -- -i --auto-start --eth-peer=0,02:00:00:00:00:00 --eth-peer=1,02:00:00:00:00:01 --forward-mode=mac
