@@ -39,7 +39,7 @@ do
 	sudo ./latency-test.sh ${rates_array[i]} 60 &
 
 	echo "sleep 1000 secs"
-	sleep 60
+	sleep 1000
 
 	sudo kill -9 $(pidof perf)
 	sleep 5
