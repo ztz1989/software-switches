@@ -7,4 +7,4 @@ else
 	NAME="${1}"
 fi
 
-sudo docker run -it --cpuset-cpus=1-4 --name="${NAME}" --privileged netmap
+sudo docker run -it --cpuset-cpus=24-27 --name="${NAME}" --privileged netmap
