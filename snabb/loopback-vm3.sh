@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export VM_NAME=vhost-vm2
-export GUEST_MEM=8192M
+export GUEST_MEM=4096M
 export QCOW2_IMAGE=/home/tianzhu/centos7.qcow2
 export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm3.qcow2
 export VHOST_SOCK_DIR=/tmp/snabb
