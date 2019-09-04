@@ -5,7 +5,7 @@ cd ${CLICKNF_DIR}
 
 if [[ -z "${1}" ]]
 then
-	config="bridge.click"
+	config="unidirectional.click"
 else
 	config="${1}"
 fi
