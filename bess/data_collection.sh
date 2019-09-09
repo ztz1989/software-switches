@@ -6,9 +6,7 @@ rates_array=(385 3850 6930)
 file_array=("fx_0.5Gbps_trainData3" "fx_5Gbps_trainData3" "fx_9Gbps_trainData3")
 
 echo "starting BESS"
-./start_bess.sh &
-echo "Sleep for 15s"
-sleep 90
+./start_bess.sh
 
 for i in 0 1 2
 do

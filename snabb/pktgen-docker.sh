@@ -9,4 +9,4 @@ else
 	NAME="${1}"
 fi
 
-sudo docker run -it --name="${NAME}" -v /dev/hugepages:/dev/hugepages -v ${VHOST_SOCK_DIR}:/tmp/snabb --privileged pktgen-3.1.1
+sudo docker run -it --name="${NAME}" -v /dev/hugepages:/dev/hugepages -v ${VHOST_SOCK_DIR}:/tmp/snabb -v /var/run/snabb/hugetlbfs/:/var/run/snabb/hugetlbfs/ --privileged pktgen-3.1.1
