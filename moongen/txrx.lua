@@ -5,8 +5,7 @@ local ts     = require "timestamping"
 local stats  = require "stats"
 local hist   = require "histogram"
 
-local PKT_SIZE	= 60
-local ETH_DST	= "11:12:13:14:15:16"
+local ETH_DST	= "aa:cc:dd:cc:00:01"
 
 local function getRstFile(...)
 	local args = { ... }
@@ -24,6 +23,7 @@ function configure(parser)
 	parser:argument("dev", "Device to transmit/receive from."):convert(tonumber)
 	--parser:argument("dev2", "Device to transmit/receive from."):convert(tonumber)
 	parser:option("-r --rate", "Transmit rate in Mbit/s."):default(10000):convert(tonumber)
+	parser:option("-s --size", "Packet size in Bytes."):default(60):convert(tonumber)
 	parser:option("-f --file", "Filename of the latency histogram."):default("histogram.csv")
 end
 
@@ -34,13 +34,13 @@ function master(args)
 	device.waitForLinks()
 	txDev:getTxQueue(0):setRate(args.rate)
 
-	mg.startTask("loadSlave", txDev, txDev:getTxQueue(0))
+	mg.startTask("loadSlave", txDev, txDev:getTxQueue(0), args.size)
 	mg.startTask("recvSlave", rxDev) 
 	stats.startStatsTask{dev1}
 	mg.waitForTasks()
 end
 
-function loadSlave(dev, queue)
+function loadSlave(dev, queue, size)
 	local mem = memory.createMemPool(function(buf)
 		buf:getEthernetPacket():fill{
 			ethSrc = txDev,
@@ -53,7 +53,7 @@ function loadSlave(dev, queue)
 	local txCtr = stats:newDevTxCounter("tx_dev", dev, "plain")
 
 	while mg.running() do
-		bufs:alloc(PKT_SIZE)
+		bufs:alloc(size)
 		queue:send(bufs)
 		txCtr:update()
 	end

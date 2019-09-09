@@ -1,0 +1,11 @@
+bess.add_worker(wid=0, core=9)
+#bess.add_worker(wid=1, core=10)
+
+inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
+#outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
+
+out0::QueueOut(port=inport, qid=0)
+
+v1::PMDPort(vdev='eth_vhost0,iface=/tmp/bess/vhost-user-0,queues=1')
+
+PortInc(port=v1.name) -> out0
