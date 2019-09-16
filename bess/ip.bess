@@ -1,0 +1,11 @@
+bess.add_worker(wid=0, core=9)
+inport::PMDPort(port_id=0, num_inc_q=1, num_out_q=1)
+outport::PMDPort(port_id=1, num_inc_q=1, num_out_q=1)
+
+in0::QueueInc(port=inport, qid=0)
+out0::QueueOut(port=outport, qid=0)
+
+iplookup = IPLookup(name='ip')
+iplookup.add(prefix='0.0.0.0', prefix_len=0, gate=0)
+
+in0 -> iplookup -> out0

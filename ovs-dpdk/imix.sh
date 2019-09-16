@@ -9,31 +9,24 @@ fi
 
 if [[ -z "${2}" ]]
 then
-    size=64
-else
-    size="${2}"
-fi
-
-if [[ -z "${3}" ]]
-then
     freq=100
 else
-    freq="${3}"
+    freq="${2}"
 fi
 
 echo "starting OVS-DPDK"
 ./ovs-p2p.sh
 
-out_file="ovs-poisson-${rate}-${size}-${freq}.csv"
+out_file="ovs-imix-${rate}-${freq}.csv"
 echo "Output file: ${out_file}"
 sudo perf stat -e instructions,branches,branch-misses,branch-load-misses,cache-misses,cache-references,cycles,context-switches,cpu-clock,minor-faults,page-faults,task-clock,bus-cycles,ref-cycles,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-stores,L1-icache-load-misses,LLC-load-misses,LLC-store-misses,LLC-stores,LLC-loads,dTLB-stores,dTLB-load-misses,dTLB-store-misses,iTLB-loads,iTLB-load-misses,node-load-misses,node-loads,node-store-misses,node-stores -x, -o "${out_file}" -r 1 -p `pidof ovs-vswitchd` -I "${freq}" &
 
-echo "starting MoonGen with rate: ${rate} mpbs, ${size} bytes, ${freq} ms"
+echo "starting MoonGen with rate: ${rate} mpbs, ${freq} ms"
 cd ../moongen
 
-r="$(bc <<< "scale=2; $rate/($size+20)/8")"
-s="$((size - 4))"
-echo "input parameters to MoonGen: ${r}, ${s}"
+r="$(bc <<< "scale=2; ${rate}*4242/4482")"
+echo "input parameters to MoonGen: ${r}"
+
 sudo ./imix-test.sh -r "${r}" &
 
 echo "sleep 30 secs"
