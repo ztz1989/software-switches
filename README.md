@@ -1,7 +1,7 @@
 # Performance comparison of state-of-the-art software switches
 This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
 
-We consider six state-of-the-art software switches in our project, including:
+We consider 7 state-of-the-art software switches in our project, including:
 * OVS-DPDK: an accelerated version of Open vSwitch based on Intel DPDK.
 * SnabbSwitch: a modular software switch based on LuaJIT.
 * FastClick: a Click modular router based on Intel DPDK.
@@ -21,7 +21,6 @@ We use QEMU/KVM as hypervisor.
 #### Version of QEMU
 In specific, three versions of QEMU software are used in our experiments:
 
-* QEMU 3.0.95: Used for experiments with OVS-DPDK, Snabb, FastClick and ClickNF
 * QEMU 2.5.0: Used for experiments with BESS due to a compatibility issue reported by https://github.com/NetSys/bess/issues/874
 * QEMU 3.0.95: A modified version for experiments with netmap, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu
 
