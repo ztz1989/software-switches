@@ -1,12 +1,12 @@
 # Performance comparison of state-of-the-art software switches
-This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
+This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!!
 
 We consider 7 state-of-the-art software switches in our project, including:
 * OVS-DPDK: an accelerated version of Open vSwitch based on Intel DPDK.
 * SnabbSwitch: a modular software switch based on LuaJIT.
 * FastClick: a Click modular router based on Intel DPDK.
 * BESS (previously named SoftNIC): a software switch aiming at augmenting physical NICs
-* netmap (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality.
+* netmap (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality. We mainly focus on the VALE switch.
 * Vector Packet Processing (VPP): an open-source full-fledged software router implemented by Cisco.
 * t4p4s: a P4 switch based on Intel DPDK.
 
@@ -16,16 +16,16 @@ The detailed instructions for each considered software switch can be found in th
 This project considers both virtual machines and containers, both of which are essential building blocks in Network Function Virtualization (NFV).
 
 ### Virtual Machines
-We use QEMU/KVM as hypervisor. 
+We use QEMU/KVM as hypervisor and instantiate virtual machines from a CentOS image.
 
 #### Version of QEMU
 In specific, three versions of QEMU software are used in our experiments:
 
-* QEMU 2.5.0: Used for experiments with BESS due to a compatibility issue reported by https://github.com/NetSys/bess/issues/874
-* QEMU 3.0.95: A modified version for experiments with netmap, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu
+* QEMU 2.5.0: Originally we ran all the experiments on QEMU 3.0.95. However, we due to a compatibility issue with BESS (https://github.com/NetSys/bess/issues/874), we have to use QEMU 2.5.0 in the end, but the results for other switches don't vary so much.
+* QEMU 3.0.95: A modified version for experiments with netmap/VALE, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu. 
 
 #### Image
-We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). We expect similar performance using other Linux distributions. In our experiments, we have downloaded CentOS-7-x86_64-Azure-vm2.qcow2 image and edit it to allow password access. The username and password to login to its VMs are both "root".
+We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). In our experiments, we have downloaded CentOS-7-x86_64-Azure-vm2.qcow2 image and edit it to allow password access.
 
 #### Examples of configuring VMs
 QEMU provides a variety of options to configure virtual machines. 
@@ -44,7 +44,7 @@ sudo taskset -c 4-7 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
   -device virtio-net-pci,mac=00:00:00:00:00:02,netdev=mynet2,mrg_rxbuf=off \
   -net user,hostfwd=tcp::10020-:22 -net nic
 
-In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in server mode) to exchange packetsw with host machine. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
+In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in client mode) to exchange packets with software switches running on  the host. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
 In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: ssh root@localhost -p 10020, and login with the same password.
 
 #### Install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html).
