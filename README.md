@@ -13,7 +13,7 @@ We consider 7 state-of-the-art software switches in our project, including:
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
 ## Virtualization environment
-This project considers both virtual machines and containers, both of which are essential building blocks in Network Function Virtualization (NFV).
+This project adopts virtual machines to host virtual network functions (VNFs).
 
 ### Virtual Machines
 We use QEMU/KVM as hypervisor and instantiate virtual machines from a CentOS image.
@@ -32,10 +32,10 @@ QEMU provides a variety of options to configure virtual machines.
 
 A sample usage is as follows:
 
-sudo taskset -c 4-7 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
-  -m $GUEST_MEM -drive file=$CDROM --nographic \
+sudo taskset -c 4-7 ./qemu-system-x86_64 -name "${VM_NAME}" -cpu host -enable-kvm \
+  -m $GUEST_MEM -drive file="$CDROM" --nographic \
   -numa node,memdev=mem -mem-prealloc -smp sockets=1,cores=4 \
-  -object memory-backend-file,id=mem,size=$GUEST_MEM,mem-path=/dev/hugepages,share=on \
+  -object memory-backend-file,id=mem,size="$GUEST_MEM",mem-path=/dev/hugepages,share=on \
   -chardev socket,id=char0,path=$VHOST_SOCK_DIR/vhost-user-1 \
   -netdev type=vhost-user,id=mynet1,chardev=char0,vhostforce \
   -device virtio-net-pci,mac=00:00:00:00:00:01,netdev=mynet1,mrg_rxbuf=off \
@@ -44,7 +44,7 @@ sudo taskset -c 4-7 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
   -device virtio-net-pci,mac=00:00:00:00:00:02,netdev=mynet2,mrg_rxbuf=off \
   -net user,hostfwd=tcp::10020-:22 -net nic
 
-In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol (in client mode) to exchange packets with software switches running on  the host. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
+In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol to exchange packets with software switches running on the host. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
 In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: ssh root@localhost -p 10020, and login with the same password.
 
 #### Install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html).
