@@ -1,5 +1,5 @@
 # Comparing the Performance of State-of-the-Art Software Switches for NFV
-This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!!
+This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!! 
 
 We consider 7 state-of-the-art software switches in our project, including:
 * OVS-DPDK: an accelerated version of Open vSwitch based on Intel DPDK.
@@ -10,6 +10,7 @@ We consider 7 state-of-the-art software switches in our project, including:
 * Vector Packet Processing (VPP): an open-source full-fledged software router implemented by Cisco.
 * t4p4s: a P4 switch based on Intel DPDK.
 
+We define Four test scenarios for performance comparison. A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html).
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
 ## Virtualization environment
