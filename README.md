@@ -1,4 +1,4 @@
-# Performance comparison of state-of-the-art software switches
+# Comparing the Performance of State-of-the-Art Software Switches for NFV
 This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!!
 
 We consider 7 state-of-the-art software switches in our project, including:
@@ -47,7 +47,7 @@ sudo taskset -c 4-7 ./qemu-system-x86_64 -name "${VM_NAME}" -cpu host -enable-kv
 In this example, we configure a VM instance with 2 virtual network interfaces, each of which uses the [vhost-user](https://access.redhat.com/solutions/3394851) protocol to exchange packets with software switches running on the host. The ${VHOST_SOCK_DIR} contains the UNIX sockets used for communication with the software virtual switch running on the host machine. The communication is only possible if the software switch uses exactly the same UNIX sockets in its local configuration. To isolate multiple instances of VMs and virtual switches on the same host, we use taskset utility to pin the VM to a specific set of cores. 
 In the last line, we configure a host forwarding rule as a shortcut to access the VM from local host, so as to avoid the stochastic foreground output of Centos in the terminal. To use this, just open another terminal and run: ssh root@localhost -p 10020, and login with the same password.
 
-#### Install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html).
+#### Install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html). Our experiments were based on DPDK 18.11, but newer versions are expected to function as well.
 
 #### Configure DPDK inside the VM, an example is given as follows:
 ```
@@ -69,3 +69,4 @@ In this script, we firstly mount and reserve hugepages for DPDK. Then we load DP
 #### Run VNFs inside the VMs
 1. For p2v and v2v tests, install and run FloWatcher-DPDK inside VM to measure throughput. Details can be found in (https://github.com/ztz1989/FloWatcher-DPDK). In addition, we also need MoonGen as TX/RX inside VMs. More details can be found in https://github.com/ztz1989/software-switches/tree/master/moongen.
 2. For loopback test, deploy DPDK l2fwd application to forward packets between two virtual interfaces. For more details, refer to (https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html).
+
