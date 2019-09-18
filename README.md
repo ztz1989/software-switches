@@ -10,7 +10,7 @@ We consider 7 state-of-the-art software switches in our project, including:
 * Vector Packet Processing (VPP): an open-source full-fledged software router implemented by Cisco.
 * t4p4s: a P4 switch based on Intel DPDK.
 
-We define Four test scenarios for performance comparison. A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html).
+We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and loopback. A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html).
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
 ## Virtualization environment
