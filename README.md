@@ -22,7 +22,7 @@ We use QEMU/KVM as hypervisor and instantiate virtual machines from a CentOS ima
 #### Version of QEMU
 In specific, three versions of QEMU software are used in our experiments:
 
-* QEMU 2.5.0: Originally we ran all the experiments on QEMU 3.0.95. However, we due to a compatibility issue with BESS (https://github.com/NetSys/bess/issues/874), we have to use QEMU 2.5.0 in the end, but the results for other switches don't vary so much.
+* QEMU 2.5.0: Originally we ran all the experiments on QEMU 3.0.95. However, due to a compatibility issue with BESS as reported [here](https://github.com/NetSys/bess/issues/874), we have to use QEMU 2.5.0 in the end, but the results for other switches don't vary so much.
 * QEMU 3.0.95: A modified version for experiments with netmap/VALE, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu. 
 
 #### Image
