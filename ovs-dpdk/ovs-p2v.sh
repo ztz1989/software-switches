@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# A script to start OVS-DPDK switch. The flow table is populated with simple L2 switching rules.
+# A script for the p2v test of OVS-DPDK. We attached a pair of physical/virtual interfaces to OVS-DPDK and configured to rely 
+# packets between them.
+
 PCI0="0b:00.0"
 
 # Stop running instances
