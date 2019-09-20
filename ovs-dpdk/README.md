@@ -25,11 +25,11 @@ Detailed steps to repeat our experiments are listed as follows:
       
       This script was customized from MoonGen's [l2-load-latency](https://github.com/emmericp/MoonGen/blob/master/examples/l2-load-latency.lua) app, it injected packets towards OVS-DPDK's two physical interfaces simultaneously and measured the aggregated throughput.
       
-    * For latency test, we utilized MoonGen's hardware timestamping feature. In particular, MoonGen was configured to mix specially marked UDP packets inside normal traffic load and collect them from the RX end to calculate the round-trip-time (RTT). To perform the test, simply execute the following script: 
+    * For latency test, we utilized MoonGen's hardware timestamping feature. In particular, MoonGen was configured to mix specially marked UDP packets inside normal traffic load and collect them from the RX end to calculate the round-trip-time (RTT). To perform the test, simply execute the latency-test.sh script, which will do all the work: 
     
       **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
       
-      Note that we only used 64B packets in our experiments and varied packet rates among [0.1, 0.5, 0.99] of the maximal sustainable throughput.
+      Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. By default, MoonGen will output the results in the "histogram.csv" file in current directory.
     
 More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
 
@@ -37,21 +37,28 @@ More details about MoonGen configurations used in our tests can be found [here](
 In p2v test, we configure OVS-DPDK to rely packets between the physical interface and the VNF running inside VM. 
 
 ### Steps:
-* Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
+* Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, and configure forwarding rules to cross-connect them:
 
   **./ovs-p2v.sh**
-* Start virtual machine using QEMU/KVM and attach one virtual interface: 
+  
+  Note that value of $PCI0 variable needs to be modifed to the PCI address of your NIC interface.
+  
+* Start a virtual machine using QEMU/KVM and create a virtio virtual interface. Then attach it to OVS-DPDK through the vhost-user backend: 
 
   **./p2v.sh**
+  
 * Login to the VM and setup DPDK, MoonGen, and FloWatcher-DPDK, as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
 
 * For unidirectional throughput test:
-    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
+    * On the host side, go to the moongen directory of this repo and start its unidirectional test script: 
     
-      **./build/FloWatcher-DPDK -c 3**
-    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
+      **cd ../moongen/**
     
       **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      
+    * Inside the VM, go to FloWatcher-DPDK installation directory and start FloWatcher-DPDK to measure the unidrectional throughput:
+
+      **./build/FloWatcher-DPDK -c 3**
       
 * For bidirectional throughput test:
     * Inside the VM, go to MoonGen directory: 
@@ -60,58 +67,71 @@ In p2v test, we configure OVS-DPDK to rely packets between the physical interfac
     * Execute the MoonGen TX/RX script: 
     
       **./build/MoonGen ../script/txrx.lua -r [packet rate (Mbps)] -s [packet size (Bytes)]**
-    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
+    * On the host side, run MoonGen bidirectional test scripts: 
     
       **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
 
 * We didn't perform latency test for p2v scenario, as explained in our paper.
 
 ## v2v test
+In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
 ### Steps:
-* Start OVS and configure the forwarding rules between two VMs
+* Start OVS, create two vhost-user interfaces, and configure the forwarding rules between them:
   
   **./ovs-v2v.sh**
-* Start two QEMU/KVM virtual machines:
+* Start two QEMU/KVM VMs by opening two termials:
 
-  **./v2v1.sh**    # start VM1 which transmits packets to VM2
+  * In the first terminal, start VM1: **./v2v1.sh**    
   
-  **./v2v.sh**     # start VM2 which receives packet from VM1 and measures the throughput
-* On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
-    * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
-    * Go to MoonGen directory and run its l2-load-latency sample application: 
+  * In the second terminal, start VM2: **./v2v.sh**
+
+  Inside both VMs, setup DPDK along with all the other tools, as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+  
+* For unidirectional throughput test:
+  * On VM1, setup and start MoonGen's l2-load-latency sample application to inject packets towards OVS-DPDK: 
     
-      **./build/MoonGen example/l2-load-latency.lua 0 0**
+    **cd path/to/MoonGen; ./build/MoonGen example/l2-load-latency.lua 0 0**
       
-      This script injects packets towards OVS-DPDK through the virtual interface. 
-* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
-    * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
-    * Go to FloWatcher-DPDK installation directory and launch it using: 
+  * On VM2, start FloWatcher-DPDK:
+   
+    **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
+* For bidirectional throughput test:
+    * On VM1, do the same as unidirectional test
+    * On VM2, start another instance of MoonGen as follows:
     
-      **./build/FloWatcher-DPDK -c 3**
-  
-## Loopback
+      **cd path/to/MoonGen; ./build/MoonGen example/l2-load-latency.lua 0 0**
+
+* For latency test:
+
+## Loopback test
+In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, each of which is hosted by a VM. Packets are injected through one physical interfaces and received from the other physical interface.
+
 ### 1-VNF experiment:
-1. start OVS and configure the loopback forwarding rules
+1. start OVS and configure the 1-VNF forwarding rules:
 
    **./ovs-loopback.sh**
-  2. start an instance of VM and attach it with two virtual interfaces
+   
+   In particular, ....
+   
+2. start an instance of VM and create two virtio virtual interfaces as follows:
   
-     **./loopback.sh**
-  3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
-      * Go to DPDK l2fwd sample application directory and launch it: 
+   **./loopback.sh**
+   
+3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
+  * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+  * Go to DPDK l2fwd sample application directory and launch it: 
       
-        **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
-      * run MoonGen scripts on the host machine from NUMA node 1:
-       * Go to MoonGen directory of our repo.
+    **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+  * run MoonGen scripts on the host machine from NUMA node 1:
+   * Go to MoonGen directory of our repo.
        
-        **cd ../MoonGen/**
-       * unidirectional test: 
+     **cd ../MoonGen/**
+   * unidirectional test: 
            
-        **sudo ./unidirectional-test.sh**
-       * bidirectional test: 
+     **sudo ./unidirectional-test.sh**
+   * bidirectional test: 
            
-        **sudo ./bidirectional-test.sh**
+     **sudo ./bidirectional-test.sh**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
@@ -134,4 +154,4 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 # Clear the flow table and terminate all OVS threads
   **./terminate_ovs-dpdk.sh**
  
- This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on physical/virtual interfaces.
+ This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on the interfaces or cores.
