@@ -34,12 +34,16 @@ More details about MoonGen configurations used in our tests can be found [here](
 In p2v test, we configure OVS-DPDK to rely packets between a physical port and VNF running 
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
-    * ./ovs-p2v.sh
-* Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
+
+  **./ovs-p2v.sh**
+* Start virtual machine using QEMU/KVM and attach one virtual interface: 
+
+  **./p2v.sh**
 * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
 
 * For unidirectional test:
-    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: 
+    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
+    
       **./build/FloWatcher-DPDK -c 3 **
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
     
