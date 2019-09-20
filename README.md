@@ -18,3 +18,6 @@ We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and l
 * [t4p4s](https://github.com/ztz1989/software-switches/tree/artifacts/t4p4s)
 * [snabb](https://github.com/ztz1989/software-switches/tree/artifacts/snabb)
 * [VALE](https://github.com/ztz1989/software-switches/tree/artifacts/netmap)
+
+We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details are omitted.
+
