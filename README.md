@@ -32,3 +32,63 @@ Our experiments adopted several software tools for different test scenarios
 * [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API.
 * [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application.
 
+## Quick start
+
+Our script are organized as follows. 
+In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions.
+
+The naming convention for the scritp is the following: ``` [switch-name]-[experiment-type].sh "[pktsize argument]" ```.
+Where:
+
+```
+switch-name={ovs-dpdk, fastclick, vpp, bess, t4p4s, snabb, netmap}
+experiment-type= {p2p, p2v, v2v, loopback}
+
+```
+
+---
+
+**WARNING!! For each switch there are specific tunings to be made.**
+
+---
+
+
+### Example 1 : P2P scenario for all switch
+
+```
+# Quick Start for a p2p experiment for all switches
+SWITCHES=( ovs-dpdk fastclick vpp bess t4p4s snabb )
+sizes=(64 250 1024)
+
+for i in "${SWITCHES[@]}"
+do
+	echo "Software Switch: $i"
+	cd "${i}"
+
+  for s in "${sizes[@]}"
+		do
+			for f in "${freqs[@]}"
+			do
+				./${i}-p2p.sh "${s}"
+			done
+		done
+	cd ..
+done
+```
+
+### Example 2: P2V scenario for a single switch
+
+To try the p2v experiment for a single switch, please use the syntax:
+
+
+```
+switch="[switch-name]"
+pktsize="[size]"
+
+cd ${switch}
+
+./${switch}-p2v.sh "${pktsize}"
+
+```
+
+
