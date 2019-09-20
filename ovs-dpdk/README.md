@@ -1,12 +1,11 @@
 # OVS-DPDK Experiments
 Install Open vSwitch according to the instructions on the offical website. The version we used was **Open vSwitch 2.11.90**.
 
-## p2p test
-In p2p test, we cross-connect two physical interfaces using OVS-DPDK, detailed steps to repeat our experiments are listed as follows:
+## p2p test 
+In p2p test, we cross-connect two physical interfaces using OVS-DPDK
+Detailed steps to repeat our experiments are listed as follows:
 
-* Start OVS and configure cross-connect rules between the two physical ports by executing 
-  
-  **./ovs-p2p.sh**
+* Start OVS and configure cross-connect rules between the two physical ports by executing **./ovs-p2p.sh**
 
   Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify variables $PCI0 and $PCI1 to your respective PCI addresses for reproduction.
 
@@ -31,7 +30,8 @@ In p2p test, we cross-connect two physical interfaces using OVS-DPDK, detailed s
 More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
 
 ## p2v test
-In p2v test, we configure OVS-DPDK to rely packets between a physical port and VNF running 
+In p2v test, we configure OVS-DPDK to rely received packets from a physical interface to a VNF running inside VM. 
+
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
 
@@ -91,7 +91,7 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
   
      **./loopback.sh**
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
+      * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
       * Go to DPDK l2fwd sample application directory and launch it: 
       
         **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
@@ -111,7 +111,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 1, start OVS 2-VNF configuration script: ./ovs-loopback-2-vm.sh
 2, open a new terminal and launch the first VM: ./loopback-vm1.sh
 3, open another terminal and launch the second VM: ./loopback-vm2.sh
-4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+4, inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application.
 5, Launch MoonGen for different measurement:
    * Go to MoonGen directory of our repo.
    * unidirectional test: 
