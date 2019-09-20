@@ -23,14 +23,18 @@ Detailed steps to repeat our experiments are listed as follows:
     
       **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
       
-    * For latency test: 
+      This script was customized from MoonGen's [l2-load-latency](https://github.com/emmericp/MoonGen/blob/master/examples/l2-load-latency.lua) app, it injected packets towards OVS-DPDK's two physical interfaces simultaneously and measured the aggregated throughput.
+      
+    * For latency test, we utilized MoonGen's hardware timestamping feature. In particular, MoonGen was configured to mix specially marked UDP packets inside normal traffic load and collect them from the RX end to calculate the round-trip-time (RTT). To perform the test, simply execute the following script: 
     
       **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      
+      Note that we only used 64B packets in our experiments and varied packet rates among [0.1, 0.5, 0.99] of the maximal sustainable throughput.
     
 More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
 
 ## p2v test
-In p2v test, we configure OVS-DPDK to rely received packets from a physical interface to a VNF running inside VM. 
+In p2v test, we configure OVS-DPDK to rely packets between the physical interface and the VNF running inside VM. 
 
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
@@ -39,16 +43,17 @@ In p2v test, we configure OVS-DPDK to rely received packets from a physical inte
 * Start virtual machine using QEMU/KVM and attach one virtual interface: 
 
   **./p2v.sh**
-* Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
+* Login to the VM and setup DPDK, MoonGen, and FloWatcher-DPDK, as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
 
-* For unidirectional test:
+* For unidirectional throughput test:
     * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
     
       **./build/FloWatcher-DPDK -c 3**
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
     
       **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
-* For bidirectional test:
+      
+* For bidirectional throughput test:
     * Inside the VM, go to MoonGen directory: 
     
       **cd /root/MoonGen**
@@ -58,6 +63,8 @@ In p2v test, we configure OVS-DPDK to rely received packets from a physical inte
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
     
       **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+
+* We didn't perform latency test for p2v scenario, as explained in our paper.
 
 ## v2v test
 ### Steps:
