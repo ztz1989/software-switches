@@ -85,9 +85,11 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
 ## Loopback
 ### 1-VNF experiment:
 1. start OVS and configure the loopback forwarding rules
-      * ./ovs-loopback.sh
+
+   **./ovs-loopback.sh**
   2. start an instance of VM and attach it with two virtual interfaces
-      * ./loopback.sh
+  
+     **./loopback.sh**
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
       * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
       * Go to DPDK l2fwd sample application directory and launch it: 
