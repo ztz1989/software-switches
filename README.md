@@ -1,5 +1,5 @@
 # Comparing the Performance of State-of-the-Art Software Switches for NFV
-This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!! 
+This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, VALE, t4p4s, and FastClick. All the results and numbers shown in the slides and papers are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly appreciated!!! 
 
 We consider 7 state-of-the-art software switches in our project, including:
 * [OVS-DPDK](http://docs.openvswitch.org/en/latest/intro/install/dpdk/): an accelerated version of Open vSwitch based on Intel DPDK.
@@ -14,19 +14,16 @@ We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and l
 The detailed instructions for each considered software switch can be found in the corresponding directories.
 
 ## Virtualization environment
-This project adopts virtual machines to host virtual network functions (VNFs).
-
-### Virtual Machines
-We use QEMU/KVM as hypervisor and instantiate virtual machines from a CentOS image.
+This project adopts virtual machines (VMs) to host virtual network functions (VNFs). Other virtualization techniques such as container are considered for future work. We use QEMU/KVM as hypervisor and instantiate virtual machines from a CentOS image.
 
 #### Version of QEMU
-In specific, three versions of QEMU software are used in our experiments:
+In specific, two versions of QEMU software are used in our experiments:
 
-* QEMU 2.5.0: Originally we ran all the experiments on QEMU 3.0.95. However, due to a compatibility issue with BESS as reported [here](https://github.com/NetSys/bess/issues/874), we have to use QEMU 2.5.0 in the end, but the results for other switches don't vary so much.
-* QEMU 3.0.95: A modified version for experiments with netmap/VALE, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu. 
+* QEMU 2.5.0: Originally we ran all the experiments on QEMU 3.0.95. However, due to a compatibility issue with BESS as reported [here](https://github.com/NetSys/bess/issues/874), we had to use QEMU 2.5.0 in the end, but the results didn't vary so much.
+* QEMU 3.0.95: A modified version for experiments with netmap/VALE, since it supports netmap passthrough (ptnet). More details can be found in https://github.com/vmaffione/qemu.
 
-#### Image
-We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). In our experiments, we have downloaded CentOS-7-x86_64-Azure-vm2.qcow2 image and edit it to allow password access.
+#### VM Image
+We choose Centos 7 image. They are available [here](https://cloud.centos.org/centos/7/images/). In our experiments, we have used the **CentOS-7-x86_64-Azure-vm2.qcow2** image and modified it to allow password access.
 
 #### Examples of configuring VMs
 QEMU provides a variety of options to configure virtual machines. 
@@ -53,20 +50,22 @@ In this example, we configure a VM instance with 2 virtual network interfaces, e
 ```
 #!/bin/bash
 
+# mount and reserve hugepages
 sysctl vm.nr_hugepages=1024
 mkdir -p /dev/hugepages
-mount -t hugetlbfs hugetlbfs /dev/hugepages  # only if not already mounted
+mount -t hugetlbfs hugetlbfs /dev/hugepages
 
+# load igb_uio module
 modprobe uio
 insmod /root/dpdk-18.11/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
 
+# bind the virtual devices to DPDK
 $DPDK_DIR/usertools/dpdk-devbind.py --status
 $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:04.0 
 $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
 ```
-In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two physical ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
+In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two virtualized ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
 
 #### Run VNFs inside the VMs
 1. For p2v and v2v tests, install and run FloWatcher-DPDK inside VM to measure throughput. Details can be found in (https://github.com/ztz1989/FloWatcher-DPDK). In addition, we also need MoonGen as TX/RX inside VMs. More details can be found in https://github.com/ztz1989/software-switches/tree/master/moongen.
 2. For loopback test, deploy DPDK l2fwd application to forward packets between two virtual interfaces. For more details, refer to (https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html).
-
