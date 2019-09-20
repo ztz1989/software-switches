@@ -5,16 +5,26 @@ Install Open vSwitch according to the instructions on the offical website. The v
 
 ### Steps:
 * Start OVS and configure cross-connect rules between the two physical ports by executing 
-  ./ovs-p2p.sh
+  
+  **./ovs-p2p.sh**
 
   Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify variables $PCI0 and $PCI1 to your respective PCI addresses for reproduction.
 
-* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
+* Instantiate MoonGen to transmit packets and measure throughput/latency:
     * Go to the MoonGen repo directory
-    * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    
+      **cd ../MoonGen**
+    * For unidirectional throughput test: 
+    
+      **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      
+      Since our NICs are 10Gbps, so the specified packet rate is always 10Gbps for us. As for packet sizes, we use 64B, 256B,       and 1024B. Note that the specified sizes should be 64B, 252B, and 1020B respectively due to checksum offloading.
+      
     * For bidirectional test: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
     * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
     
+More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
+
 ## p2v test
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
