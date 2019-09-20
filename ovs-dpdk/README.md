@@ -67,11 +67,17 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
     * ./v2v1.sh    # start VM1 which transmits packets to VM2
     * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
 * On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-    * Go to MoonGen directory and run its l2-load-latency sample application: /build/MoonGen example/l2-load-latency.lua 0 0
+    * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
+    * Go to MoonGen directory and run its l2-load-latency sample application: 
+    
+      **./build/MoonGen example/l2-load-latency.lua 0 0**
+      
+      This script injects packets towards OVS-DPDK through the virtual interface. 
 * On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-    * Go to FloWatcher-DPDK installation directory and launch it using: ./build/FloWatcher-DPDK -c 3
+    * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * Go to FloWatcher-DPDK installation directory and launch it using: 
+    
+      **./build/FloWatcher-DPDK -c 3**
   
 ## Loopback
 ### 1-VNF experiment:
@@ -80,7 +86,7 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
   2. start an instance of VM and attach it with two virtual interfaces
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+      * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
       * Go to DPDK l2fwd sample application directory and launch it: 
       
         **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
@@ -103,20 +109,17 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 4, inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
 5, Launch MoonGen for different measurement:
    * Go to MoonGen directory of our repo.
-   * unidirectional test: sudo ./unidirectional-test.sh 
-   * bidirectional test: sudo ./bidirectional-test.sh
-   * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
-
-## Containers (To be completed)
-* Physical <-> Virtual test
-   * start OVS and configure forwarding rules
-      * ./ovs-nic1-vm1.sh
-   * start an instance of FlowMown-DPDK container and login
-      * ./flowmown-docker.sh
-   * start FlowMown-DPDK inside the container
-      * ./build/FlowMown-DPDK -c 0xe0 -n 1 --socket-mem=1024,0 --file-prefix flowmown --no-pci --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-2'
+   * unidirectional test: 
+   
+     **sudo ./unidirectional-test.sh**
+   * bidirectional test: 
+   
+     **sudo ./bidirectional-test.sh**
+   * For latency test: 
+   
+     **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
 
 # Clear the flow table and terminate all OVS threads
-  * ./terminate_ovs-dpdk.sh
+  **./terminate_ovs-dpdk.sh**
  
  This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on physical/virtual interfaces.
