@@ -6,7 +6,7 @@ We consider 7 state-of-the-art software switches in our project, including:
 * [SnabbSwitch](https://github.com/snabbco/snabb): a modular software switch based on LuaJIT.
 * [FastClick](https://github.com/tbarbette/fastclick): a Click modular router based on Intel DPDK.
 * [BESS](https://github.com/NetSys/bess) (previously named SoftNIC): a software switch aiming at augmenting physical NICs
-* [netmap](https://github.com/luigirizzo/netmap) (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality. We mainly focus on the VALE switch.
+* [netmap](https://github.com/luigirizzo/netmap) (including VALE switch, mSwitch and ptnet): a state-of-the-art high-speed packet I/O frameworks. Its solutions provide L2 switching functionality. We mainly focus on its **VALE switch**.
 * [VPP](https://github.com/FDio/vpp): an open-source full-fledged software router implemented by Cisco.
 * [t4p4s](https://github.com/P4ELTE/t4p4s): a P4 switch based on Intel DPDK.
 
