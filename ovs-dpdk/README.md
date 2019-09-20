@@ -77,17 +77,19 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
       * ./loopback.sh
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
       * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-      * Go to DPDK l2fwd sample application directory and launch it: ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1
+      * Go to DPDK l2fwd sample application directory and launch it: 
+      
+        **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
       * run MoonGen scripts on the host machine from NUMA node 1:
-           * Go to MoonGen directory of our repo.
-           * unidirectional test: 
+       * Go to MoonGen directory of our repo.
+       
+        **cd ../MoonGen/**
+       * unidirectional test: 
            
-             ** sudo ./unidirectional-test.sh **
-           * bidirectional test: 
+        **sudo ./unidirectional-test.sh **
+       * bidirectional test: 
            
-             **sudo ./bidirectional-test.sh**
-           
-             
+        **sudo ./bidirectional-test.sh**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
