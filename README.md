@@ -22,6 +22,10 @@ We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and l
 We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details are omitted.
 
 ## Tools
-* MoonGen
-* FloWatcher-DPDK
-* pkt-gen
+Our experiments adopted several software tools for different test scenarios
+
+* [MoonGen](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md): A high-speed traffic generator based on LuaJIT and DPDK. 
+* [FloWatcher-DPDK](https://github.com/ztz1989/FloWatcher-DPDK): A lightweight software traffic monitor.
+* [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API.
+* [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application.
+
