@@ -1,10 +1,15 @@
-# OVS-DPDK experiments
+# OVS-DPDK Experiments
+Install Open vSwitch according to the instructions on the offical website. The version we used was **Open vSwitch 2.11.90**.
 
 ## p2p test
+
 ### Steps:
-* Start OVS and configure rules cross-connect rules between two physical ports: ./ovs-p2p.sh
-    * Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
-* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
+1. Start OVS and configure cross-connect rules between the two physical ports by executing 
+> ./ovs-p2p.sh
+
+> Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify variables $PCI0 and $PCI1 to your respective PCI addresses for reproduction.
+
+2. Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
     * Go to the MoonGen repo directory
     * For unidirectional test: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
     * For bidirectional test: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
