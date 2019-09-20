@@ -2,8 +2,8 @@
 Install Open vSwitch according to the instructions on the offical website. The version we used was **Open vSwitch 2.11.90**.
 
 ## p2p test
+In p2p test, we cross-connect two physical interfaces using OVS-DPDK, detailed steps to repeat our experiments are listed as follows:
 
-### Steps:
 * Start OVS and configure cross-connect rules between the two physical ports by executing 
   
   **./ovs-p2p.sh**
@@ -20,24 +20,40 @@ Install Open vSwitch according to the instructions on the offical website. The v
       
       Since our NICs are 10Gbps, so the specified packet rate is always 10Gbps for us. As for packet sizes, we use 64B, 256B,       and 1024B. Note that the specified sizes should be 64B, 252B, and 1020B respectively due to checksum offloading.
       
-    * For bidirectional test: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
-    * For latency test: sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * For bidirectional test: 
+    
+      **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      
+    * For latency test: 
+    
+      **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
     
 More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
 
 ## p2v test
+In p2v test, we configure OVS-DPDK to rely packets between a physical port and VNF running 
 ### Steps:
 * Start OVS, bind a physical port and a vhost-user port to OVS-DPDK, then configure forwarding rules between them:
     * ./ovs-p2v.sh
 * Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
-* Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+* Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
+
 * For unidirectional test:
-    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: ./build/FloWatcher-DPDK -c 3
-    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: 
+      **./build/FloWatcher-DPDK -c 3 **
+    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
+    
+      **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
 * For bidirectional test:
-    * Inside the VM, go to MoonGen directory: cd /root/MoonGen
-    * Execute the MoonGen TX/RX script: ./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]
-    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]
+    * Inside the VM, go to MoonGen directory: 
+    
+      **cd /root/MoonGen**
+    * Execute the MoonGen TX/RX script: 
+    
+      **./build/MoonGen ../script/txrx.lua -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
+    
+      **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
 
 ## v2v test
 ### Steps:
@@ -64,8 +80,14 @@ More details about MoonGen configurations used in our tests can be found [here](
       * Go to DPDK l2fwd sample application directory and launch it: ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1
       * run MoonGen scripts on the host machine from NUMA node 1:
            * Go to MoonGen directory of our repo.
-           * unidirectional test: sudo ./unidirectional-test.sh 
-           * bidirectional test: sudo ./bidirectional-test.sh
+           * unidirectional test: 
+           
+             ** sudo ./unidirectional-test.sh **
+           * bidirectional test: 
+           
+             **sudo ./bidirectional-test.sh**
+           
+             
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
