@@ -44,7 +44,7 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
 * For unidirectional test:
     * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
     
-      **./build/FloWatcher-DPDK -c 3 **
+      **./build/FloWatcher-DPDK -c 3**
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
     
       **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
