@@ -16,3 +16,4 @@ sudo taskset -c 1-2 ./qemu-system-x86_64 -name "${VM_NAME}" -cpu host -enable-kv
   -netdev type=vhost-user,id=mynet1,chardev=char0,vhostforce \
   -device virtio-net-pci,mac=00:00:00:00:00:01,netdev=mynet1,mrg_rxbuf=off,csum=off,gso=off,guest_tso4=off,guest_tso6=off,guest_ecn=off,mq=on,vectors=6 \
   -net user,hostfwd=tcp::10020-:22 -net nic
+
