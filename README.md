@@ -46,8 +46,11 @@ experiment-type= {p2p, p2v, v2v, loopback}
 
 ```
 
+---
+
 **WARNING!! For each switch there are specific tunings to be made.**
 
+---
 
 
 ### Example 1 : P2P scenario for all switch
