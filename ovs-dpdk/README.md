@@ -62,10 +62,13 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
 ## v2v test
 ### Steps:
 * Start OVS and configure the forwarding rules between two VMs
-    * ./ovs-v2v.sh
+  
+  **./ovs-v2v.sh**
 * Start two QEMU/KVM virtual machines:
-    * ./v2v1.sh    # start VM1 which transmits packets to VM2
-    * ./v2v.sh     # start VM2 which receives packet from VM1 and measures the throughput
+
+  **./v2v1.sh**    # start VM1 which transmits packets to VM2
+  
+  **./v2v.sh**     # start VM2 which receives packet from VM1 and measures the throughput
 * On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
     * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)
     * Go to MoonGen directory and run its l2-load-latency sample application: 
