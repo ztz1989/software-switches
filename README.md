@@ -34,10 +34,27 @@ Our experiments adopted several software tools for different test scenarios
 
 ## Quick start
 
-### P2P scenario
+Our script are organized as follows. 
+In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions.
+
+The naming convention for the scritp is the following: ``` [switch-name]-[experiment-type].sh "[pktsize argument]" ```.
+Where:
 
 ```
-#SWITCHES=( ovs-dpdk fastclick vpp bess t4p4s snabb )
+switch-name={ovs-dpdk, fastclick, vpp, bess, t4p4s, snabb, netmap}
+experiment-type= {p2p, p2v, v2v, loopback}
+
+```
+
+**WARNING!! For each switch there are specific tunings to be made.**
+
+
+
+### Example 1 : P2P scenario for all switch
+
+```
+# Quick Start for a p2p experiment for all switches
+SWITCHES=( ovs-dpdk fastclick vpp bess t4p4s snabb )
 sizes=(64 250 1024)
 
 for i in "${SWITCHES[@]}"
@@ -55,3 +72,20 @@ do
 	cd ..
 done
 ```
+
+### Example 2: P2V scenario for a single switch
+
+To try the p2v experiment for a single switch, please use the syntax:
+
+
+```
+switch="[switch-name]"
+pktsize="[size]"
+
+cd ${switch}
+
+./${switch}-p2v.sh "${pktsize}"
+
+```
+
+
