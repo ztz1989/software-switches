@@ -10,5 +10,11 @@ We consider 7 state-of-the-art software switches in our project, including:
 * [VPP](https://github.com/FDio/vpp): an open-source full-fledged software router implemented by Cisco.
 * [t4p4s](https://github.com/P4ELTE/t4p4s): a P4 switch based on Intel DPDK.
 
-We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and loopback. A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html).
-The detailed instructions for each considered software switch can be found in the corresponding directories.
+We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and loopback. A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html). The detailed instructions for each considered software switch can be found in the corresponding directories:
+* [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk)
+* [FastClick](https://github.com/ztz1989/software-switches/tree/artifacts/fastclick)
+* [BESS](https://github.com/ztz1989/software-switches/tree/artifacts/bess)
+* [VPP](https://github.com/ztz1989/software-switches/tree/artifacts/vpp)
+* [t4p4s](https://github.com/ztz1989/software-switches/tree/artifacts/t4p4s)
+* [snabb](https://github.com/ztz1989/software-switches/tree/artifacts/snabb)
+* [VALE](https://github.com/ztz1989/software-switches/tree/artifacts/netmap)
