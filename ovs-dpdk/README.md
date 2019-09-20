@@ -99,7 +99,7 @@ In p2v test, we configure OVS-DPDK to rely packets between a physical port and V
         **cd ../MoonGen/**
        * unidirectional test: 
            
-        **sudo ./unidirectional-test.sh **
+        **sudo ./unidirectional-test.sh**
        * bidirectional test: 
            
         **sudo ./bidirectional-test.sh**
