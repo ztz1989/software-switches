@@ -32,3 +32,26 @@ Our experiments adopted several software tools for different test scenarios
 * [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API.
 * [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application.
 
+## Quick start
+
+### P2P scenario
+
+```
+#SWITCHES=( ovs-dpdk fastclick vpp bess t4p4s snabb )
+sizes=(64 250 1024)
+
+for i in "${SWITCHES[@]}"
+do
+	echo "Software Switch: $i"
+	cd "${i}"
+
+  for s in "${sizes[@]}"
+		do
+			for f in "${freqs[@]}"
+			do
+				./${i}-p2p.sh "${s}"
+			done
+		done
+	cd ..
+done
+```
