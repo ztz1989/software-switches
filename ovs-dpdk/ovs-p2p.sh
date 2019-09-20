@@ -19,10 +19,12 @@ sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=400
 sudo ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048,0"
 sudo env "PATH=${PATH}" ovs-ctl --no-ovsdb-server --db-sock="$DB_SOCK" start
 
+# Create a new OVS bridge and attach the two physical to it through PCI addresses.
 sudo ovs-vsctl del-br br-acl
 sudo ovs-vsctl add-br br-acl -- set bridge br-acl datapath_type=netdev
 sudo ovs-vsctl add-port br-acl dpdk-lc0p0 -- set interface dpdk-lc0p0 type=dpdk options:dpdk-devargs="${PCI0}"
 sudo ovs-vsctl add-port br-acl dpdk-lc0p1 -- set interface dpdk-lc0p1 type=dpdk options:dpdk-devargs="${PCI1}"
 
+# Populate flow table with cross-connect rules. Packets are matched with in_port.
 sudo ovs-ofctl add-flow br-acl "in_port=1 actions=2"
 sudo ovs-ofctl add-flow br-acl "in_port=2 actions=1"
