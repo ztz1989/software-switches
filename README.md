@@ -22,7 +22,7 @@ A detailed description of test scenarios and experimental results can be found o
 * [snabb](https://github.com/ztz1989/software-switches/tree/artifacts/snabb)
 * [VALE](https://github.com/ztz1989/software-switches/tree/artifacts/netmap)
 
-We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted.
+We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted for other switches.
 
 ## Testbed settings
 We conducted all the tests on a single commodity off-the-shelf server. The layout is illustrated as follows:
