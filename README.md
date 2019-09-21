@@ -44,7 +44,7 @@ Our server consists of two NUMA sockets, each of which is attached an Intel 5259
 ## Tools for measurement
 Our experiments adopted several software tools for different test scenarios
 
-* [MoonGen](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md): A high-speed traffic generator based on LuaJIT and DPDK. In our experiments, MoonGen is used in all the 4 test scenarios to generate predefined traffic load. It is also used to measure both throughput and latency for p2p and loopback scenarios. Please refer to the README file inside the directory of each software switch for a detailed usage of MoonGen.
+* [MoonGen](https://github.com/emmericp/MoonGen): A high-speed traffic generator based on LuaJIT and DPDK. In our experiments, MoonGen is used in all the 4 test scenarios to generate predefined traffic load. It is also used to measure both throughput and latency for p2p and loopback scenarios. Please refer to the README file inside the directory of each software switch for a detailed usage of MoonGen.
 * [FloWatcher-DPDK](https://github.com/ztz1989/FloWatcher-DPDK): A lightweight software traffic monitor based on DPDK. It is used in the p2v and v2v test scenarios to measure unidirectional throughput for all the software switches except VALE.
 * [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API. It is used to measure throughput for p2v and v2v scenarios for the VALE switch.
 * [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application. It is deployed as VNF inside virtual machines. We use it to rely packets between virtual machines and construct a linear service function chain. 
