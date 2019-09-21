@@ -13,7 +13,7 @@ We consider 7 state-of-the-art software switches in our project, including:
 ## Introduction
 We performed performance comparison under 4 test scenarios: p2p, p2v, v2v, and loopback.
 
-A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html). The detailed instructions for each considered software switch can be found as follows:
+A detailed description of test scenarios and experimental results can be found on [our demo website](https://ztz1989.github.io/software-switches.github.io/examples/dashboard.html). The detailed instructions to reproduce the described tests for each considered software switch can be found as follows:
 * [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk)
 * [FastClick](https://github.com/ztz1989/software-switches/tree/artifacts/fastclick)
 * [BESS](https://github.com/ztz1989/software-switches/tree/artifacts/bess)
@@ -22,19 +22,27 @@ A detailed description of test scenarios and experimental results can be found o
 * [snabb](https://github.com/ztz1989/software-switches/tree/artifacts/snabb)
 * [VALE](https://github.com/ztz1989/software-switches/tree/artifacts/netmap)
 
-We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details are omitted.
+We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted.
 
-## Tools
+## Testbed settings
+We conducted all the tests on a single commodity off-the-shelf server. The layout is illustrated as follows:
+
+<img src="testbed.png" alt="testbed"
+	title="Testbed" width="300" height="200" />
+
+Our server consists of two NUMA sockets, each of which is attached an Intel 52599 dual-port 10Gbps network interface card (NIC). As shown by the figure, each physical port is **directly** cabled to another port on the other NUMA node. The software switch under test (along with its associated virtual machines) are deployed on NUMA node 0 (SUT in the figure), while other measurement tools including traffic generators (TX) and montiors (RX) are deployed on NUMA node 1.  
+
+## Tools for measurement
 Our experiments adopted several software tools for different test scenarios
 
-* [MoonGen](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md): A high-speed traffic generator based on LuaJIT and DPDK. 
-* [FloWatcher-DPDK](https://github.com/ztz1989/FloWatcher-DPDK): A lightweight software traffic monitor.
-* [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API.
-* [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application.
+* [MoonGen](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md): A high-speed traffic generator based on LuaJIT and DPDK. In our experiments, MoonGen is used in all the 4 test scenarios to generate predefined traffic load. It is also used to measure both throughput and latency for p2p and loopback scenarios. Please refer to the README file inside the directory of each software switch for a detailed usage of MoonGen.
+* [FloWatcher-DPDK](https://github.com/ztz1989/FloWatcher-DPDK): A lightweight software traffic monitor based on DPDK. It is used in the p2v and v2v test scenarios to measure unidirectional throughput for all the software switches except VALE.
+* [pkt-gen](https://github.com/luigirizzo/netmap/tree/master/apps/pkt-gen): A high-speed traffic generator based on netmap API. It is used to measure throughput for p2v and v2v scenarios for the VALE switch.
+* [DPDK l2fwd](https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html): DPDK L2 fowarding sample application. It is deployed as VNF inside virtual machines. We use it to rely packets between virtual machines and construct a linear service function chain. 
 
 ## Quick start
 
-Our script are organized as follows. 
+Our script are organized as follows: 
 In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions.
 
 The naming convention for the scritp is the following: ``` [switch-name]-[experiment-type].sh "[pktsize argument]" ```.
