@@ -1,10 +1,3 @@
--- This test does the following:
--- 	1. Execute ARP so that the devices exchange MAC-addresses
---	2. Send UDP packets from NIC 1 to NIC 2
--- 	3. Read the statistics from the recieving device
---
--- This script demonstrates how to access device specific statistics ("normal" stats and xstats) via DPDK
-
 local mg     = require "moongen"
 local memory = require "memory"
 local device = require "device"
@@ -67,16 +60,6 @@ function master(args)
 end
 
 local function fillUdpPacket(buf, len)
---[[		buf:getUdpPacket():fill{
-		ethSrc = queue,
-		ethDst = DST_MAC,
-		ip4Src = SRC_IP,
-		ip4Dst = DST_IP,
-		udpSrc = SRC_PORT,
-		udpDst = DST_PORT,
-		pktLength = len
-	}
---]]
 	buf:getEthernetPacket():fill{
             ethSrc = queue,
             ethDst = DST_MAC,
@@ -140,55 +123,6 @@ function loadSlave(queue, rxDev, size)
 	end
 	txCtr:finalize()
 	rxCtr:finalize()
-
-	print("Total Loss Rate: " .. (txCtr.total - rxCtr.total)/txCtr.total)
-
-	local drop = {}
-	for i=3, #txCtr.mpps-2
-	do
-		drop[i-2] = txCtr.mpps[i] - rxCtr.mpps[i]
-	end
-
-	print("Avg Drop: " .. stats.average(drop) .. "  stdDev: " .. stats.stdDev(drop))
-
-	-- retrieve different stats
-	--[[
-	log:info(green("---------------------Moongen STATS---------------------------"))
-
-	local stats = rxCtr:getStats()
-	for key,value in pairs(stats) do log:info(tostring(key) .. " - " .. tostring(value)) end
-
-	log:info(green("------------------------STATS--------------------------------"))
-	local rxStats = rxDev:getStats()
-	log:info("ipacktes: " .. tostring(rxStats.ipackets))
-	log:info("opacktes: " .. tostring(rxStats.opackets))
-	log:info("ibytes: " .. tostring(rxStats.ibytes))
-	log:info("obytes: " .. tostring(rxStats.obytes))
-	log:info("imissed: " .. tostring(rxStats.imissed))
-	log:info("ierrors: " .. tostring(rxStats.ierrors))
-	log:info("oerrors: " .. tostring(rxStats.oerrors))
-	log:info("rx_nombuf: " .. tostring(rxStats.rx_nombuf))
-	log:info("q_ipacktes[0]: " .. tostring(rxStats.q_ipackets[0]))
-	log:info("q_ipacktes[1]: " .. tostring(rxStats.q_ipackets[1]))
-	log:info("q_ipacktes[2]: " .. tostring(rxStats.q_ipackets[2]))
-	log:info("q_ipacktes[3]: " .. tostring(rxStats.q_ipackets[3]))
-
-	-- if no xstats are available we will skip them
-	if numxstats > 0 then
-		xstats = ffi.new("struct rte_eth_xstat[?]", numxstats)
-		C.rte_eth_xstats_get(rxDev.id, xstats, numxstats)
-		xstatNames = ffi.new("struct rte_eth_xstat_name[?]", numxstats)
-		C.rte_eth_xstats_get_names(rxDev.id, xstatNames, numxstats)
-		log:info(green("------------------------XSTATS-------------------------------"))
-		log:info("Number of xstats: " .. numxstats)
-
-		for i=0,result-1 do
-	   		log:info(ffi.string(xstatNames[i].name, 64) .. ": " .. tostring(xstats[i].value))
-		end
-	else
-		log:warn("This device does not provide any xstats")
-	end
-	]]--
 end
 
 --- Runs on the recieving NIC
