@@ -24,6 +24,15 @@ A detailed description of test scenarios and experimental results can be found o
 
 We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted for other switches.
 
+## Metrics
+We measure both throughput and latency under the four test scenarios for each software switch.
+
+### Throughput
+
+
+### Latency
+
+
 ## Testbed settings
 We conducted all the tests on a single commodity off-the-shelf server. The layout is illustrated as follows:
 
