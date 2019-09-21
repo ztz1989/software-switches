@@ -21,7 +21,7 @@ MoonGen should be deployed differently for different test scenarios: For p2p and
   
   Similar to unidirectional test, the ${MOONGEN_DIR} variable needs to be customized according to the installation directory of MoonGen on your local server. This script instructs MoonGen to transmit/measure traffic (ethernet frames) at both interfaces simultaneously. 
 
-Both scripts will output the average throughput upon ternimation. 
+Both scripts will output the average throughput upon termination. Also note that the packet TX rate can also be changed by appending "-r [rate in Mbps]" option, our experiments stick to 10Gbps. 
 
 ### Latency test
 Script for latency test is very simialr to the **unidirectional-test.sh** script. The only difference is this script generates UDP/PTP packets instead of simple ethernet frames. 
