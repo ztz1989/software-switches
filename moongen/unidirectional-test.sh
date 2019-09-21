@@ -34,4 +34,5 @@ done
 echo "Packet rate: ${rate}, Packet size: ${size}"
 
 cd $MOONGEN_DIR
-sudo ./build/MoonGen ${CURR_DIR}/throughput-test.lua 0 1 -r "${rate}" -s "${size}"
+sudo ./build/MoonGen ${CURR_DIR}/throughput-test.lua 0 1 -r "${rate}" -s "${size}" --dpdk-config=dpdk-conf.lua
+
