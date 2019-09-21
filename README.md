@@ -28,10 +28,10 @@ We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989
 We measure both throughput and latency under the four test scenarios for each software switch.
 
 ### Throughput
-
+We performed throughput test for each software switch, both unidirectionally and bidirectionally. To view the performance under different patterns, we injected synthetic traffic with identical packets of 3 different sizes: 64B, 256B, and 1024B. 
 
 ### Latency
-
+For latency test, we transmitted UDP/PTP packets towards one interface of the software switch and collected them from another port to calculate the latency (in terms of RTT). Our experiments relied on the hardware and software timestamping features of MoonGen to measure latency in different test scenarios. More details can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen#latency-test).
 
 ## Testbed settings
 We conducted all the tests on a single commodity off-the-shelf server. The layout is illustrated as follows:
@@ -39,7 +39,7 @@ We conducted all the tests on a single commodity off-the-shelf server. The layou
 <img src="testbed.png" alt="testbed"
 	title="Testbed" width="300" height="200" />
 
-Our server consists of two NUMA sockets, each of which is attached an Intel 52599 dual-port 10Gbps network interface card (NIC). As shown by the figure, each physical port is **directly** cabled to another port on the other NUMA node. The software switch under test (along with its associated virtual machines) are deployed on NUMA node 0 (SUT in the figure), while other measurement tools including traffic generators (TX) and montiors (RX) are deployed on NUMA node 1.  
+Our server consists of two NUMA sockets, each of which is attached an Intel 52599 dual-port 10Gbps network interface card (NIC). As shown by the figure, each physical port is **directly** cabled to another port on the other NUMA node. The software switch under test (along with its associated virtual machines) are deployed on NUMA node 0 (SUT in the figure), while other measurement tools including traffic generators (TX) and montiors (RX) are deployed on NUMA node 1. Note that the software switch is pinned to a single core. Extension to multiple cores is left for future work.
 
 ## Tools for measurement
 Our experiments adopted several software tools for different test scenarios
@@ -107,5 +107,3 @@ cd ${switch}
 ./${switch}-p2v.sh "${pktsize}"
 
 ```
-
-
