@@ -27,7 +27,7 @@ Detailed steps to repeat our experiments are listed as follows:
       
     * For latency test, we utilized MoonGen's hardware timestamping feature. In particular, MoonGen was configured to mix specially marked UDP packets inside normal traffic load and collect them from the RX end to calculate the round-trip-time (RTT). To perform the test, simply execute the latency-test.sh script, which will do all the work: 
     
-      **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (in Bytes)]**
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
       
       Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. In particular, we firstly transmit at 10Gbps rate to obtain the maximal sustainable throughput `R+`. Then we repeat the same experiments with [0.1, 0.5, 0.99] of `R+` respectively.  
 By default, MoonGen will output the results in the "histogram.csv" file in current directory.
@@ -66,7 +66,7 @@ In p2v test, we configure OVS-DPDK to rely packets between the physical interfac
 * For bidirectional throughput test:
     * Inside the VM, go to MoonGen directory: 
     
-      **cd /root/MoonGen**
+      **cd path/to/MoonGen**
       
     * Execute the MoonGen TX/RX script: 
     
@@ -92,9 +92,9 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
   Inside both VMs, setup DPDK along with all the other tools, as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
   
 * For unidirectional throughput test:
-  * On VM1, setup and start MoonGen's l2-load-latency sample application to inject packets towards OVS-DPDK: 
+  * On VM1, setup and start txrx/lua script to inject packets towards OVS-DPDK: 
     
-    **cd path/to/MoonGen; ./build/MoonGen example/l2-load-latency.lua 0 0**
+    **cd path/to/MoonGen; ./build/MoonGen path/to/txrx.lua 0 0**
       
   * On VM2, start FloWatcher-DPDK:
    
@@ -103,7 +103,7 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
     * On VM1, do the same as unidirectional test
     * On VM2, start another instance of MoonGen as follows:
     
-      **cd path/to/MoonGen; ./build/MoonGen example/l2-load-latency.lua 0 0**
+      **cd path/to/MoonGen; ./build/MoonGen path/to/txrx.lua 0 0**
 
 * For latency test, we run MoonGen's software timestamping script inside VM. Although not as accurate as hardware timestamping, it can still provide a comparison among different software switches. 
 
@@ -124,12 +124,14 @@ In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, 
       
     **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
   * On the host side, run MoonGen scripts on the host machine from NUMA node 1:
+     
+     **cd ../moongen**
    * unidirectional test: 
            
-     **sudo ./unidirectional-test.sh**
+     **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
    * bidirectional test: 
            
-     **sudo ./bidirectional-test.sh**
+     **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
@@ -145,7 +147,9 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    
 4. inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application.
 5. Launch MoonGen for different measurement:
-   * Go to MoonGen directory of our repo.
+   * Go to MoonGen directory of our repo:
+   
+     **cd ../moongen/**
    * unidirectional test: 
    
      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
@@ -154,7 +158,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
    * For latency test: 
    
-     **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+     **sudo ./latency-test.sh -r [packet rate (Mbps)]**
 
 ## Clear the flow table and terminate all OVS threads
   **./terminate_ovs-dpdk.sh**
