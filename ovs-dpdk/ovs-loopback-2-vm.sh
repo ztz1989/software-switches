@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# A script to start OVS-DPDK switch. The flow table is populated with simple L2 switching rules.
+PCI0=0b:00.0
+PCI1=0b:00.1
 
 # Stop running instances
 sudo env "PATH=${PATH}" ovs-ctl stop
@@ -16,8 +17,8 @@ sudo env "PATH=${PATH}" ovs-ctl --no-ovsdb-server --db-sock="$DB_SOCK" start
 
 sudo ovs-vsctl del-br br-acl
 sudo ovs-vsctl add-br br-acl -- set bridge br-acl datapath_type=netdev
-sudo ovs-vsctl add-port br-acl dpdk-lc0p0 -- set interface dpdk-lc0p0 type=dpdk options:dpdk-devargs=0000:0b:00.0
-sudo ovs-vsctl add-port br-acl dpdk-lc0p1 -- set interface dpdk-lc0p1 type=dpdk options:dpdk-devargs=0000:0b:00.1
+sudo ovs-vsctl add-port br-acl dpdk-lc0p0 -- set interface dpdk-lc0p0 type=dpdk options:dpdk-devargs="${PCI0}"
+sudo ovs-vsctl add-port br-acl dpdk-lc0p1 -- set interface dpdk-lc0p1 type=dpdk options:dpdk-devargs="${PCI1}"
 
 sudo ovs-vsctl add-port br-acl vhost-user-1 -- set Interface vhost-user-1 type=dpdkvhostuser ofport_request=3
 sudo ovs-vsctl add-port br-acl vhost-user-2 -- set Interface vhost-user-2 type=dpdkvhostuser ofport_request=4
