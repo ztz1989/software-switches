@@ -121,15 +121,11 @@ In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, 
   
    **./loopback.sh**
    
-3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-  * Login to the VM and setup DPDK as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application, as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
   * Go to DPDK l2fwd sample application directory and launch it: 
       
-    **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
-  * run MoonGen scripts on the host machine from NUMA node 1:
-   * Go to MoonGen directory of our repo.
-       
-     **cd ../MoonGen/**
+    **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+  * On the host side, run MoonGen scripts on the host machine from NUMA node 1:
    * unidirectional test: 
            
      **sudo ./unidirectional-test.sh**
@@ -147,15 +143,15 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    * Go to MoonGen directory of our repo.
    * unidirectional test: 
    
-     **sudo ./unidirectional-test.sh**
+     **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
    * bidirectional test: 
    
-     **sudo ./bidirectional-test.sh**
+     **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
    * For latency test: 
    
-     **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+     **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
 
 # Clear the flow table and terminate all OVS threads
   **./terminate_ovs-dpdk.sh**
  
- This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on the interfaces or cores.
+  This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on the interfaces or cores.
