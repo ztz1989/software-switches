@@ -3,8 +3,17 @@ The scripts directory contains the snabb lua scripts to configure the workflows 
 
 ## p2p test
 ### Steps:
-* Make ${SNABB_DIR}/src/program/p2p/ directory and copy the scripts/p2p.lua script to it.
-* Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
+* Make a new snabb application implementing p2p forwarding: create a ${SNABB_DIR}/src/program/p2p/ directory and copy the scripts/p2p.lua script to it:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/p2p/**
+  
+  **cp script/p2p.lua ${SNABB_DIR}/src/program/p2p/**
+
+Do the same to build bidirectional p2p application (p2p-bi).
+
+* Recompile snabb program according to [the instructions from its authors](https://github.com/snabbco/snabb#how-do-i-get-started).
 * Start Snabb and configure rules cross-connect rules between two physical ports: 
     * For unidirectional test: 
     
@@ -13,23 +22,32 @@ The scripts directory contains the snabb lua scripts to configure the workflows 
     
       **./start-snabb.sh p2p-bi**
   
-  Note that current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
+  Note that current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your NIC's PCI addresses.
 
-* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
-    * Go to the MoonGen repo directory
+* Instantiate MoonGen for throughput (unidirectional/bidirectional) and latency tests:
+    * Go to the MoonGen repo directory:
+    
+      **cd ../moongen/**
     * For unidirectional test: 
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
     * For bidirectional test:
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
     * For latency test:
       
-      **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
     
 ## p2v test
 ### Steps:
-* Make ${SNABB_DIR}/src/program/p2v/ directory and copy the scripts/p2v.lua script to it.
+* Make snabb p2v and bidirectional p2v (p2v-bi) applications:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/p2v/; mkdir -p ${SNABB_DIR}/src/program/p2v-bi/**
+  
+  **cp script/p2v.lua ${SNABB_DIR}/src/program/p2v/; cp script/p2v-bi.lua ${SNABB_DIR}/src/program/p2v-bi/**
+  
 * Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
 * Start Snabb, bind a physical port and a vhost-user port to Snabb, then configure forwarding rules between them:
     * For unidirectional test: 
@@ -48,22 +66,30 @@ The scripts directory contains the snabb lua scripts to configure the workflows 
       **./build/FloWatcher-DPDK -c 3**
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
 * For bidirectional test:
     * Inside the VM, go to MoonGen directory: 
     
       **cd /root/MoonGen**
     * Execute the MoonGen TX/RX script: 
     
-      **./build/MoonGen ../script/txrx.lua -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
 ### Steps:
-* Make ${SNABB_DIR}/src/program/v2v/ directory and copy the scripts/v2v.lua script to it.
+* Make snabb v2v and bidirectional v2v (v2v-bi) applications:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/v2v/; mkdir -p ${SNABB_DIR}/src/program/v2v-bi/**
+  
+  **cp script/p2v.lua ${SNABB_DIR}/src/program/v2v/; cp script/p2v-bi.lua ${SNABB_DIR}/src/program/v2v-bi/**
+  
 * Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
+
 * Start Snabb, bind a physical port and a vhost-user port to Snabb, then configure forwarding rules between them:
     * For unidirectional test: 
     
@@ -71,53 +97,84 @@ The scripts directory contains the snabb lua scripts to configure the workflows 
     * For bidirectioanl test: 
     
       **./start-snabb.sh v2v-bi**
+      
 * Start two QEMU/KVM virtual machines:
 
-   **./v2v1.sh**   # start VM1 which transmits packets to VM2
+   * Start VM1: **./v2v1.sh**
    
-   **./v2v.sh**     # start VM2 which receives packet from VM1 and measures the throughput
-* On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-    * Go to MoonGen directory and run its l2-load-latency sample application: 
+   * Start VM2: **./v2v.sh**
     
-      **./build/MoonGen example/l2-load-latency.lua 0 0**
-* On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030), we start an instance of FloWatcher-DPDK to measure the inter-VM throughput:
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-    * Go to FloWatcher-DPDK installation directory and launch it using: 
+* On VM1, setup DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * Go to MoonGen directory and execute the txrx.lua script: 
+    
+      **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
       
-      **./build/FloWatcher-DPDK -c 3**
+* On VM2, setup DPDK, FloWatcher-DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * For unidirectional throughput test:
+    
+     * Go to FloWatcher-DPDK installation directory and launch it: 
+    
+       **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
+    * For bidirectional throughput test:
+     * Go to MoonGen installation directiory and launch txrx.lua script:
+       
+       **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+       
+    * For latency test:
+      .....
   
 ## Loopback
 ### 1-VNF experiment:
-* Make ${SNABB_DIR}/src/program/loopback/ directory and copy the scripts/loopback.lua to it.
+* Make a new snabb application implementing loopback forwarding:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/loopback/**
+  
+  **cp script/loopback.lua ${SNABB_DIR}/src/program/loopback/**
+
+Repeat the same steps to build bidirectional loopback application (loopback-bi).
+
 * Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
 * Start Snabb, bind a physical port and a vhost-user port to Snabb, then configure forwarding rules between them:
+
     * For unidirectional test: 
     
       **./start-snabb.sh loopback**
     * For bidirectioanl test: 
     
       **./start-snabb.sh loopback-bi**
+      
 * start an instance of VM and attach it with two virtual interfaces:
 
-   **./loopback.sh**
-* inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-    * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+  **./loopback.sh**
+* inside the VM, and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
     * Go to DPDK l2fwd sample application directory and launch it: 
       
       **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+      
     * run MoonGen scripts on the host machine from NUMA node 1:
-      * Go to MoonGen directory of our repo.
+     * Go to MoonGen directory of our repo:
+      * **cd ../moongen/**
       * unidirectional test: 
            
-       **sudo ./unidirectional-test.sh**
+        **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
       * bidirectional test: 
       
-       **sudo ./bidirectional-test.sh**
+        **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-* Make ${SNABB_DIR}/src/program/loopback2/ directory and copy the scripts/loopback2.lua to it.
+* Make a new snabb application implementing unidirectional loopback forwarding between two VMs:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/loopback2/**
+  
+  **cp script/loopback2.lua ${SNABB_DIR}/src/program/loopback2/**
+
+Repeat the same steps to build bidirectional loopback application for two VMs (loopback2-bi).
+
 * Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
 * Start Snabb, bind a physical port and a vhost-user port to Snabb, then configure forwarding rules between them:
     * For unidirectional test: 
@@ -132,16 +189,20 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 * open another terminal and launch the second VM: 
 
    **./loopback-vm2.sh**
-* inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+* inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application:
+
+   **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+   
 * Launch MoonGen for different measurement:
-   * Go to MoonGen directory of our repo.
+   * Go to MoonGen directory of our repo:
+   
+      **cd ../moongen/**
    * unidirectional test: 
    
-      **sudo ./unidirectional-test.sh**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
    * bidirectional test:
    
-      **sudo ./bidirectional-test.sh**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
    * For latency test:
    
-      **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
-
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
