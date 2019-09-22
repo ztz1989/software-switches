@@ -113,8 +113,8 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 1. Open a new terminal, start BESS and configure the corresponding forwarding for BESS:
      * For unidirectional test: **./start_bess.sh loopback-2-vm**
      * For bidirectioanl test: **./start_bess.sh loopback-2-vm-bi**
-2. Open a new terminal and launch the first VM: ./loopback-vm1.sh
-3. Open another terminal and launch the second VM: ./loopback-vm2.sh
+2. Open a new terminal and launch the first VM: **./loopback-vm1.sh**
+3. Open another terminal and launch the second VM: **./loopback-vm2.sh**
 
 Each VM contains two virtio virtual interfaces.
 4. Inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application.
