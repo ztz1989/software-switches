@@ -2,7 +2,7 @@
 
 export VM_NAME=vhost-vm
 export GUEST_MEM=4096M
-export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure.qcow2
+export CDROM=path/to/image
 export VHOST_SOCK_DIR=/usr/local/var/run/openvswitch
 
 cd /home/tianzhu/qemu/bin/x86_64-softmmu/
