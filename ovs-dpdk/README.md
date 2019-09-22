@@ -15,23 +15,24 @@ Detailed steps to repeat our experiments are listed as follows:
       **cd ../MoonGen**
     * For unidirectional throughput test: 
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
       
       Since our NICs are 10Gbps, so the specified packet rate is always 10Gbps for us. As for packet sizes, we use 64B, 256B,       and 1024B. Note that the specified sizes should be 64B, 252B, and 1020B respectively due to checksum offloading.
       
     * For bidirectional test: 
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (in Bytes)]**
       
       This script was customized from MoonGen's [l2-load-latency](https://github.com/emmericp/MoonGen/blob/master/examples/l2-load-latency.lua) app, it injected packets towards OVS-DPDK's two physical interfaces simultaneously and measured the aggregated throughput.
       
     * For latency test, we utilized MoonGen's hardware timestamping feature. In particular, MoonGen was configured to mix specially marked UDP packets inside normal traffic load and collect them from the RX end to calculate the round-trip-time (RTT). To perform the test, simply execute the latency-test.sh script, which will do all the work: 
     
-      **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (in Bytes)]**
       
-      Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. By default, MoonGen will output the results in the "histogram.csv" file in current directory.
-    
-More details about MoonGen configurations used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen)
+      Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. In particular, we firstly transmit at 10Gbps rate to obtain the maximal sustainable throughput `R+`. Then we repeat the same experiments with [0.1, 0.5, 0.99] of `R+` respectively.  
+By default, MoonGen will output the results in the "histogram.csv" file in current directory.
+
+More details about MoonGen scripts used in our tests can be found [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen).
 
 ## p2v test
 In p2v test, we configure OVS-DPDK to rely packets between the physical interface and the VNF running inside VM. 
@@ -54,22 +55,25 @@ In p2v test, we configure OVS-DPDK to rely packets between the physical interfac
     
       **cd ../moongen/**
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
       
     * Inside the VM, go to FloWatcher-DPDK installation directory and start FloWatcher-DPDK to measure the unidrectional throughput:
 
-      **./build/FloWatcher-DPDK -c 3**
+      **./build/FloWatcher-DPDK -c portmask**
+      
+      FloWatcher-DPDK requires two cores to function, specify it accordingly, e.g., 0x3. 
       
 * For bidirectional throughput test:
     * Inside the VM, go to MoonGen directory: 
     
       **cd /root/MoonGen**
+      
     * Execute the MoonGen TX/RX script: 
     
-      **./build/MoonGen ../script/txrx.lua -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
     * On the host side, run MoonGen bidirectional test scripts: 
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 * We didn't perform latency test for p2v scenario, as explained in our paper.
 
