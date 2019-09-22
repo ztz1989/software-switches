@@ -48,7 +48,7 @@ Install VPP according to instructions on official website. The VPP version we us
 * For bidirectional test:
     * Inside the VM, go to MoonGen directory: 
     
-      **cd /root/MoonGen**
+      **cd path/to/MoonGen**
     * Execute the MoonGen TX/RX script: 
     
       **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
