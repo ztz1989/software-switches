@@ -5,7 +5,7 @@
 sudo mkdir -p /tmp/fastclick
 sudo rm -rf /tmp/fastclick/*
 
-FASTCLICK_DIR="/home/tianzhu/fastclick"
+FASTCLICK_DIR="path/to/fastclick
 
 if [[ -z "${1}" ]]
 then

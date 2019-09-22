@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export VPP_ROOT='/home/tianzhu/vpp-19.04/vpp'
+export VPP_ROOT='path/to/vpp'
 export STARTUP_CONF='startup-p2p.conf'
 export NAMELC0P0="TenGigabitEthernetb/0/0"
 export NAMELC0P1="VhostEthernet1"

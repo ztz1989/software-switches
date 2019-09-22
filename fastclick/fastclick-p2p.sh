@@ -2,7 +2,7 @@
 
 # script to start fastClick on NUMA node 0 with 2 NICs
 
-FASTCLICK_DIR="/home/tianzhu/fastclick"
+FASTCLICK_DIR=path/to/fastclick
 
 if [[ -z "${1}" ]]
 then

@@ -2,9 +2,8 @@
 
 export VM_NAME=vhost-vm
 export GUEST_MEM=4096M
-export CDROM=path/to/your/image
+export CDROM=path/to/image
 export QEMU_DIR=/path/to/qemu
-
 export VHOST_SOCK_DIR=/usr/local/var/run/openvswitch
 
 cd "${QEMU_DIR}"/bin/x86_64-softmmu/

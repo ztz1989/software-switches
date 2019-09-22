@@ -14,7 +14,9 @@ sudo vale-ctl -a vale3:enp11s0f1
 
 echo 'Start Centos VM..'
 
-sudo taskset -c 24-27 ./qemu/x86_64-softmmu/qemu-system-x86_64 CentOS-7-x86_64-Azure-vm3.qcow2 \
+IMAGE=path/to/image
+cd path/to/qemu
+sudo taskset -c 24-27 ./x86_64-softmmu/qemu-system-x86_64 "${IMAGE}" \
      --enable-kvm -smp 4 -m 4G -nographic -cpu host \
      -device ptnet-pci,netdev=data1,mac=00:AA:BB:CC:01:05 \
      -netdev netmap,ifname=vale2:v6,id=data1,passthrough=on -vnc :8 \

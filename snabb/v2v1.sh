@@ -2,11 +2,11 @@
 
 export VM_NAME2=vhost-vm2
 export GUEST_MEM=4096M
-export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure2.qcow2
+export CDROM=path/to/image
 export VHOST_SOCK_DIR=/tmp/snabb
 
-cd /home/tianzhu/qemu/bin/x86_64-softmmu/
-sudo numactl --membind=0 --physcpubind=5-8 ./qemu-system-x86_64 -name $VM_NAME2 -cpu host -enable-kvm \
+cd path/to/qemu
+sudo taskset -c 5-8 ./bin/x86_64-softmmu/qemu-system-x86_64 -name $VM_NAME2 -cpu host -enable-kvm \
   -m $GUEST_MEM -drive file=$CDROM --nographic \
   -numa node,memdev=mem1 -mem-prealloc -smp sockets=1,cores=4 \
   -object memory-backend-file,id=mem1,size=$GUEST_MEM,mem-path=/dev/hugepages,share=on \

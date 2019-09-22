@@ -2,12 +2,12 @@
 
 export VM_NAME=vhost-vm3
 export GUEST_MEM=4096M
-export QCOW2_IMAGE=/home/tianzhu/centos7.qcow2
-export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm4.qcow2
+export CDROM=path/to/image
 export VHOST_SOCK_DIR=/tmp/vpp
 
-cd /home/tianzhu/qemu/bin/x86_64-softmmu/
-sudo taskset -c 28-31 ./qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
+cd path/to/qemu
+
+sudo taskset -c 28-31 ./bin/x86_64-softmmu/qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
    -m $GUEST_MEM -drive file=$CDROM --nographic \
   -numa node,memdev=mem -mem-prealloc -smp sockets=1,cores=4 \
   -object memory-backend-file,id=mem,size=$GUEST_MEM,mem-path=/dev/hugepages,share=on \
