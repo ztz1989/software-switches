@@ -105,7 +105,7 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
     
       **cd path/to/MoonGen; ./build/MoonGen example/l2-load-latency.lua 0 0**
 
-* For latency test:
+* For latency test, we run MoonGen's software timestamping script inside VM. Although not as accurate as hardware timestamping, it can still provide a comparison among different software switches. 
 
 ## Loopback test
 In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, each of which is hosted by a VM. Packets are injected through one physical interfaces and received from the other physical interface.
@@ -115,11 +115,9 @@ In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, 
 
    **./ovs-loopback.sh**
    
-   In particular, ....
+   This script creates two vhost-user interfaces on OVS-DPDK. The interfaces will be attached to VM. Modify variables $PCI0 and $PCI1 to the PCI addresses of physical interfaces on your server. The forwarding rules are also configured to match the in_port of each packet.
    
-2. start an instance of VM and create two virtio virtual interfaces as follows:
-  
-   **./loopback.sh**
+2. start an instance of VM and create two virtio virtual interfaces: **./loopback.sh**
    
 3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application, as explained [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
   * Go to DPDK l2fwd sample application directory and launch it: 
