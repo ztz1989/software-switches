@@ -99,7 +99,8 @@ Install BESS according to the instructions on [BESS official website](https://gi
       * For unidirectional throughput test: **./start_bess.sh loopback**
       * For bidirectioanl throughput test: **./start_bess.sh loopback-bi**
   2. Start an instance of VM and attach it with two virtual interfaces by executing the **loopback.sh** script.
-  3. Inside the VM, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).     4. Go to DPDK l2fwd sample application directory and launch it:
+  3. Inside the VM, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md). 
+  4. Go to DPDK l2fwd sample application directory and launch it:
       
         **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
       * run MoonGen scripts on the host machine from NUMA node 1:
