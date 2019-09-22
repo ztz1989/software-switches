@@ -156,7 +156,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    
      **sudo ./latency-test.sh -r [packet rate (Mbps)] -s [packet size (Bytes)]**
 
-# Clear the flow table and terminate all OVS threads
+## Clear the flow table and terminate all OVS threads
   **./terminate_ovs-dpdk.sh**
  
   This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on the interfaces or cores.
