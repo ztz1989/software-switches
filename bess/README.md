@@ -1,25 +1,34 @@
 # BESS experiments
+Install BESS according to the instructions on [BESS official website](https://github.com/NetSys/bess). We used the Hashwell tarball available [here](https://github.com/NetSys/bess/releases/download/v0.4.0/bess-haswell-linux.tar.gz).
 
 ## p2p test
 ### Steps:
 * Start BESS and configure rules cross-connect rules between two physical ports:
-    * Go to BESS installation directory and launch BESS CLI: sudo ${BESS_DIR}/bessctl/bessctl
-    * On the CLI, start BESS daemon process: daemon start
-    * Run Configure p2p forwarding for BESS on the CLI:
-     * For unidirectional test: run file p2p.bess
-     * For bidirectioanl test: run file p2p-bi.bess
-     Note: Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
-* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
-    * Go to the MoonGen repo directory
-    * For unidirectional test: 
-    
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
-    * For bidirectional test: 
-    
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
-    * For latency test: 
-    
-      **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+    * Go to BESS installation directory.
+    * Open a new ternimal, start BESS daemon process and configure p2p forwarding for BESS:
+     * For unidirectional test: 
+     
+       **./start_bess.sh p2p**
+     
+       Then start MoonGen's unidirectional throughput test script on NUMA node 1:
+       
+       **cd path/to/MoonGen; sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+     * For bidirectioanl test: 
+     
+       **./start_bess.sh p2p-bi**
+
+       Then start MoonGen's bidirectional throughput test script on NUMA node 1:
+       
+       **cd path/to/MoonGen; sudo ./bidirectional-test.sh  -s [packet size (Bytes)]**
+     * For latency test:
+     
+       **./start_bess.sh p2p**
+       
+       Then start MoonGen's bidirectional latency test script on NUMA node 1:
+
+       **cd path/to/MoonGen; sudo ./latency-test.sh -r [packet rate (Mpps)]**
+       
+       As detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/moongen/README.md#latency-test), we vary packet rate to collect latency statistics. 
     
 ## p2v test
 ### Steps:
@@ -27,8 +36,8 @@
     * Go to BESS installation directory and launch BESS CLI: sudo ${BESS_DIR}/bessctl/bessctl
     * On the CLI, start BESS daemon process: daemon start
     * Run Configure p2v forwarding for BESS on the CLI:
-      * For unidirectional test: run file p2v.bess
-      * For bidirectioanl test: run file p2v-bi.bess
+     * For unidirectional test: run file p2v.bess
+     * For bidirectioanl test: run file p2v-bi.bess
 * Start virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
 * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
 * For unidirectional test:
