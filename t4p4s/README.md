@@ -23,8 +23,24 @@ A more comprehensive test description will be added soon. Stay tuned!!!
   Note that this is just the DPDK whitelist commandline option. The specified interfaces will be granted a DPDK device number
   starting from 0.
 - start t4p4s switch for p2p test: **./start_t4p4s.sh p2p**
-- launch MoonGen to inject packets externally to the physical interfaces, both unidirectionally or bidirectionally. 
-  Note that t4p4s uses a default Match/Action table to forward packets. The default Match field is the destination MAC address. 
+- Instantiate MoonGen for throughput (unidirectional/bidirectional) and latency tests:
+    * Go to the MoonGen repo directory:
+    
+      **cd ../moongen/**
+      
+    * For unidirectional throughput test:
+    
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+      
+    * For bidirectional throughput test: 
+    
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+      
+    * For latency test: 
+    
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
+
+Note that t4p4s uses a default Match/Action table to forward packets. The default Match field is the destination MAC address. 
   The table is shown here. Part of it looks like this:
   
   | Dst MAC  | Out_port |
@@ -43,43 +59,93 @@ Steps to reproduce p2v test for t4p4s is as follows:
 - start t4p4s switch: **./start_t4p4s.sh p2v**
 - launch a VM instance with a virtio interface connected through the specified socket path, using the p2v.sh script.
 - launch MoonGen and inject traffic to the specified physical interface.
-- inside the VM, launch a FloWatcher-DPDK instance to measure the forwarding throughput.
+ * For unidirectional test:
+    * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput: 
+    
+      **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
+    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: sudo 
+      
+      **cd ../moongen; ./unidirectional-test.sh -s [packet size (Bytes)]**
+ * For bidirectional test:
+    * Inside the VM, go to MoonGen directory: 
+    
+      **cd path/to/MoonGen**
+    * Execute the MoonGen TX/RX script: 
+    
+      **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
+    
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test:
-- in the v2v.cfg configuration file, specify two virtual devices
-- start t4p4s switch: **./start_t4p4s.sh v2v**
-- launch two VMs using
-  - **./v2v.sh**
-  - **./v2v1.sh**
-- on the first VM, start MoonGen to transmit packets to its virtual interface from inside.
-- on the second VM, start FloWatcher-DPDK to measure forwarding throughput of t4p4s switch.
+* In the **v2v.cfg** configuration file, specify two virtual devices
+* start t4p4s switch: **./start_t4p4s.sh v2v**
+* launch two VMs:
+  - Start VM1: **./v2v.sh**
+  - Start VM2: **./v2v1.sh**
+* On VM1, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * Go to MoonGen directory and run its l2-load-latency sample application: 
+    
+      **./build/MoonGen example/l2-load-latency.lua 0 0**
+* On VM2, setup DPDK, as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * For unidirectional throughput test:
+    
+     * Go to FloWatcher-DPDK installation directory and launch it: 
+    
+       **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
+    * For bidirectional throughput test:
+     * Go to MoonGen installation directiory and launch it:
+       
+       **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+       
+    * For latency test:
+      .....
 
 ## Loopback
 ### 1-VNF experiment:
 1. start VPP and configure the loopback forwarding rules: **./start_t4p4s.sh loopback**
 2. start an instance of VM and attach it with two virtual interfaces: **./loopback.sh**
 3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
-      * Go to DPDK l2fwd sample application directory and launch it: **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+      * Login to the VM and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+      * Go to DPDK l2fwd sample application directory and launch it: 
+      
+        **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
       * run MoonGen scripts on the host machine from NUMA node 1:
-       * Go to MoonGen directory of our repo.
+       * Go to MoonGen directory of our repo:
+       
+         **cd ../moongen/
        * unidirectional test: 
        
-         **sudo ./unidirectional-test.sh**
+         **sudo ./unidirectional-test.sh  -s [packet size (Bytes)]**
        * bidirectional test: 
        
-         **sudo ./bidirectional-test.sh**
+         **sudo ./bidirectional-test.sh  -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-1. start t4p4s 2-VNF configuration script: ./start_t4p4s.sh loopback-2-vm
-2. open a new terminal and launch the first VM: **./loopback-vm1.sh**
-3. open another terminal and launch the second VM: **./loopback-vm2.sh**
-4. inside both VMs, setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows and launch DPDK l2fwd sample application.
+1. start t4p4s 2-VNF configuration script:
+
+   **./start_t4p4s.sh loopback-2-vm**
+2. open a new terminal and launch the first VM: 
+
+   **./loopback-vm1.sh**
+3. open another terminal and launch the second VM: 
+
+   **./loopback-vm2.sh**
+   
+4. inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application:
+
+   **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
 5. Launch MoonGen for different measurement:
-   * Go to MoonGen directory of our repo.
-   * unidirectional test: **sudo ./unidirectional-test.sh**
-   * bidirectional test: **sudo ./bidirectional-test.sh**
+   * Go to MoonGen directory of our repo:
+   
+     **cd ../moongen**
+   * unidirectional test:
+   
+     **sudo ./unidirectional-test.sh**
+   * bidirectional test:
+   
+     **sudo ./bidirectional-test.sh**
    * For latency test: 
    
-     **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+     **sudo ./latency-test.sh -r [packet rate (Mbps)]**
