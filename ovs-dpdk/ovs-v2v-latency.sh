@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# A script to start OVS-DPDK switch. The flow table is populated with simple L2 switching rules.
-
 # Stop running instances
 sudo env "PATH=${PATH}" ovs-ctl stop
 

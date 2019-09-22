@@ -1,3 +1,5 @@
 #!/bin/bash
 
-sudo /home/tianzhu/bess/bessctl/bessctl daemon stop
+BESS_DIR=path/to/bess
+
+sudo "${BESS_DIR}"/bessctl/bessctl daemon stop

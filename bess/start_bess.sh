@@ -1,14 +1,16 @@
 #!/bin/bash
 
+BESS_DIR=path/to/bess
+
 sudo mkdir -p /tmp/bess
 sudo rm /tmp/bess/* 2> /dev/null
 
-sudo /home/tianzhu/bess/bessctl/bessctl daemon start
+sudo "${BESS_DIR}"/bessctl/bessctl daemon start
 
 while [[ "$?" -ne 0 ]]
 do
 	echo "startup failure, trying it again!"
-	sudo /home/tianzhu/bess/bessctl/bessctl daemon start
+	sudo "${BESS_DIR}"/bessctl/bessctl daemon start
 done
 
 echo "bess daemon started!"
@@ -22,4 +24,4 @@ fi
 
 echo "configuration: ${config}"
 
-sudo /home/tianzhu/bess/bessctl/bessctl run file "${config}.bess"
+sudo "${BESS_DIR}"/bessctl/bessctl run file "${config}.bess"
