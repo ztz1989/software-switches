@@ -40,16 +40,17 @@ Install FastClick from source and follow the [instructions](https://github.com/t
     * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
     
       **./build/FloWatcher-DPDK -c 3**
-    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1: 
       
-      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+    * On the host side, start the unidirectional test script on NUMA node 1: 
+      
+      **cd ../moongen; sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
 * For bidirectional test:
     * Inside the VM, go to MoonGen directory and execute the MoonGen TX/RX script: 
     
-      **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+      **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)]**
+      **sudo ./bidirectional-test.sh  -r [packet rate (Mbps)]**
 
 ## v2v test
 ### Steps:
@@ -135,5 +136,5 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
    * For latency test:
    
-     **sudo ./latency-test.sh -r [packet rate (Mpps)]** 
+     **sudo ./latency-test.sh -r [packet rate (Mbps)]** 
    
