@@ -26,5 +26,7 @@ Both scripts will output the average throughput upon termination. Also note that
 ### Latency test
 Script for latency test is very simialr to the **unidirectional-test.sh** script. The only difference is this script generates UDP/PTP packets instead of simple ethernet frames. 
 
-   **sudo ./latency-test.sh [-r packet rate]**
+**sudo ./latency-test.sh [-r packet rate]**
 
+Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. In particular, we firstly transmit at 10Gbps rate to obtain the maximal sustainable throughput R+. Then we repeat the same experiments with [0.1, 0.5, 0.99] of R+ respectively.
+By default, MoonGen will output the results in the "histogram.csv" file in current directory.
