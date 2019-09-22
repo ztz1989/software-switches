@@ -10,7 +10,7 @@ Install VPP according to instructions on official website. The VPP version we us
     
       **./vppctl_p2p.sh l2patch**
       
-* Instantiate MoonGen for throughput (unidirectional/bidirectional) and latency:
+* Instantiate MoonGen for throughput (unidirectional/bidirectional) and latency tests:
     * Go to the MoonGen repo directory:
     
       **cd ../moongen/**
