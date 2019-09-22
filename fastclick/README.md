@@ -35,7 +35,7 @@ Install FastClick from source and follow the [instructions](https://github.com/t
 * Start virtual machine using QEMU/KVM and attach one virtual interface: 
 
   **./p2v.sh**
-* Login to the VM and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+* Login to the VM, setup DPDK, FloWatcher-DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
 * For unidirectional test:
     * Inside the VM, to to FloWatcher-DPDK directory and instantiate FloWatcher-DPDK to measure unidrectional throughput:
     
@@ -65,7 +65,7 @@ Install FastClick from source and follow the [instructions](https://github.com/t
 
   **./v2v1.sh**    # start VM1 which transmits packets to VM2
   **./v2v.sh**     # start VM2 which receives packet from VM1 and measures the throughput
-* On VM1, setup DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+* On VM1, setup DPDK, FloWatcher-DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
     * Go to MoonGen directory and run its l2-load-latency sample application:
     
       **./build/MoonGen example/txrx.lua 0 0**
