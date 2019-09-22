@@ -63,16 +63,25 @@ Install FastClick from source and follow the [instructions](https://github.com/t
       **./fastclick-v2v.sh bidirectional-x.click**
 * Start two QEMU/KVM virtual machines:
 
-  **./v2v1.sh**    # start VM1 which transmits packets to VM2
-  **./v2v.sh**     # start VM2 which receives packet from VM1 and measures the throughput
-* On VM1, setup DPDK, FloWatcher-DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
-    * Go to MoonGen directory and run its l2-load-latency sample application:
+  **./v2v1.sh**    
+  **./v2v.sh**     
+* On VM1, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * Go to MoonGen directory and run its l2-load-latency sample application: 
     
-      **./build/MoonGen example/txrx.lua 0 0**
-* On VM2, setup DPDK and MoonGen as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
-    * Go to FloWatcher-DPDK installation directory and launch it using: 
+      **./build/MoonGen example/l2-load-latency.lua 0 0**
+* On VM2, setup DPDK, as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
+    * For unidirectional throughput test:
     
-      **./build/FloWatcher-DPDK -c 3**
+     * Go to FloWatcher-DPDK installation directory and launch it: 
+    
+       **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
+    * For bidirectional throughput test:
+     * Go to MoonGen installation directiory and launch it:
+       
+       **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+       
+    * For latency test:
+      .....
   
 ## Loopback
 ### 1-VNF experiment:
@@ -80,9 +89,11 @@ Install FastClick from source and follow the [instructions](https://github.com/t
     * For unidirectional test, use: 
     
       **./fastclick-loopback.sh**
+      
     * For bidirectional test, use:
     
       **./fastclick-loopback.sh loopback-bi.click**
+      
 2. start an instance of VM and attach it with two virtual interfaces
 
    **./loopback.sh**
@@ -90,10 +101,12 @@ Install FastClick from source and follow the [instructions](https://github.com/t
    * Login to the VM and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
    * Go to DPDK l2fwd sample application directory and launch it:
       
-     **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+     **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+     
    * run MoonGen scripts on the host machine from NUMA node 1:
       
-    * Go to MoonGen directory of our repo.
+    * Go to MoonGen directory of our repo:
+      **cd ../moongen**
        
     * unidirectional test: 
        
@@ -122,7 +135,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
    
 4. inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md)  and launch DPDK l2fwd sample application:
 
-     **./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+     **cd path/to/MoonGen; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
      
 5. Launch MoonGen for different kinds of measurements:
    * Go to MoonGen directory of our repo:
