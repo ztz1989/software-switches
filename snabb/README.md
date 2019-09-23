@@ -86,7 +86,7 @@ Do the same to build bidirectional p2p application (p2p-bi).
   
   **mkdir -p ${SNABB_DIR}/src/program/v2v/; mkdir -p ${SNABB_DIR}/src/program/v2v-bi/**
   
-  **cp script/p2v.lua ${SNABB_DIR}/src/program/v2v/; cp script/p2v-bi.lua ${SNABB_DIR}/src/program/v2v-bi/**
+  **cp script/v2v.lua ${SNABB_DIR}/src/program/v2v/; cp script/v2v-bi.lua ${SNABB_DIR}/src/program/v2v-bi/**
   
 * Recompile snabb program according to (https://github.com/snabbco/snabb#how-do-i-get-started).
 
@@ -120,13 +120,20 @@ Do the same to build bidirectional p2p application (p2p-bi).
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
        
-### For latency test
 ### Steps for latency test:
 * For latency test, we need to setup a loopback forwarding rules between the VMs and use MoonGen's software timestamping script to measure/calculate latency (in terms RTT). Detailed steps are as follows:
 * Terminate all VMs: 
 
   **sudo killall qemu-system-x86_64**
   
+* build v2v-latency app as follows:
+
+  **export SNABB_DIR=path/to/snabb**
+  
+  **mkdir -p ${SNABB_DIR}/src/program/v2v-latency**
+  
+  **cp script/v2v-latency.lua ${SNABB_DIR}/src/program/v2v-latency/**
+
 * restart snabb and configure the loopback forwarding rules:
 
   **./startup-snabb.sh v2v-latency**
