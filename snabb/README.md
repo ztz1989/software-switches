@@ -79,7 +79,7 @@ Do the same to build bidirectional p2p application (p2p-bi).
       **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
-### Steps:
+### Steps for throughput test:
 * Make snabb v2v and bidirectional v2v (v2v-bi) applications:
 
   **export SNABB_DIR=path/to/snabb**
@@ -120,8 +120,33 @@ Do the same to build bidirectional p2p application (p2p-bi).
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
        
-    * For latency test:
-      .....
+### For latency test
+### Steps for latency test:
+* For latency test, we need to setup a loopback forwarding rules between the VMs and use MoonGen's software timestamping script to measure/calculate latency (in terms RTT). Detailed steps are as follows:
+* Terminate all VMs: 
+
+  **sudo killall qemu-system-x86_64**
+  
+* restart snabb and configure the loopback forwarding rules:
+
+  **./startup-snabb.sh v2v-latency**
+
+* Start two QEMU/KVM VMs by opening two termials, just as before:
+
+   * In the first terminal, start VM1: 
+
+     **./loopback-vm1.sh** 
+   * In the second terminal, start VM2: 
+
+     **./loopback-vm2.sh**
+
+     Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
+
+     **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
+   * On VM1, start MoonGen's software timestamping script:
+
+     **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
   
 ## Loopback
 ### 1-VNF experiment:
