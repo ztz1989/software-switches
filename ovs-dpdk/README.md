@@ -116,10 +116,10 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
     
       * In the first terminal, start VM1: 
      
-        **./v2v1.sh** 
+        **./loopback-vm1.sh** 
       * In the second terminal, start VM2: 
       
-        **./v2v.sh**
+        **./loopback-vm2.sh**
         
         Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
         
