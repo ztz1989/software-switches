@@ -43,11 +43,11 @@
   
 * For unidirectional throughput test:
     * Inside the VM, start an pkt-gen instance to receive packets from the `ptnet` interface.
-    
+
       **pkt-gen -i vif0 -f rx**
-      
-      Note that `vif0` is the name assigned to the ptnet virtual interface, it may vary depending on systems. Please adjust it accordingly.
-      
+
+Note that `vif0` is the name assigned to the ptnet virtual interface, it may vary depending on systems. Please adjust it accordingly.
+
     * On the host side, go to our moongen directory and start its unidirectional test script:
     
       **cd ../moongen/; sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
