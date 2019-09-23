@@ -37,47 +37,53 @@
     
 ## p2v test
 ### Steps:
-* Start an instance of VALE, bind a physical port and a virtual port to it and instantiate the virtual machine using QEMU/KVM with a ptnet-pci virtual interface:
+* Start an instance of VALE, attach a physical port and a `ptnet` port to it and then instantiate the virtual machine using QEMU/KVM with a ptnet-pci virtual interface. The following script does all the work:
 
   **./p2v.sh**
   
-* For unidirectional test:
-    * Inside the VM, start an pkt-gen instance to receive packets from the host
+* For unidirectional throughput test:
+    * Inside the VM, start an pkt-gen instance to receive packets from the `ptnet` interface.
     
       **pkt-gen -i vif0 -f rx**
       
-      vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+      Note that `vif0` is the name assigned to the ptnet virtual interface, it may vary depending on systems. Please adjust it accordingly.
       
-    * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1:
+    * On the host side, go to our moongen directory and start its unidirectional test script:
     
-      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+      **cd ../moongen/; sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
       
-* For bidirectional test:
-    * Inside the VM, create a VALE interface: 
+* For bidirectional throughput test:
+    * Inside the VM, create a VALE interface `v0`: 
     
       **vale-ctl -n v0**
-    * attach both vif0 and v0:
+      
+    * attach both vif0 and v0 to VALE (named `vale1` here):
     
-      **vale-ctl -a vale1:vif0** # vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+      **vale-ctl -a vale1:vif0** 
+      
+      Note again that vif0 is the name assigned to the ptnet virtual interface, it may vary on different systems.
 
       **vale-ctl -a vale1:v0**
-    * Then instantiate a pair of pkt-gen TX/RX thread: 
+      
+    * Then instantiate a pair of pkt-gen TX/RX threads: 
     
       **pkt-gen -i vale1:v0 -f tx**
       
       **pkt-gen -i vale1:v0 -f rx**
-    * On the host side, run MoonGen bidirectional test scripts on NUMA node 1:
+      
+    * On the host side, go to the moongen directory of this repo and run the bidirectional test script:
     
-      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+      **cd ../moongen/; sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
-### Steps:
-* Start netmap and configure rules cross-connect rules between two virtual ports using VALE switch, and start two QEMU/KVM 
+### Steps for throughput test:
+* Start netmap and configure the cross-connect rules between two virtual ports using VALE switch, and start two QEMU/KVM 
 virtual machines:
 
-  **./v2v1.sh**  # start VM1 which transmits packets to VM2
-  
-  **./v2v.sh**   # start VM2 which receives packet from VM1 and measures the throughput under unidirectional test
+  * start VM1: **./v2v1.sh**
+
+  * start VM2: **./v2v.sh**
+
 * On VM1 (which can also be logged in from the host machine using: ssh root@localhost -p 10020), we start MoonGen using the following commands:
     * For unidirectional test, start a pkt-gen TX thread to inject packets towards the other VM: 
     
@@ -85,21 +91,64 @@ virtual machines:
     * For bidirectional test, create a VALE interface: 
     
       **vale-ctl -n v0**
-    * attach both vif0 and v0:
+     * attach both vif0 and v0:
     
-      **vale-ctl -a vale1:vif0** # vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+       **vale-ctl -a vale1:vif0**
+       
+       vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
       
-      **vale-ctl -a vale1:v0**
-    * Then instantiate a pair of pkt-gen TX/RX thread:
+       **vale-ctl -a vale1:v0**
+     * Then instantiate a pair of pkt-gen TX/RX thread:
     
-      **pkt-gen -i vale1:v0 -f tx**
+       **pkt-gen -i vale1:v0 -f tx**
       
-      **pkt-gen -i vale1:v0 -f rx**
+       **pkt-gen -i vale1:v0 -f rx**
+       
 * On VM2 (which can also be logged in from the host machine using: ssh root@localhost -p 10030):
     * For unidirectional test, start a pkt-gen RX thread to monitor traffic from the first VM: 
     
       **pkt-gen -i vif0 -f rx**
-    * For bidirectional test, follow exactly the same configuration steps as the first VM.
+    * For bidirectional test, follow exactly the same configuration steps as the first VM:
+    
+      **vale-ctl -n v0**
+      
+      **vale-ctl -a vale1:vif0**
+      
+      **vale-ctl -a vale1:v0**
+      
+      **pkt-gen -i vale1:v0 -f tx**
+      
+      **pkt-gen -i vale1:v0 -f rx**
+
+### For latency test
+* Start netmap and configure the cross-connect rules between two virtual ports using VALE switch, and start two QEMU/KVM 
+virtual machines:
+
+  * Start VM1: **./v2v1.sh**
+
+    Assign an IP address to the `vif0` virtio interface:
+    
+    **ip addr add 10.0.0.1 dev vif0**
+    
+    **ip link set vif0 up**
+    
+    **ip link set vif0 promisc on **
+    
+  * Start VM2: **./v2v.sh**
+  
+    Assign an IP address to the `vif0` virtio interface:
+    
+    **ip addr add 10.0.0.2 dev vif0**
+    
+    **ip link set vif0 up**
+    
+    **ip link set vif0 promisc on **
+    
+  * From VM1, ping 10.0.0.2 to measure the RTT:
+  
+    **ping 10.0.0.2 -i 0.000001**
+    
+    Here we issue 1 million packets per second, making the packet transmission rate the same as the timestamps-software.lua script.
   
 ## Loopback
 ### 1-VNF experiment:
@@ -118,13 +167,13 @@ virtual machines:
        
          **cd ../moongen/**
          
-        * unidirectional test: 
+       * unidirectional test: 
         
-          **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+         **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
           
-        * bidirectional test:
+       * bidirectional test:
         
-          **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+         **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
