@@ -1,5 +1,6 @@
-# netmap/VALE experiments
+# netmap/VALE tests
 * Installation instructions are detailed in https://github.com/luigirizzo/netmap. Install it from the source and build the related tools including `VALE switch`, `pkt-gen`, and `bridge` etc.
+* Build netmap's customized version of QEMU to support ptnet mechanism. More details can be found [here](https://github.com/luigirizzo/netmap/blob/master/README.ptnetmap.md). All the virtual machines mentioned here are based on this special version of QEMU.  
 * Bind concerning physical ports to netmap's `ixgbe` device driver.
 * Enable promiscuous mode for the physical ports:
 
@@ -31,17 +32,26 @@
     * For latency test: 
     
       **sudo ./latency-test.sh -r [packet rate (Mbps)]**
+      
+      Vary the packet rate as detailed [here](https://github.com/ztz1989/software-switches/tree/artifacts/moongen#latency-test).
     
 ## p2v test
 ### Steps:
-* Start netmap, bind a physical port and a ptnet port to it, configure forwarding rules between them, 
-and instantiate virtual machine using QEMU/KVM and attach one virtual interface: ./p2v.sh
+* Start an instance of VALE, bind a physical port and a virtual port to it and instantiate the virtual machine using QEMU/KVM with a ptnet-pci virtual interface:
+
+  **./p2v.sh**
+  
 * For unidirectional test:
     * Inside the VM, start an pkt-gen instance to receive packets from the host
-      **pkt-gen -i vif0 -f rx** # vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+    
+      **pkt-gen -i vif0 -f rx**
+      
+      vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
+      
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1:
     
       **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+      
 * For bidirectional test:
     * Inside the VM, create a VALE interface: 
     
@@ -95,17 +105,23 @@ virtual machines:
 ### 1-VNF experiment:
   1. start netmap and configure multiple instances of VALE switch to realize the loopback forwarding workflow:
   
-     **./loopback.sh
+     **./loopback.sh**
+     
   2. inside the VM, bind the two virtual interfaces to another VALE instance:
   
      **vale-ctl -a vale0:vif0**
      
      **vale-ctl -a vale0:vif1**
-      * run MoonGen scripts on the host machine from NUMA node 1:
-       * Go to MoonGen directory of our repo.
+     
+      * run MoonGen scripts on the host machine from NUMA node 1
+       * Go to MoonGen directory of our repo:
+       
+         **cd ../moongen/**
+         
         * unidirectional test: 
         
           **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+          
         * bidirectional test:
         
           **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
@@ -147,3 +163,5 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 
 ## Detach all the physical/virtual ports from any VALE instance upon finishing, so as to avoid potential race conditions:
    **./detach.sh**
+   
+   VALE will keep grabing the interfaces if they are not detached from it.
