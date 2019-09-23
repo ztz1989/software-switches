@@ -26,17 +26,17 @@ Both scripts will output the average throughput upon termination. Also note that
 ### Latency test
 There are two sorts of scripts for latency tests.
 
-### p2p and loopback scenario
+### p2p and loopback scenarios
 Script for such latency test is based on the **unidirectional-test.sh** script. The only difference is this script generates UDP packets instead of simple ethernet frames. Since packets are generated from NUMA node 1 in p2p and loopback scenarios, we can exploit the hardware timestamping features of the physical NIC on NUMA node 1. The following script generates traffic on NUMA node 1 and collects the stamped packets forwarded back by the software switch under test on NUMA node 0. We measure latency as Round Trip Time (RTT).
 
 **sudo ./latency-test.sh [-r packet rate (Mbps)]**
 
-Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. In particular, we firstly transmit at 10Gbps rate to obtain the maximal sustainable throughput R+. Then we repeat the same experiments with [0.1, 0.5, 0.99] of R+ respectively.
-By default, MoonGen will output the results in the "histogram.csv" file in current directory.
+Note that we only used 64B packets in our experiments and varied the packet rate among [0.1, 0.5, 0.99] of the maximal sustainable throughput. In particular, we firstly transmit at 10Gbps rate to obtain the maximal sustainable throughput R+. Then we repeat the same experiments with [0.1, 0.5, 0.99] of R+ respectively. By default, MoonGen will output the results in the "histogram.csv" file in current directory.
 
-### v2v scenarios
-We also try to measure RTT in the v2v scenario. However, unlike p2p or loopback scenario, MoonGen cannot take advantage of physical NIC's hardware timestamping feature inside a virtual machine, we instead use another MoonGen script that exploits software timestamping. Basically, it stamps packets in software instead of hardware. Even if not as accurate as hardware timestamping, it still provides a reference by comparing all the solutions (except VALE) under the same setting. Command to issue the script is:
+### v2v scenario
+We also try to measure RTT in the v2v scenario. However, unlike p2p or loopback scenario, MoonGen cannot take advantage of physical NIC's hardware timestamping feature from inside a virtual machine, we instead use another MoonGen script that exploits software timestamping. Basically, it stamps packets in software (at **1 Mpps**) instead of hardware. Even if not as accurate as hardware timestamping, it still provides a reference by comparing all the solutions (except VALE) under the same setting. The command to issue the script is:
 
 **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
 
-More details about MoonGen's software timestamping features can be found [here](https://github.com/emmericp/MoonGen/tree/master/examples/timestamping-tests).
+More details about MoonGen's software timestamping features can be found [here](https://github.com/emmericp/MoonGen/tree/master/examples/timestamping-tests). 
+
