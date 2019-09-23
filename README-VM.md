@@ -55,24 +55,24 @@ Note that we need to specify the virtual device type as `ptnet-pci`. The backend
 
 ## Configuration of VNFs inside the virtual machines
 1. DPDK: install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html). Our experiments were based on DPDK 18.11, but newer versions are expected to function as well. A simple example is given as follows:
-  ```
-  #!/bin/bash
+    ```
+    #!/bin/bash
 
-  # mount and reserve hugepages
-  sysctl vm.nr_hugepages=1024
-  mkdir -p /dev/hugepages
-  mount -t hugetlbfs hugetlbfs /dev/hugepages
+    # mount and reserve hugepages
+    sysctl vm.nr_hugepages=1024
+    mkdir -p /dev/hugepages
+    mount -t hugetlbfs hugetlbfs /dev/hugepages
 
-  # load igb_uio module
-  modprobe uio
-  insmod /root/dpdk-18.11/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
+    # load igb_uio module
+    modprobe uio
+    insmod /root/dpdk-18.11/x86_64-native-linuxapp-gcc/kmod/igb_uio.ko
 
-  # bind the devices to DPDK
-  $DPDK_DIR/usertools/dpdk-devbind.py --status
-  $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:04.0 
-  $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
-  ```
-  In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two virtualized ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
+    # bind the devices to DPDK
+    $DPDK_DIR/usertools/dpdk-devbind.py --status
+    $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:04.0 
+    $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
+    ```
+    In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two virtualized ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
 
 2. MoonGen: build MoonGen inside the VM. More details can be found [here](https://github.com/ztz1989/software-switches/tree/master/moongen).
 
