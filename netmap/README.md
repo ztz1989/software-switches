@@ -143,7 +143,7 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
       
    * For latency test: 
    
-      **sudo ./latency-test.sh -r [packet rate (Mpps)]**
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
 
 ## Detach all the physical/virtual ports from any VALE instance upon finishing, so as to avoid potential race conditions:
    **./detach.sh**
