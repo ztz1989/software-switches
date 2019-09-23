@@ -98,7 +98,7 @@ Install FastClick from source and follow the [instructions](https://github.com/t
 
         **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
 
-      - On VM1, start MoonGen's software timestamping script:
+      - On VM1, start MoonGen's software timestamping script and measure latency:
 
         **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
   
