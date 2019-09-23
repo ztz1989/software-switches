@@ -132,7 +132,7 @@ virtual machines:
     
     **ip link set vif0 up**
     
-    **ip link set vif0 promisc on **
+    **ip link set vif0 promisc on**
     
   * Start VM2: **./v2v.sh**
   
@@ -142,7 +142,7 @@ virtual machines:
     
     **ip link set vif0 up**
     
-    **ip link set vif0 promisc on **
+    **ip link set vif0 promisc on**
     
   * From VM1, ping 10.0.0.2 to measure the RTT:
   
