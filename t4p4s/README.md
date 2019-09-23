@@ -56,7 +56,9 @@ Before starting p2v test, one thing to emphasize about t4p4s is the fact that it
 
 Steps to reproduce p2v test for t4p4s is as follows:
 - in the p2v.cfg configuration file, line 8: specify your intended virtual device with the Unix socket path through the DPDK --vdev option. Also whitelist the PCI address of the physical interface using -w option.
-- start t4p4s switch: **./start_t4p4s.sh p2v**
+- start t4p4s switch: 
+
+  **./start_t4p4s.sh p2v**
 - launch a VM instance with a virtio interface connected through the specified socket path, using the p2v.sh script.
 - launch MoonGen and inject traffic to the specified physical interface.
  * For unidirectional test:
@@ -78,6 +80,7 @@ Steps to reproduce p2v test for t4p4s is as follows:
       **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test:
+### Steps for throughput test:
 * In the **v2v.cfg** configuration file, specify two virtual devices
 * start t4p4s switch: **./start_t4p4s.sh v2v**
 * launch two VMs:
@@ -97,9 +100,28 @@ Steps to reproduce p2v test for t4p4s is as follows:
      * Go to MoonGen installation directiory and launch it:
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
-       
-    * For latency test:
-      .....
+      
+### Steps for latency test:
+* Kill all the VMs as well as t4p4s
+  - Start t4p4s, configure a loopback forwarding flow between two VMs (each with two virtio interfaces):
+      
+    **./start_t4p4s v2v-latency**
+
+  - In the first terminal, start VM1:
+
+    **./loopback-vm1.sh**
+
+  - Open a second terminal, start VM2:
+
+    **./loopback-vm2.sh**
+
+  - Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
+
+    **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
+  - On VM1, start MoonGen's software timestamping script and measure latency:
+
+    **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
 
 ## Loopback
 ### 1-VNF experiment:
@@ -111,15 +133,16 @@ Steps to reproduce p2v test for t4p4s is as follows:
       
         **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
       * run MoonGen scripts on the host machine from NUMA node 1:
-       * Go to MoonGen directory of our repo:
+        * Go to MoonGen directory of our repo:
        
-         **cd ../moongen/
-       * unidirectional test: 
+          **cd ../moongen/**
+         
+        * unidirectional test: 
        
-         **sudo ./unidirectional-test.sh  -s [packet size (Bytes)]**
-       * bidirectional test: 
+          **sudo ./unidirectional-test.sh  -s [packet size (Bytes)]**
+        * bidirectional test: 
        
-         **sudo ./bidirectional-test.sh  -s [packet size (Bytes)]**
+          **sudo ./bidirectional-test.sh  -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
