@@ -30,7 +30,7 @@
       
     * For latency test: 
     
-      **sudo ./latency-test.sh -r [packet rate (Mpps)]**
+      **sudo ./latency-test.sh -r [packet rate (Mbps)]**
     
 ## p2v test
 ### Steps:
@@ -41,7 +41,7 @@ and instantiate virtual machine using QEMU/KVM and attach one virtual interface:
       **pkt-gen -i vif0 -f rx** # vif0 is the name assigned to the ptnet virtual interface, it may vary depending on systems.
     * On the host side, go to MoonGen repo directory and start its unidirectional test script on NUMA node 1:
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
 * For bidirectional test:
     * Inside the VM, create a VALE interface: 
     
@@ -58,7 +58,7 @@ and instantiate virtual machine using QEMU/KVM and attach one virtual interface:
       **pkt-gen -i vale1:v0 -f rx**
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1:
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
 ### Steps:
@@ -105,30 +105,45 @@ virtual machines:
        * Go to MoonGen directory of our repo.
         * unidirectional test: 
         
-          **sudo ./unidirectional-test.sh**
+          **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
         * bidirectional test:
         
-          **sudo ./bidirectional-test.sh**
+          **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
      
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
-* start netmap 2-VNF configuration script: ./loopback-2-vm.sh
-* open a new terminal and launch the first VM: ./loopback-2-vm1.sh
-* Inside both VMs, use VALE switch to bridge each pair of virtual interfaces just like other test scenarios.
-* Launch MoonGen for different measurement:
+* From a terminal, configure netmap 2-VNF forwarding and launch the first VM: 
+  
+  **./loopback-2-vm.sh**
+  
+* open a terminal and launch the second VM: 
+
+  **./loopback-2-vm1.sh**
+  
+  Each VM contains two virtual interfaces.
+  
+* Inside both VMs, use VALE switch to bridge the pair of virtual interfaces:
+  
+  **sudo vale-ctl -b vale0:vif0**
+  
+  **sudo vale-ctl -b vale0:vif1**
+  
+* Launch MoonGen for different kinds of measurements:
    * Go to MoonGen directory of our repo:
       
      **cd ../moongen/**
+     
    * unidirectional test: 
    
-     **sudo ./unidirectional-test.sh**
+     **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+     
    * bidirectional test: 
    
-      **sudo ./bidirectional-test.sh**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+      
    * For latency test: 
    
-      **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./latency-test.sh -r [packet rate (Mpps)]**
 
 ## Detach all the physical/virtual ports from any VALE instance upon finishing, so as to avoid potential race conditions:
-
    **./detach.sh**
