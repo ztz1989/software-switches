@@ -54,7 +54,9 @@ sudo taskset -c 1-4 ./qemu/x86_64-softmmu/qemu-system-x86_64 CentOS-7-x86_64-Azu
 Note that we need to specify the virtual device type as `ptnet-pci`. The backend can be any netmap/VALE interfaces. We specify a VALE interface here.
 
 ## Configuration of VNFs inside the virtual machines
-1. DPDK: install DPDK from source, detailed instructions can be found from DPDK official website (https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html). Our experiments were based on DPDK 18.11, but newer versions are expected to function as well. A simple example is given as follows:
+To reproduce our experiments, a set of tools are required.
+1. DPDK: for all the software switches except VALE, DPDK is required to support other tools such as MoonGen and FloWatcher-DPDK inside the VM. For loopback test, we adopted DDPK's l2fwd sample application as VNF to forward packets among a linear chain of VMs. Firstly, install DPDK from source, more detailed instructions can be found 
+[here](https://doc.dpdk.org/guides/linux_gsg/build_dpdk.html). Our experiments were based on DPDK 18.11, but newer versions are expected to function as well. A simple example is given as follows:
     ```
     #!/bin/bash
 
@@ -72,7 +74,8 @@ Note that we need to specify the virtual device type as `ptnet-pci`. The backend
     $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:04.0 
     $DPDK_DIR/usertools/dpdk-devbind.py -b igb_uio 00:05.0
     ```
-    In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the kernel. Then we bind two virtualized ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
+    
+    In this script, we firstly mount and reserve hugepages for DPDK. Then we load DPDK PMD driver (such as igb_uio) into the   kernel. Then we bind two virtualized ports to DPDK using their PCI addresses (04:00.0, 05:00.0).
 
 2. MoonGen: build MoonGen inside the VM. More details can be found [here](https://github.com/ztz1989/software-switches/tree/master/moongen).
 
