@@ -138,7 +138,10 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 3. Open another terminal and launch the second VM: **./loopback-vm2.sh**
 
 Each VM contains two virtio virtual interfaces.
-4. Inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application.
+4. Inside both VMs, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application as follows:
+
+   **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
 5. Launch MoonGen to measure different metrics:
    * Go to MoonGen directory of our repo.
    * unidirectional test: **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
