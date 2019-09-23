@@ -80,8 +80,27 @@ Install FastClick from source and follow the [instructions](https://github.com/t
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
        
-    * For latency test:
-      .....
+    * For latency test, 
+      - Kill all the VMs as well as Fastclick
+      - Start fastclick, configure a loopback forwarding flow between two VMs (each with two virtio interfaces):
+      
+        **./fastclick-v2v-latency.sh**
+
+      - In the first terminal, start VM1:
+
+        **./loopback-vm1.sh**
+
+      - Open a second terminal, start VM2:
+
+        **./loopback-vm2.sh**
+
+      - Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
+
+        **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
+      - On VM1, start MoonGen's software timestamping script:
+
+        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
   
 ## Loopback
 ### 1-VNF experiment:
@@ -97,24 +116,26 @@ Install FastClick from source and follow the [instructions](https://github.com/t
 2. start an instance of VM and attach it with two virtual interfaces
 
    **./loopback.sh**
+   
 3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
    * Login to the VM and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
-   * Go to DPDK l2fwd sample application directory and launch it:
-      
+   * Go to the DPDK l2fwd sample application directory and launch it:
+
      **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
-     
+
    * run MoonGen scripts on the host machine from NUMA node 1:
-      
+
     * Go to MoonGen directory of our repo:
+
       **cd ../moongen**
-       
+
     * unidirectional test: 
-       
-       **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
-         
+
+       **sudo ./unidirectional-test.sh -s [packet size (in Bytes)]**
+
     * bidirectional test: 
-         
-       **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+
+      **sudo ./bidirectional-test.sh -s [packet size (in Bytes)]**
 
 ### Multi-VNF experiments:
 Depending on the number of VNFs, our experiments use different scripts. We demonstrate only 2-VNF experiment as an example:
