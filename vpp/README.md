@@ -57,7 +57,7 @@ Install VPP according to instructions on official website. The VPP version we us
       **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
-### Steps:
+### Steps for throughput test:
 * Start VPP and configure the forwarding rules between two VMs
     * **./startup_vpp.sh v2v**
     * Open another terminal and configure VPP l2patch rules: 
@@ -81,9 +81,33 @@ Install VPP according to instructions on official website. The VPP version we us
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
        
-    * For latency test:
-      .....
+### Steps for latency test:
+* For latency test, we need to setup a loopback forwarding rules between the VMs and use MoonGen's software timestamping script to measure/calculate latency (in terms RTT). Detailed steps are as follows:
+* Terminate all VMs: 
+
+  **sudo killall qemu-system-x86_64**
   
+* restart BESS and configure the loopback forwarding rules:
+
+  **./startup_vpp.sh v2v-latency**
+
+* Start two QEMU/KVM VMs by opening two termials, just as before:
+
+   * In the first terminal, start VM1: 
+
+     **./loopback-vm1.sh** 
+   * In the second terminal, start VM2: 
+
+     **./loopback-vm2.sh**
+
+     Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
+
+     **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
+   * On VM1, start MoonGen's software timestamping script:
+
+     **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+
 ## Loopback
 ### 1-VNF experiment:
   1. start VPP and configure the loopback forwarding rules
@@ -95,10 +119,11 @@ Install VPP according to instructions on official website. The VPP version we us
   
       **./loopback.sh**
   3. inside the VM, initiate DPDK and run the DPDK l2fwd sample application
-      * Login to the VM and setup DPDK according to https://github.com/ztz1989/software-switches#configure-dpdk-inside-the-vm-an-example-is-given-as-follows.
+      * Login to the VM and setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
       * Go to DPDK l2fwd sample application directory and launch it: 
       
          **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+         
       * run MoonGen scripts on the host machine from NUMA node 1:
        * Go to MoonGen directory of our repo:
        
@@ -123,7 +148,8 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 3. open another terminal and launch the second VM: 
 
    **./loopback-vm2.sh**
-4. inside both VMs, setup DPDK detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application.
+4. inside both VMs, setup DPDK detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md) and launch DPDK l2fwd sample application:
+
    **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
 5. Launch MoonGen for different measurement:
       * Go to MoonGen directory of our repo:
