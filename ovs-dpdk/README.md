@@ -13,6 +13,7 @@ Detailed steps to repeat our experiments are listed as follows:
     * Go to the MoonGen repo directory
     
       **cd ../MoonGen**
+      
     * For unidirectional throughput test: 
     
       **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
@@ -105,7 +106,28 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
     
       **cd path/to/MoonGen; ./build/MoonGen path/to/txrx.lua 0 0**
 
-* For latency test, we run MoonGen's software timestamping script inside VM. Although not as accurate as hardware timestamping, it can still provide a comparison among different software switches. 
+* For latency test, we need to setup a loopback forwarding rules between the VMs and use MoonGen's software timestamping script to measure/calculate latency (in terms RTT). Detailed steps are as follows:
+    * terminate all VMs: **sudo killall qemu-system-x86_64**
+    * restart OVS-DPDK and configure the loopback forwarding rules:
+    
+      **./ovs-v2v-latency.sh**
+    
+    * Start two QEMU/KVM VMs by opening two termials, just as before:
+    
+      * In the first terminal, start VM1: 
+     
+        **./v2v1.sh** 
+      * In the second terminal, start VM2: 
+      
+        **./v2v.sh**
+        
+        Then start DPDK l2fwd app to inter-connect the two virtio ports on VM2:
+        
+        **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+      
+      * On VM1, start MoonGen's software timestamping script:
+      
+        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
 
 ## Loopback test
 In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, each of which is hosted by a VM. Packets are injected through one physical interfaces and received from the other physical interface.
@@ -123,9 +145,11 @@ In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, 
   * Go to DPDK l2fwd sample application directory and launch it: 
       
     **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+    
   * On the host side, run MoonGen scripts on the host machine from NUMA node 1:
      
      **cd ../moongen**
+     
    * unidirectional test: 
            
      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
@@ -138,9 +162,11 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
 1. start OVS 2-VNF configuration script: 
 
    **./ovs-loopback-2-vm.sh**
+   
 2. open a new terminal and launch the first VM:
     
    **./loopback-vm1.sh**
+   
 3. open another terminal and launch the second VM: 
 
    **./loopback-vm2.sh**
@@ -164,3 +190,4 @@ Depending on the number of VNFs, our experiments use different scripts. We demon
   **./terminate_ovs-dpdk.sh**
  
   This script terminates both ovs daemon and ovsdb threads. This step is necessary before running any experiment for other software switches, just in case of race conditions on the interfaces or cores.
+
