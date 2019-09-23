@@ -1,26 +1,36 @@
 # netmap/VALE experiments
-* Installation instructions are detailed in https://github.com/luigirizzo/netmap. 
-* Bind concerning physical ports to netmap's ixgbe device driver.
-* Enable promiscuous mode for each physical port.
+* Installation instructions are detailed in https://github.com/luigirizzo/netmap. Install it from the source and build the related tools including `VALE switch`, `pkt-gen`, and `bridge` etc.
+* Bind concerning physical ports to netmap's `ixgbe` device driver.
+* Enable promiscuous mode for the physical ports:
+
+  **sudo ip link set [interface name] promisc on**
 
 ## p2p test
 ### Steps:
-* Start netmap and configure rules cross-connect rules between two physical ports using VALE switch:
+* Start an instance of VALE switch named `vale0` and attach two physical interfaces to it:
 
   **sudo vale-ctl -b vale0:if0**
+  
   **sudo vale-ctl -b vale0:if1**
-    Current configuration designates the two ports with PCI address 0b:00.0 and 0b:00.1, modify it to your respective PCI addresses for reproduction.
-* Instantiate MoonGen to TX/RX the performance for throughput (unidirectional/bidirectional) and latency:
-    * Go to the MoonGen repo directory
+
+  The interface names `if0` and `if1` need to be modifed to the correct name on your server, the names can be verified through the `ifconfig/ip` commands or DPDK's `dpdk-devbind.py -s` command (just check the `if` field).
+  
+* Instantiate MoonGen to perform throughput (unidirectional/bidirectional) and latency tests:
+    * Go to the MoonGen repo directory:
+    
+      **cd ../moongen/**
+      
     * For unidirectional test: 
     
-      **sudo ./unidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./unidirectional-test.sh -s [packet size (Bytes)]**
+      
     * For bidirectional test: 
     
-      **sudo ./bidirectional-test.sh  -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+      
     * For latency test: 
     
-      **sudo ./latency-test.sh -r [packet rate (Mpps)] -s [packet size (Bytes)]**
+      **sudo ./latency-test.sh -r [packet rate (Mpps)]**
     
 ## p2v test
 ### Steps:
