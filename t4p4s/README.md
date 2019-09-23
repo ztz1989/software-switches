@@ -96,8 +96,7 @@ Steps to reproduce p2v test for t4p4s is as follows:
      * Go to FloWatcher-DPDK installation directory and launch it: 
     
        **cd path/to/FloWatcher-DPDK; ./build/FloWatcher-DPDK -c 3**
-    * For bidirectional throughput test:
-     * Go to MoonGen installation directiory and launch it:
+    * For bidirectional throughput test, go to MoonGen installation directiory and launch it:
        
        **cd path/to/MoonGen; ./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
       
