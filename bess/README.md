@@ -54,20 +54,23 @@ Install BESS according to the instructions on [BESS official website](https://gi
       **cd ../moongen; ./unidirectional-test.sh -s [packet size (Bytes)]**
       
 * For bidirectional test:
-    * Inside the VM, go to MoonGen directory: **cd /root/MoonGen**
+    * Inside the VM, go to MoonGen directory: 
+    
+      **cd /root/MoonGen**
+      
     * Execute the MoonGen TX/RX script: 
     
       **./build/MoonGen ../script/txrx.lua -s [packet size (Bytes)]**
+      
     * On the host side, run MoonGen bidirectional test scripts on NUMA node 1: 
     
-      **sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
+      **cd ../moongen; sudo ./bidirectional-test.sh -s [packet size (Bytes)]**
 
 ## v2v test
-### Steps:
+### Steps for throughput test:
 * Open a new terminal, start BESS and configure v2v forwarding for BESS:
      * For unidirectional test: **./start_bess.sh v2v**
      * For bidirectioanl test: **./start_bess v2v-bi**
-     * For latency test: **./start_bess v2v-latency**
 * Start two QEMU/KVM virtual machines:
     * Open a terminal and start VM1: **./v2v1.sh**    
     * Open another terminal and launch VM2: **./v2v.sh**
@@ -77,9 +80,7 @@ Install BESS according to the instructions on [BESS official website](https://gi
       **cd path/to/MoonGen; ./build/MoonGen path/to/txrx.lua 0 0**
       
       The txrx.lua script is also modified from MoonGen's l2-load-latency.lua sample script. Instead of using two ports, it just TX/RX on the same port simultaneously.
-    
-    * For latency test, ****
-      
+          
 * On VM2, setup DPDK as detailed [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md).
     * For unidrectional throughput test, go to FloWatcher-DPDK installation directory and launch it using: 
     
@@ -92,7 +93,26 @@ Install BESS according to the instructions on [BESS official website](https://gi
     * For latency test, launch DPDK l2fwd sample app to forward packets between the two virtual interfaces of VM2.
     
       **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
-  
+
+### Steps for latency test:
+* Start BESS and configure loopback forwarding between two VMs:
+
+  **./start_bess v2v-latency**
+
+* Open a terminal and start VM1: **./loopback-vm1.sh**
+
+* Open another terminal and start VM2: 
+
+  **./loopback-vm2.sh**
+   
+* Inside VM2, launch DPDK l2fwd sample app to forward packets between the two virtual interfaces of VM2.
+    
+  **cd path/to/l2fwd; ./build/l2fwd -l 0-3 -- -p 3 -T 1 -q 1**
+
+* Inside VM1, launch MoonGen software timestamping script to measure latency:
+
+  **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+
 ## Loopback
 ### 1-VNF experiment:
   1. Open a terminal, start BESS and configure the corresponding forwarding for BESS as follows: 
