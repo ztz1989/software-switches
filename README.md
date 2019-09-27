@@ -22,8 +22,6 @@ A detailed description of test scenarios and experimental results can be found o
 * [snabb](https://github.com/ztz1989/software-switches/tree/artifacts/snabb)
 * [VALE](https://github.com/ztz1989/software-switches/tree/artifacts/netmap)
 
-We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted for other switches.
-
 ## Metrics
 We measure both throughput and latency under the four test scenarios for each software switch.
 
@@ -52,13 +50,4 @@ Our experiments adopted several software tools for different test scenarios
 ## Quick start
 
 Our script are organized as follows: 
-In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions.
-
-The naming convention for the scritp is the following: ``` [switch-name]-[experiment-type].sh "[pktsize argument]" ```.
-Where:
-
-```
-switch-name={ovs-dpdk, fastclick, vpp, bess, t4p4s, snabb, netmap}
-experiment-type= {p2p, p2v, v2v, loopback}
-
-```
+In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions. We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted for other switches.
