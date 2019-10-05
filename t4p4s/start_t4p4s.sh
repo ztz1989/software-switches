@@ -1,6 +1,6 @@
 #!/bin/bash
 
-T4P4s_DIR=/home/tianzhu/t4p4s/t4p4s
+T4P4s_DIR=path/to/t4p4s
 CURR_DIR=$(pwd)
 
 sudo mkdir -p /tmp/t4p4s
