@@ -100,7 +100,7 @@ Install FastClick from source and follow the [instructions](https://github.com/t
 
       - On VM1, start MoonGen's software timestamping script and measure latency:
 
-        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1**
   
 ## Loopback
 ### 1-VNF experiment:
