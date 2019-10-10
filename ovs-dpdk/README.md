@@ -127,7 +127,7 @@ In v2v scenario, we configure OVS-DPDK to rely packets between two VMs.
       
       * On VM1, start MoonGen's software timestamping script:
       
-        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+        **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1**
 
 ## Loopback test
 In this scenario, we configure OVS-DPDK to forward packets for a chain of VNFs, each of which is hosted by a VM. Packets are injected through one physical interfaces and received from the other physical interface.
