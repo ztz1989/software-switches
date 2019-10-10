@@ -111,7 +111,7 @@ Install BESS according to the instructions on [BESS official website](https://gi
 
 * Inside VM1, launch MoonGen software timestamping script to measure latency:
 
-  **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+  **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1**
 
 ## Loopback
 ### 1-VNF experiment:
