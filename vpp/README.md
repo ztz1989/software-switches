@@ -106,7 +106,7 @@ Install VPP according to instructions on official website. The VPP version we us
 
    * On VM1, start MoonGen's software timestamping script:
 
-     **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+     **cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1**
 
 ## Loopback
 ### 1-VNF experiment:
