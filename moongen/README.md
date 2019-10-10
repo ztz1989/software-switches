@@ -36,7 +36,7 @@ Note that we only used 64B packets in our experiments and varied the packet rate
 ### v2v scenario
 We also try to measure RTT in the v2v scenario. However, unlike p2p or loopback scenario, MoonGen cannot take advantage of physical NIC's hardware timestamping feature from inside a virtual machine, we instead use another MoonGen script that exploits software timestamping. Basically, it stamps packets in software (at **1 Mpps**) instead of hardware. Even if not as accurate as hardware timestamping, it still provides a reference by comparing all the solutions (except VALE) under the same setting. The command to issue the script is:
 
-**cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1 10000**
+**cd path/to/MoonGen; ./build/MoonGen path/to/timestamps-software.lua 0 1**
 
 More details about MoonGen's software timestamping features can be found [here](https://github.com/emmericp/MoonGen/tree/master/examples/timestamping-tests). 
 
