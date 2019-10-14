@@ -5,9 +5,15 @@ Since the 7 software switches under test are based on different implementation t
 
 ## Configuration of virtual machines
 ### VM Image
-We choose Centos images available [here](https://cloud.centos.org/centos/7/images/). In our experiments, we have used the **CentOS-7-x86_64-Azure-vm2.qcow2** image. All the virtual machines are instantiated from duplications of this image to ensure fairness.
-
+We choose Centos images available [here](https://cloud.centos.org/centos/7/images/). In our experiments, we have used the **CentOS-7-x86_64-Azure-vm2.qcow2** image and installed all the related software on it.All the virtual machines are instantiated from duplications of this image to ensure fairness.
 Note that we modified it to allow password access. This can be done using the image editing tools.
+
+We suggest reviewers download this empty image and install all the software tools (explained in the following sections) from scratch. But we do provide two qcow3 images with everything already installed:
+
+* CentOS image to host VNFs for OVS-DPDK, FastClick, VPP, t4p4s, BESS, and Snabb: https://drive.google.com/open?id=1KRqgInvv7cbhd2rYIYCBjsDFOid3fg30
+* CentOS image to host VNFs for VALE switch: https://drive.google.com/open?id=1K4RPzkofWFtmkl4VAxZW3Eog52CKvFNt
+
+Both images are configured with username **root** and password **root**.
 
 ### Version of QEMU hypervisor
 In specific, two versions of QEMU/KVM hypervisor are used in our experiments:
