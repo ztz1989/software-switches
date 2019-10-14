@@ -79,4 +79,4 @@ To reproduce our experiments, a set of tools are required:
 
 2. MoonGen: build MoonGen inside the VM. More details can be found [here](https://github.com/ztz1989/software-switches/tree/master/moongen).
 
-3. FloWatcher-DPDK: Details can be found in (https://github.com/ztz1989/FloWatcher-DPDK).
+3. FloWatcher-DPDK: Details can be found [here](https://github.com/ztz1989/FloWatcher-DPDK).
