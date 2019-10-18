@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export T=/home/tianzhu/vpp-19.04/vpp/build-root/install-vpp-native/vpp
+export T=path/to/vpp/build-root/install-vpp-native/vpp
 config="p2p"
 
 sudo mkdir -p /tmp/vpp
