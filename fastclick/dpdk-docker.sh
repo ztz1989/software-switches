@@ -7,9 +7,9 @@ sudo rm "${VHOST_SOCK_DIR}/*" 2> /dev/null
 
 if [[ -z "${1}" ]]
 then
-	NAME="fastclick-testpmd-docker"
+	NAME="fastclick-docker"
 else
 	NAME="${1}"
 fi
 
-sudo docker run -it --name="${NAME}" -v /dev/hugepages:/dev/hugepages -v ${VHOST_SOCK_DIR}:/tmp/fastclick --privileged dpdk-18.11
+sudo docker run -it --name="${NAME}" -v /dev/hugepages:/dev/hugepages -v ${VHOST_SOCK_DIR}:/tmp/fastclick --privileged dpdk_suite

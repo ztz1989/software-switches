@@ -1,1 +1,1 @@
-FromDPDKDevice(0, NDESC 4096, PROMISC false) -> ToDPDKDevice(1, NDESC 4096)
+FromDPDKDevice(0, NDESC 4096) -> ToDPDKDevice(1, NDESC 4096)

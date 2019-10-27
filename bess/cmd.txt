@@ -23,20 +23,20 @@ testpmd:
 
 loopback:
 
-./l2fwd -c 0x30 -n 1 --socket-mem=4096,0 --file-prefix testpmd --no-pci  \
-   --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-1' \
-   --vdev 'net_virtio_user3,mac=00:00:00:00:00:03,path=/var/run/openvswitch/vhost-user-2' \
+./l2fwd -c 0x30 -n 1 --socket-mem=1024,0 --file-prefix testpmd --no-pci  \
+   --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/tmp/bess/vhost-user-0' \
+   --vdev 'net_virtio_user3,mac=00:00:00:00:00:03,path=/tmp/bess/vhost-user-1' \
    -- -p 0x3 -T 1
 
 
-nic2vm:
+p2v:
 
-./build/FlowMon-DPDK -c 0xf0 -n 1 --socket-mem=4096,0 --file-prefix flowmon --no-pci  \
-   --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-0'
+./build/FloWatcher-DPDK -c 0xe0 -n 1 --socket-mem=1024,0 --file-prefix flowmon --no-pci  \
+   --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/tmp/bess/vhost-user-0'
 
 
 vm-vm:
-pktgen -l 1-3 -n 1 --socket-mem=2048,2048  --vdev='net_virtio_user0,path=/var/run/openvswitch/vhost-user-1' --no-pci --file-prefix pktgen -- -P -m "[2:3].0" -T --crc-strip
+pktgen -l 0-3 -n 1 --socket-mem=1024,0  --vdev='net_virtio_user0,path=/tmp/bess/vhost-user-0' --no-pci --file-prefix pktgen -- -P -m "[1:3].0" -T --crc-strip
 
 ./build/FlowMon-DPDK -c 0xf0 -n 1 --socket-mem=4096,0 --file-prefix flowmon --no-pci  \
    --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/var/run/openvswitch/vhost-user-2'

@@ -23,6 +23,7 @@ local seq_table = {         -- entries can be in any order
     ["cos"] = 5,
     ["tos"] = 6
   };
+
 -- seqTable( seq#, portlist, table );
 pktgen.seqTable(0, "all", seq_table );
 pktgen.set("all", "seq_cnt", 1);

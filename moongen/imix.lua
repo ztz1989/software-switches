@@ -50,7 +50,6 @@ function master(args)
 	-- max 1kpps timestamping traffic timestamping
 	-- rate will be somewhat off for high-latency links at low rates
 	if args.rate > 0 then
-		--txDev:getTxQueue(0):setRate(args.rate - (60 + 4) * 8 / 1000)
 		txDev:getTxQueue(0):setRate(args.rate)	
 	end
 	--rxDev:getTxQueue(0).dev:UdpGenericFilter(rxDev:getRxQueue(3))
@@ -62,16 +61,6 @@ function master(args)
 end
 
 local function fillUdpPacket(buf, len)
---[[	buf:getUdpPacket():fill{
-		ethSrc = queue,
-		ethDst = DST_MAC,
-		ip4Src = SRC_IP,
-		ip4Dst = DST_IP,
-		udpSrc = SRC_PORT,
-		udpDst = DST_PORT,
-		pktLength = len
-	}
---]]
 	buf:getEthernetPacket():fill{
             ethSrc = queue,
             ethDst = DST_MAC,
