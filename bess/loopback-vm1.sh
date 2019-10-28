@@ -8,7 +8,8 @@ export VHOST_SOCK_DIR=/tmp/bess
 
 sudo mkdir -p ${VHOST_SOCK_DIR}
 
-cd /home/tianzhu/qemu/bin/x86_64-softmmu/
+#cd /home/tianzhu/qemu/bin/x86_64-softmmu/
+cd /home/tianzhu/qemu-repo/qemu-2.2.0/x86_64-softmmu/
 
 sudo taskset -c 1-4 ./qemu-system-x86_64  -name $VM_NAME -cpu host -enable-kvm \
  -m ${GUEST_MEM} -drive file=$CDROM --nographic \

@@ -6,7 +6,7 @@ export QCOW2_IMAGE=/home/tianzhu/centos7.qcow2
 export CDROM=/home/tianzhu/CentOS-7-x86_64-Azure-vm4.qcow2
 export VHOST_SOCK_DIR=/tmp/bess
 
-cd /home/tianzhu/qemu/bin/x86_64-softmmu/
+cd /home/tianzhu/qemu-repo/qemu-2.2.0/x86_64-softmmu/
 sudo taskset -c 28-31 /home/tianzhu/qemu-repo/qemu-2.2.0/x86_64-softmmu/qemu-system-x86_64 -name $VM_NAME -cpu host -enable-kvm \
    -m $GUEST_MEM -drive file=$CDROM --nographic \
   -numa node,memdev=mem -mem-prealloc -smp sockets=1,cores=4 \
