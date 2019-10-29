@@ -1,3 +1,8 @@
+p2v:
+
+pktgen -l 1-4 -n 1 --socket-mem=1024,0  --vdev='net_virtio_user0,path=/tmp/snabb/vhost-user-1' --no-pci --file-prefix pktgen -- -P -m "[2:4].0" -T
+
+
 ./l2fwd -c 0x30 -n 1 --socket-mem=4096,0 --file-prefix testpmd --no-pci  \
    --vdev 'net_virtio_user2,mac=00:00:00:00:00:02,path=/tmp/snabb/vhost-user-1' \
    --vdev 'net_virtio_user3,mac=00:00:00:00:00:03,path=/tmp/snabb/vhost-user-2' \
