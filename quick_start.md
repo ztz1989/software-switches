@@ -78,7 +78,7 @@ Launch the first VM, it takes around 10 seconds to finish initialization.
 Open a new terminal, login to the first VM with username/password "**root/root**", and then setup dpdk:
 
 	$ ssh root@localhost -p 10020	
-	$ cd ~; ./setup.sh
+	$ cd ~; ./setup.sh     # DPDK provisioning inside virtual machine
 	
 Launch MoonGen inside the first VM:
 
@@ -99,3 +99,4 @@ Go to the monitor directory and launch FloWatcher-DPDK:
 	$ cd monitor
 	$ ./build/Flowmon-DPDK -c 7
 
+Observe the measured throughput (in Mpps).
