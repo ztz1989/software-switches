@@ -1,8 +1,5 @@
 # Getting started
 
-Our script are organized as follows: 
-In order to start one experiment, it is sufficient to cd into the directory of the considered software switch and follow the instructions. We recommend to start with instructions of [OVS-DPDK](https://github.com/ztz1989/software-switches/tree/artifacts/ovs-dpdk), as some repeated details of the measurement tools are omitted for other switches, for the sake of conciseness.
-
 Considering the fact that our experiments require DPDK-compatible physical NICs to reproduce p2p, p2v, and loopback scenario, we thus recommend the reviewers to begin with v2v scenario that is less hardware dependent.
 
 ## Install DPDK
