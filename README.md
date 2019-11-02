@@ -50,4 +50,4 @@ Our experiments adopted several software tools for different test scenarios
 A detailed description about VNF deployment inside QEMU VMs can be found [here](https://github.com/ztz1989/software-switches/blob/artifacts/README-VM.md). We also provide a setup script **setup.sh** to provision all the physical part of our test.
 
 ## Quick start guide
-Please refer to [quick start section]() for a quick start.
+Please refer to [quick start section](https://github.com/ztz1989/software-switches/blob/artifacts/quick_start.md) for a quick start.
