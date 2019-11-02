@@ -2,7 +2,7 @@
 
 export VM_NAME1=vhost-vm1
 export GUEST_MEM=4096M
-export CDROM=path/to/image
+export CDROM=/tmp/CentOS-7-x86_64-Azure2.qcow2
 export VHOST_SOCK_DIR=/tmp/fastclick
 
 cd path/to/qemu
