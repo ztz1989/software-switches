@@ -32,6 +32,12 @@ Load igb_uio module
 	$ sudo rmmod igb_uio 2> /dev/null
 	$ cd "${RTE_TARGET}/kmod"; sudo insmod igb_uio.ko
 
+Mount Hugepages for DPDK, assume 2MB page size:
+
+	$ mkdir -p /mnt/huge
+	$ mount -t hugetlbfs nodev /mnt/huge
+	$ echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+	
 ## Install FastClick
 Get FastClick source
 
