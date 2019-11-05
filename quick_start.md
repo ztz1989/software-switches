@@ -40,7 +40,7 @@ Mount Hugepages for DPDK, assume 2MB page size:
 
 	$ mkdir -p /mnt/huge
 	$ mount -t hugetlbfs nodev /mnt/huge
-	$ echo 64 > /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+	$ echo 64 | sudo tee /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
 	
 ## Install FastClick
 Get FastClick source
