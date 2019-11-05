@@ -14,4 +14,4 @@ else
 	config="${1}"
 fi
 
-sudo "${FASTCLICK_DIR}"/bin/click --dpdk -c 0x400 --vdev=eth_vhost0,iface=/tmp/fastclick/vhost-user-0 --vdev=eth_vhost1,iface=/tmp/fastclick/vhost-user-1 --socket-mem=2048,0 --no-pci  -- "${config}"
+sudo "${FASTCLICK_DIR}"/bin/click --dpdk -c 0x400 --vdev=eth_vhost0,iface=/tmp/fastclick/vhost-user-0 --vdev=eth_vhost1,iface=/tmp/fastclick/vhost-user-1 --socket-mem=64,0 --no-pci  -- "${config}"
