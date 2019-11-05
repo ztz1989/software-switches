@@ -7,9 +7,9 @@ In particular, all the experiments are based on DPDK-18.11.2. To install it:
 
 	$ export DPDK_VERSION=18.11.2
 
-Install libnuma-dev dependency:
+Install dependencies:
 
-	$ sudo apt-get install libnuma-dev
+	$ sudo apt-get install libnuma-dev make
 	
 Put everything into the "/tmp/tools" directory
 
