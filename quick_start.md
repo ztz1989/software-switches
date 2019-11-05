@@ -9,7 +9,7 @@ In particular, all the experiments are based on DPDK-18.11.2. To install it:
 
 Install dependencies:
 
-	$ sudo apt-get install libnuma-dev make gcc g++ pkg-config mtools
+	$ sudo apt-get install libnuma-dev make gcc g++ pkg-config zlib1g-dev
 	
 Put everything into the "/tmp/tools" directory
 
