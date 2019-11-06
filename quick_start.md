@@ -69,6 +69,17 @@ Compile FastClick:
 
 	$ sudo make -j40
 
+## Install QEMU/KVM
+There are several ways to install QEMU, the following instructions build it from the source:
+
+	$ git clone git://git.qemu-project.org/qemu.git
+	$ cd qemu
+	$ ./configure --target-list=x86_64-softmmu
+	$ make -j4
+	$ sudo make install
+	
+If you prefer other ways, please refer to [the QEMU wiki](https://en.wikibooks.org/wiki/QEMU/Installing_QEMU) for more information.
+
 ## Reproduce v2v test scenario
 Download our provisioned CentOS 7 image ([CentOS-7-x86_64-Azure.qcow2](https://drive.google.com/open?id=1KRqgInvv7cbhd2rYIYCBjsDFOid3fg30)) and put it under /tmp/ directory. As v2v scenario requires two VMs, make a copy of this image and name it to **CentOS-7-x86_64-Azure2.qcow2**
 
