@@ -2,7 +2,7 @@
 
 Considering the fact that our experiments require DPDK-compatible physical NICs to reproduce p2p, p2v, and loopback scenario, we thus recommend the reviewers to begin with v2v scenario that is less hardware dependent. 
 
-It is recommended to run the experiments on a commodity server with more than 10GB RAM and 10 logical cores, since user laptops might face memory issues.
+It is recommended to run the experiments on a commodity server with more than 10GB RAM and 10 logical cores, since user laptops might face memory issues and might also require to install many developement tools.
 
 ## Install DPDK
 In particular, all the experiments are based on DPDK-18.11.2. To install it:
