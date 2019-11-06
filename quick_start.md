@@ -90,7 +90,7 @@ Open a new terminal, login to the first VM with username/password "**root/root**
 Launch MoonGen inside the first VM:
 
 	$ cd MoonGen
-	$ ./build/MoonGen example/l2-load-latency.sh 0 0
+	$ ./build/MoonGen example/l2-load-latency.lua 0 0
 	
 Open a new terminal, launch the second VM and wait for around 10 seconds
 
