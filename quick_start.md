@@ -3,7 +3,7 @@
 Considering the fact that our experiments require DPDK-compatible physical NICs to reproduce p2p, p2v, and loopback scenario, we thus recommend the reviewers to begin with v2v scenario that is less hardware dependent. 
 
 ## System Requirement
-It is recommended to run experiments of v2v test scenario on a commodity server with more than 16GB RAM and 10 logical cores, as each VM requires 4GB RAM and 4 cores to achieve optimal performance, user laptops might thus face memory issues and might also require to install many developement tools. Usually, a industrial standard commodity off-the-shelf (COTS) server would be enough. Pay attention if your testbed contains more than one NUMA node and always ensure that everything is allocated to the same NUMA socket.
+It is recommended to run experiments of v2v test scenario on a commodity server with more than 16GB RAM and 10 logical cores, as each VM requires 4GB RAM and 4 cores to achieve optimal performance, user laptops might thus face insufficient resource issues and might also require to install many developement tools. Usually, a industrial standard commodity off-the-shelf (COTS) server would be enough. Pay attention if your testbed contains more than one NUMA node and always ensure that everything is allocated to the same NUMA socket.
 
 ## Install DPDK
 In particular, all the experiments are based on DPDK-18.11.2. To install it:
