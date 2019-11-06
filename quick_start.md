@@ -3,7 +3,7 @@
 Considering the fact that our experiments require DPDK-compatible physical NICs to reproduce p2p, p2v, and loopback scenario, we thus recommend the reviewers to begin with v2v scenario that is less hardware dependent. 
 
 ## System Requirement
-It is recommended to run experiments of v2v test scenario on a commodity server with more than 16GB RAM and 10 logical cores, since user laptops might face memory issues and might also require to install many developement tools.
+It is recommended to run experiments of v2v test scenario on a commodity server with more than 20GB RAM and 10 logical cores, since user laptops might face memory issues and might also require to install many developement tools. Usually, a industrial standard commodity off-the-shelf (COTS) server would be enough.
 
 ## Install DPDK
 In particular, all the experiments are based on DPDK-18.11.2. To install it:
@@ -12,7 +12,7 @@ In particular, all the experiments are based on DPDK-18.11.2. To install it:
 
 Install dependencies:
 
-	$ sudo apt-get install libnuma-dev make gcc g++ pkg-config zlib1g-dev linux-headers-$(uname -r)
+	$ sudo apt-get install libnuma-dev make gcc g++ pkg-config zlib1g-dev git linux-headers-$(uname -r)
 	
 Put everything into the "/tmp/tools" directory
 
@@ -34,16 +34,22 @@ Compile DPDK
 	$ cd "${RTE_SDK}"
 	$ make install T="${RTE_TARGET}"
 
+**Note: when the compilation process finishes, a warning message "Installation cannot run with T defined and DESTDIR undefined
+" will be displayed. Please just ignore it.**
+
+
 Load igb_uio module
 
 	$ sudo rmmod igb_uio 2> /dev/null
-	$ cd "${RTE_TARGET}/kmod"; sudo insmod igb_uio.ko
+	$ cd "${RTE_TARGET}/kmod"
+	$ sudo modprobe uio
+	$ sudo insmod igb_uio.ko
 
 Mount Hugepages for DPDK, 2MB hugepage size is the default:
 
 	$ sudo mkdir -p /mnt/huge
 	$ sudo mount -t hugetlbfs nodev /mnt/huge
-	$ echo 1024 | sudo tee /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+	$ echo 4096 | sudo tee /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
 	
 ## Install FastClick
 Get FastClick source
