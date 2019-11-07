@@ -1,9 +1,5 @@
 # Performance comparison of state-of-the-art software switches
 
----
-## [FOR THE ARTIFACT EVALUATION: Please switch to the branch "artifacts"](https://github.com/ztz1989/software-switches/tree/artifacts)
----
-
 This repository contains scripts to reproduce all the experiments we conducted to compare performance of seven state-of-the-art software switches, namely OVS-DPDK, VPP, snabb, BESS, netmap, t4p4s, etc. All the results and numbers shown in the slides and papers (TBA) are reproducible on our server. We expect similar results from other testbeds. So you're welcome to download the scripts and run the tests on your server. Any feedback or suggestions are highly recommended!!!
 
 We consider 7 state-of-the-art software switches in our project, including:
