@@ -76,13 +76,13 @@ In this script, we firstly mount and reserve hugepages for DPDK. Then we load DP
 2. For loopback test, deploy DPDK l2fwd application to forward packets between two virtual interfaces. For more details, refer to (https://doc.dpdk.org/guides-18.08/sample_app_ug/l2_forward_real_virtual.html).
 
 ### Containers
-We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we firstly build three Docker images, based on which containers are instantiated:
+We use Docker to create and manage containers. The version is 17.03.2-ce, build f5ec1e2. To carry out our experiments with Docker, we have built a Docker image wraping a full DPDK distribution, based on which containers of the following applications can be instantiated:
 
 * FloWatcher-DPDK image: wraps the FloWatcher-DPDK 
 * pktgen-dpdk image: wraps pktgen-dpdk application
 * DPDK l2fwd image: wraps the dpdk l2fwd sample application
 
-These images are locally generated on our server. The corresponding Docketfiles can be found in Docker/ directory. 
+These images are locally generated on our server. The corresponding Docketfiles can be found in Docker/ directory. We have pushed a version of the image to Dockerhub: https://hub.docker.com/repository/docker/ztz1989/dpdk-suite 
 
 Instructions for starting Docker instances for different test scenarios are available in each sub-directiory. Actually, we dont't need to start a new container everytime since all the containers instances are still reserved in the container pool. We can just restart and jump into their terminals using
   * sudo docker container start -i [container name]
