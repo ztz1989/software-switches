@@ -1,0 +1,10 @@
+version: "3.9"
+services: 
+  l2fwd:
+    image: ztz1989/dpdk-suite:v2
+    volumes:
+      - /tmp/fastclick:/tmp/fastclick
+      - /dev/hugepages:/dev/hugepages
+    tty: true
+    privileged: true
+

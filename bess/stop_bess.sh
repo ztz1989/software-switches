@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo /home/tianzhu/bess/bessctl/bessctl daemon stop
+sudo /home/tzhang/bess/bessctl/bessctl daemon stop

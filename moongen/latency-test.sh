@@ -5,6 +5,8 @@
 rate=${1}
 size=${2}
 
+CURR_DIR=$(pwd)
+
 if [[ "${#}" -lt 2 ]]
 then
 	echo "Usage: ${0} TX_RATE PKT_SIZE"
@@ -13,6 +15,8 @@ fi
 
 echo "Packet rate: ${1}, Packet size: ${2}"
 
-MOONGEN_DIR="/usr/local/src/MoonGen/"
+MOONGEN_DIR="/home/tzhang/MoonGen/"
 
-sudo $MOONGEN_DIR/build/MoonGen ./latency-test.lua 0 1 -r "${rate}" -s "${size}"
+
+cd $MOONGEN_DIR
+sudo ./build/MoonGen $CURR_DIR/latency-test.lua 0 1 -r "${rate}" -s "${size}"

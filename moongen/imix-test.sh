@@ -2,7 +2,7 @@
 
 # This script is created to measure the throughput and latency of Software/Virtual switches
 
-MOONGEN_DIR=/usr/local/src/MoonGen/
+MOONGEN_DIR=/home/tzhang/MoonGen/
 CURR_DIR=$(pwd)
 
 # default values for packet rates [Mpps]

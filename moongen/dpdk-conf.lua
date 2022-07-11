@@ -5,7 +5,7 @@
 -- In this case it may be necessary to use the blacklist or whitelist features in some configurations.
 DPDKConfig {
 	-- configure the CPU cores to use, default: all cores
-	--cores = {0, 10, 11, 12, 13, 14, 15},
+	cores = {10,11,12,13,14,15},
 	
 	-- max number of shared tasks running on core 0
 	--sharedCores = 8,

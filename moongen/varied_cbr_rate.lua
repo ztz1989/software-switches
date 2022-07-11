@@ -7,12 +7,19 @@ local timer     = require "timer"
 local histogram = require "histogram"
 local log       = require "log"
 
+-- set addresses here
+local DST_MAC           = "aa:cc:dd:cc:00:01" -- resolved via ARP on GW_IP or DST_IP, can be overriden with a string here
+local SRC_IP_BASE       = "10.1.0.10" -- actual address will be SRC_IP_BASE + random(0, flows)
+local DST_IP            = "2.1.1.1"
+local SRC_PORT          = 1234
+local DST_PORT          = 319
+
 function configure(parser)
 	parser:description("Generates traffic based on a poisson process with CRC-based rate control.")
 	parser:argument("txDev", "Device to transmit from."):args(1):convert(tonumber)
 	parser:argument("rxDev", "Device to receive from."):args(1):convert(tonumber)
-	--parser:option("-r --rate", "Transmit rate in Mpps."):args(1):default(2):convert(tonumber)
-	--parser:option("-s --size", "Packet size in Bytes."):args(1):default(60):convert(tonumber)
+	parser:option("-r --rate", "Transmit rate in Mpps."):args(1):default(2):convert(tonumber)
+	parser:option("-s --size", "Packet size in Bytes."):args(1):default(508):convert(tonumber)
 end
 
 function master(args)
@@ -21,18 +28,28 @@ function master(args)
 
 	device.waitForLinks()
 
-	mg.startTask("loadSlave", txDev, rxDev, txDev:getTxQueue(0))
-	mg.startTask("loadSlave", txDev, rxDev, txDev:getTxQueue(1))
+	mg.startTask("loadSlave", txDev, rxDev, txDev:getTxQueue(0), args.size)
+	mg.startTask("loadSlave", txDev, rxDev, txDev:getTxQueue(1), args.size)
 
 	mg.waitForTasks()
 end
 
-function loadSlave(dev, rxDev, queue)
+function loadSlave(dev, rxDev, queue, size)
 	local mem = memory.createMemPool(function(buf)
-		buf:getEthernetPacket():fill{
-			ethDst = "aa:cc:dd:cc:00:01",
-			ethType = 0x1234
-		}
+		--buf:getEthernetPacket():fill{
+		--	ethDst = "aa:cc:dd:cc:00:01",
+		--	ethType = 0x1234
+		--}
+        	buf:getUdpPacket():fill{
+                	ethSrc = queue,
+                	ethDst = DST_MAC,
+                	ip4Src = SRC_IP,
+                	ip4Dst = DST_IP,
+                	udpSrc = SRC_PORT,
+                	udpDst = DST_PORT,
+                	pktLength = size
+        	}
+
 	end)
 
 	local bufs = mem:bufArray()
@@ -43,14 +60,15 @@ function loadSlave(dev, rxDev, queue)
 	end
 
 	local txStats = stats:newManualTxCounter(dev, "plain")
-    local limiter = timer:new(20)
 
-	local rates = {0.74, 3.72, 7.44, 11.16, 14.88, 11.16, 7.44, 3.72, 0.74}
+    	local limiter = timer:new(10)
+
+	local rates = {0.5, 1, 1.5, 2, 2.5} --{0.74, 3.72, 7.44, 11.16, 14.88, 11.16, 7.44, 3.72, 0.74}
 	local r = 2
 	local rate = rates[1]
 
 	while mg.running() do
-		bufs:alloc(60)
+		bufs:alloc(size)
 		
 		if limiter:expired()
 		then
@@ -67,19 +85,19 @@ function loadSlave(dev, rxDev, queue)
 		for _, buf in ipairs(bufs) do
 			-- this script uses Mpps instead of Mbit (like the other scripts)
 			--buf:setDelay(poissonDelay(10^10 / 8 / (rate * 10^6) - size - 24))
-			buf:setDelay(10^10 / 8 / (rate * 10^6) - 60 - 24)
+			buf:setDelay(10^10 / 8 / (rate * 10^6) - size - 24)
 		end
 
-		txStats:updateWithSize(queue:sendWithDelay(bufs), 60)
+		txStats:updateWithSize(queue:sendWithDelay(bufs), size)
 
 		if queue.qid == 0
-    	then
+    		then
 			rxStats:update()
 		end
-	end
+		end
 
 	if queue.qid == 0
-    then
+    	then
 		rxStats:finalize()
 	end
 

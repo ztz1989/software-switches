@@ -2,8 +2,8 @@
 
 # This script is created to measure the throughput and latency of Software/Virtual switches
 
-MOONGEN_DIR=/home/tzhang/MoonGen/
-CURR_DIR=$(pwd)
+MOONGEN_DIR="/home/tzhang/MoonGen/"
+CURR_DIR="$(pwd)"
 
 # default values for packet rates [Mbps] and packet size [bytes]
 rate=10000
@@ -11,7 +11,7 @@ size=60
 
 if [[ "${UID}" -ne 0 ]]
 then
-	echo "Need root priviledge"
+	echo "Need root priviledge to execute"
 	exit 1
 fi
 
@@ -20,10 +20,10 @@ usage(){ echo "Usage: ${0} [-s packet size][-r packet rate]"; exit 1; }
 while getopts ":s:r:" arg; do
 	case "${arg}" in
 		s)
-			size=${OPTARG}
+			size="${OPTARG}"
 			;;
 		r)
-			rate=${OPTARG}
+			rate="${OPTARG}"
 			;;
 		h | *)
 			usage
@@ -33,5 +33,5 @@ done
 
 echo "Packet rate: ${rate}, Packet size: ${size}"
 
-#cd $MOONGEN_DIR
-sudo $MOONGEN_DIR/build/MoonGen ${CURR_DIR}/throughput-test.lua 0 1 -r "${rate}" -s "${size}"
+cd "${MOONGEN_DIR}"
+sudo ./build/MoonGen "${CURR_DIR}"/"${1}".lua 0 1

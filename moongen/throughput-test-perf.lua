@@ -122,11 +122,16 @@ function loadSlave(queue, rxDev, size)
 	end)
 	local bufs = mempool:bufArray()
 	local txCtr = stats:newDevTxCounter(queue, "plain")
-	local rxCtr = stats:newDevRxCounter(rxDev, "plain") --"/home/tzhang/ml-for-highspeed-networks/data/analysis/rx-stats.csv")
+	local rxCtr = stats:newDevRxCounter(rxDev, "plain", "/home/tzhang/ml-for-highspeed-networks/data/analysis/rx-stats.csv")
 	local baseIP = parseIPAddress(SRC_IP_BASE)
+        local perf_on = false
 
 	-- send out UDP packets until the user stops the script
 	while mg.running() do
+                if not perf_on then
+			os.execute("./perf.sh &")	
+			perf_on = true
+		end
 		bufs:alloc(size)
 		for i, buf in ipairs(bufs) do
 			local pkt = buf:getUdpPacket()

@@ -12,7 +12,7 @@ local log    = require "log"
 -- set addresses here
 local DST_MAC		= "aa:cc:dd:cc:00:01" -- resolved via ARP on GW_IP or DST_IP, can be overriden with a string here
 local SRC_IP_BASE	= "10.1.0.10" -- actual address will be SRC_IP_BASE + random(0, flows)
-local DST_IP		= "10.0.0.10"
+local DST_IP		= "2.1.1.1"
 local SRC_PORT		= 1234
 local DST_PORT		= 319
 
@@ -29,8 +29,8 @@ function configure(parser)
 	parser:argument("txDev", "Device to transmit from."):convert(tonumber)
 	parser:argument("rxDev", "Device to receive from."):convert(tonumber)
 	parser:option("-r --rate", "Transmit rate in Mbit/s."):default(10000):convert(tonumber)
-	parser:option("-f --flows", "Number of flows (randomized source IP)."):default(1):convert(tonumber)
-	parser:option("-s --size", "Packet size."):default(60):convert(tonumber)
+	parser:option("-f --flows", "Number of flows (randomized source IP)."):default(100):convert(tonumber)
+	parser:option("-s --size", "Packet size."):default(508):convert(tonumber)
 end
 
 function master(args)
@@ -91,12 +91,12 @@ function loadSlave(queue, rxDev, size, flows)
 	local baseIP = parseIPAddress(SRC_IP_BASE)
 	while mg.running() do
 		bufs:alloc(size)
---[[		for i, buf in ipairs(bufs) do
+		for i, buf in ipairs(bufs) do
 			local pkt = buf:getUdpPacket()
 			pkt.ip4.src:set(baseIP + counter)
 			counter = incAndWrap(counter, flows)
 		end
---]]
+
 		-- UDP checksums are optional, so using just IPv4 checksums would be sufficient here
 		bufs:offloadUdpChecksums()
 		queue:send(bufs)

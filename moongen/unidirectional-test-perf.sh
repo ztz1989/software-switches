@@ -34,4 +34,4 @@ done
 echo "Packet rate: ${rate}, Packet size: ${size}"
 
 #cd $MOONGEN_DIR
-sudo $MOONGEN_DIR/build/MoonGen ${CURR_DIR}/throughput-test.lua 0 1 -r "${rate}" -s "${size}"
+sudo $MOONGEN_DIR/build/MoonGen ${CURR_DIR}/throughput-test-perf.lua 0 1 -r "${rate}" -s "${size}"

@@ -113,7 +113,7 @@ function loadSlave(queue, rxDev, size)
     local limiter = timer:new(20)
 
     --local rates = {0.17, 0.84, 1.80, 2.71, 3.30, 2.51, 1.67, 0.84, 0.17}
-	local rates = {473, 2366, 4732, 7098, 9464, 7098, 4732, 2366, 473}
+    local rates = {473, 2366, 4732, 7098, 9464, 7098, 4732, 2366, 473}
     local r = 2
     local rate = rates[1]
 
